@@ -1,0 +1,49 @@
+{
+  "collectionName": "components_shared_buttons",
+  "info": {
+    "displayName": "Button",
+    "description": "Reusable CTA button: title, variant, scroll-to, and a link target (external URL or internal Page / Case Study / Insight)"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "variant": {
+      "type": "enumeration",
+      "enum": [
+        "default",
+        "ghost"
+      ]
+    },
+    "scrollTo": {
+      "type": "string"
+    },
+    "linkType": {
+      "type": "enumeration",
+      "enum": [
+        "external",
+        "internal"
+      ],
+      "default": "external"
+    },
+    "url": {
+      "type": "string"
+    },
+    "page": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::page.page"
+    },
+    "caseStudy": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::case-study.case-study"
+    },
+    "insight": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::insight.insight"
+    }
+  }
+}

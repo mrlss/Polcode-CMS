@@ -1,0 +1,29 @@
+{
+  "collectionName": "components_sections_industries",
+  "info": {
+    "displayName": "Industries",
+    "description": "Industries section"
+  },
+  "options": {},
+  "attributes": {
+    "anchor": {
+      "type": "string",
+      "description": "DOM id / URL hash for this section (e.g. \"industries\" → #industries). Lets nav links target this section on the page."
+    },
+    "headline": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.headline"
+    },
+    "button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.button"
+    },
+    "industries": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::industry.industry"
+    }
+  }
+}

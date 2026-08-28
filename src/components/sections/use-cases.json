@@ -1,0 +1,38 @@
+{
+  "collectionName": "components_sections_use_cases",
+  "info": {
+    "displayName": "Use Cases",
+    "description": "Use cases section, latest or manual"
+  },
+  "options": {},
+  "attributes": {
+    "headline": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.headline"
+    },
+    "theme": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.theme"
+    },
+    "button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.button"
+    },
+    "pick": {
+      "type": "enumeration",
+      "enum": [
+        "latest",
+        "manual"
+      ],
+      "default": "latest"
+    },
+    "useCases": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::use-case.use-case"
+    }
+  }
+}

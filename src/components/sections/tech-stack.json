@@ -1,0 +1,29 @@
+{
+  "collectionName": "components_sections_tech_stacks",
+  "info": {
+    "displayName": "Tech Stack",
+    "description": "Tech stack section with load-more button"
+  },
+  "options": {},
+  "attributes": {
+    "anchor": {
+      "type": "string",
+      "description": "DOM id / URL hash for this section (e.g. \"technologies\" → #technologies). Lets nav links target this section on the page."
+    },
+    "headline": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.headline"
+    },
+    "button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.button"
+    },
+    "blocks": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::tech-stack.tech-stack"
+    }
+  }
+}

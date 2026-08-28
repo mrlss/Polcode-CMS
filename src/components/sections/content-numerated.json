@@ -1,0 +1,41 @@
+{
+  "collectionName": "components_sections_content_numerateds",
+  "info": {
+    "displayName": "Content Numerated",
+    "description": "Numerated content, static or expandable"
+  },
+  "options": {},
+  "attributes": {
+    "headline": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.headline"
+    },
+    "button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.button"
+    },
+    "layout": {
+      "type": "enumeration",
+      "enum": [
+        "buttonBelow",
+        "buttonOnSide"
+      ],
+      "default": "buttonBelow"
+    },
+    "behavior": {
+      "type": "enumeration",
+      "enum": [
+        "static",
+        "expandable"
+      ],
+      "default": "static"
+    },
+    "items": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.content-item"
+    }
+  }
+}

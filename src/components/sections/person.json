@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_sections_people",
+  "info": {
+    "displayName": "Person",
+    "description": "Person detail"
+  },
+  "options": {},
+  "attributes": {
+    "person": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::team.team"
+    },
+    "address": {
+      "type": "text"
+    },
+    "email": {
+      "type": "email"
+    },
+    "socials": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.socials"
+    },
+    "button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.button"
+    }
+  }
+}

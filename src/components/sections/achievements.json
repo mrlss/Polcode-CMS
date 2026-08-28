@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_sections_achievements",
+  "info": {
+    "displayName": "Achievements",
+    "description": "Achievements section: headline + a picker of achievement entries"
+  },
+  "options": {},
+  "attributes": {
+    "headline": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.headline"
+    },
+    "theme": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.theme"
+    },
+    "achievements": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::achievement.achievement"
+    }
+  }
+}

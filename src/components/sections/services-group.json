@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_sections_services_groups",
+  "info": {
+    "displayName": "Services Group",
+    "description": "Grouped services with related use cases"
+  },
+  "options": {},
+  "attributes": {
+    "headline": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.headline"
+    },
+    "groups": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.service-group"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_sections_progress_cards",
+  "info": {
+    "displayName": "Progress Cards",
+    "description": "Milestone progress cards"
+  },
+  "options": {},
+  "attributes": {
+    "headline": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.headline"
+    },
+    "cards": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.card-milestone"
+    }
+  }
+}

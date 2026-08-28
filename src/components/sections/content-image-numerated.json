@@ -1,0 +1,37 @@
+{
+  "collectionName": "components_sections_content_image_numerateds",
+  "info": {
+    "displayName": "Content Image Numerated",
+    "description": "Numerated content with image"
+  },
+  "options": {},
+  "attributes": {
+    "headline": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.headline"
+    },
+    "subtitle": {
+      "type": "string"
+    },
+    "button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.button"
+    },
+    "media": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "videos"
+      ]
+    },
+    "blocks": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.content-item"
+    }
+  }
+}

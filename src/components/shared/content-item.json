@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_shared_content_items",
+  "info": {
+    "displayName": "Content Item",
+    "description": "Title + wysiwyg + optional button"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "customField",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      }
+    },
+    "button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.button"
+    }
+  }
+}

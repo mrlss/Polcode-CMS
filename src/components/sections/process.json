@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_sections_processes",
+  "info": {
+    "displayName": "Process",
+    "description": "Process steps section"
+  },
+  "options": {},
+  "attributes": {
+    "headline": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.headline"
+    },
+    "blocks": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::process.process"
+    },
+    "button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.button"
+    }
+  }
+}

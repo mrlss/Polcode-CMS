@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_shared_headlines",
+  "info": {
+    "displayName": "Headline",
+    "description": "Reusable headline with optional index/count prefix"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "addCount": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

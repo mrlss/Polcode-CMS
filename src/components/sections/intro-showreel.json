@@ -1,0 +1,42 @@
+{
+  "collectionName": "components_sections_intro_showreels",
+  "info": {
+    "displayName": "Intro Showreel",
+    "description": "Showreel intro"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.button"
+    },
+    "media": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "videos"
+      ]
+    },
+    "label": {
+      "type": "string"
+    },
+    "description": {
+      "type": "customField",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      }
+    },
+    "showreel": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.showreel"
+    }
+  }
+}

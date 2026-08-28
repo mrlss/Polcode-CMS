@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_sections_intersection_media",
+  "info": {
+    "displayName": "Intersection Media",
+    "description": "Media with title + button overlay"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.button"
+    },
+    "media": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "videos"
+      ]
+    }
+  }
+}

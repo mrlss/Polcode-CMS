@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_shared_themes",
+  "info": {
+    "displayName": "Theme",
+    "description": "Section background color + text contrast"
+  },
+  "options": {},
+  "attributes": {
+    "background": {
+      "type": "enumeration",
+      "enum": [
+        "white",
+        "black",
+        "cream",
+        "purple"
+      ],
+      "default": "white"
+    },
+    "textColor": {
+      "type": "enumeration",
+      "enum": [
+        "light",
+        "dark"
+      ],
+      "default": "light"
+    }
+  }
+}

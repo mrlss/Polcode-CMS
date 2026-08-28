@@ -1,0 +1,38 @@
+{
+  "collectionName": "components_sections_case_studies",
+  "info": {
+    "displayName": "Case Studies",
+    "description": "Case studies section, latest or manual"
+  },
+  "options": {},
+  "attributes": {
+    "pick": {
+      "type": "enumeration",
+      "enum": [
+        "latest",
+        "manual"
+      ],
+      "default": "latest"
+    },
+    "headline": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.headline"
+    },
+    "theme": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.theme"
+    },
+    "button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.button"
+    },
+    "caseStudies": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::case-study.case-study"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_sections_hero_svgs",
+  "info": {
+    "displayName": "Hero SVG",
+    "description": "Hero with SVG/image"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_shared_showreels",
+  "info": {
+    "displayName": "Showreel",
+    "description": "Video with poster image"
+  },
+  "options": {},
+  "attributes": {
+    "video": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "videos"
+      ]
+    },
+    "poster": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    }
+  }
+}

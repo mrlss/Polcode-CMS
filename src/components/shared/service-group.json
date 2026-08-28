@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_shared_service_groups",
+  "info": {
+    "displayName": "Service Group",
+    "description": "Group title + services + related use cases"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "services": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::service.service"
+    },
+    "relatedUseCases": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::use-case.use-case"
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "collectionName": "components_sections_hero_riches",
+  "info": {
+    "displayName": "Hero Rich",
+    "description": "Rich hero with title variant and carousel"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "text"
+    },
+    "description": {
+      "type": "customField",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      }
+    },
+    "button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.button"
+    },
+    "label": {
+      "type": "string"
+    },
+    "variant": {
+      "type": "enumeration",
+      "enum": [
+        "titleAbove",
+        "titleBelow"
+      ],
+      "default": "titleAbove"
+    },
+    "carousel": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.content-item"
+    }
+  }
+}

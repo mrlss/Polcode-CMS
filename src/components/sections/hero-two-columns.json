@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_sections_hero_two_columns",
+  "info": {
+    "displayName": "Hero Two Columns",
+    "description": "Two-column hero"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.button"
+    },
+    "label": {
+      "type": "string"
+    },
+    "indicatorText": {
+      "type": "string"
+    }
+  }
+}

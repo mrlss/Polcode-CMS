@@ -1,0 +1,29 @@
+{
+  "collectionName": "components_sections_intersection_floating_boxes",
+  "info": {
+    "displayName": "Intersection Floating Boxes",
+    "description": "Floating cards over media"
+  },
+  "options": {},
+  "attributes": {
+    "headline": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.headline"
+    },
+    "media": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "videos"
+      ]
+    },
+    "blocks": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.floating-card"
+    }
+  }
+}

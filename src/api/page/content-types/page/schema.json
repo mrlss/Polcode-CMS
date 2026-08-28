@@ -1,0 +1,72 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pages",
+  "info": {
+    "singularName": "page",
+    "pluralName": "pages",
+    "displayName": "Pages",
+    "description": "Site pages rendered by the frontend"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true,
+      "regex": "^[a-z0-9-_.~/]+$"
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
+    },
+    "showScrollTop": {
+      "type": "boolean",
+      "default": false
+    },
+    "showSectionsNav": {
+      "type": "boolean",
+      "default": false
+    },
+    "sections": {
+      "type": "dynamiczone",
+      "components": [
+        "sections.cta",
+        "sections.achievements",
+        "sections.cards-large-numerated",
+        "sections.case-studies",
+        "sections.content-color-boxes",
+        "sections.content-image-left",
+        "sections.content-image-numerated",
+        "sections.content-numerated",
+        "sections.faq",
+        "sections.form",
+        "sections.hero-rich",
+        "sections.hero-svg",
+        "sections.hero-two-columns",
+        "sections.industries",
+        "sections.insights",
+        "sections.intersection-floating-boxes",
+        "sections.intersection-media",
+        "sections.intro-showreel",
+        "sections.person",
+        "sections.process",
+        "sections.progress-cards",
+        "sections.services-group",
+        "sections.team-grid",
+        "sections.team",
+        "sections.tech-stack",
+        "sections.testimonials-clients",
+        "sections.testimonials-team",
+        "sections.use-cases"
+      ]
+    }
+  }
+}

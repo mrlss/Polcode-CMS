@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_shared_socials",
+  "info": {
+    "displayName": "Socials",
+    "description": "Social link: title + url"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "link": {
+      "type": "string"
+    }
+  }
+}

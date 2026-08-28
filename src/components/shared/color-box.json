@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_shared_color_boxes",
+  "info": {
+    "displayName": "Color Box",
+    "description": "Expandable color box with content-item blocks"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "label": {
+      "type": "string"
+    },
+    "expandable": {
+      "type": "boolean",
+      "default": false
+    },
+    "blocks": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.content-item"
+    }
+  }
+}

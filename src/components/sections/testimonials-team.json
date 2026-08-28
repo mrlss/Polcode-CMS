@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_sections_testimonials_teams",
+  "info": {
+    "displayName": "Testimonials Team",
+    "description": "Team testimonials, carousel or grid"
+  },
+  "options": {},
+  "attributes": {
+    "headline": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.headline"
+    },
+    "cardsLayout": {
+      "type": "enumeration",
+      "enum": [
+        "carousel",
+        "grid"
+      ],
+      "default": "carousel"
+    },
+    "cards": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::testimonial.testimonial"
+    }
+  }
+}

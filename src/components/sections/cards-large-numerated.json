@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_sections_cards_large_numerateds",
+  "info": {
+    "displayName": "Cards Large Numerated",
+    "description": "Numerated cards, carousel or grid"
+  },
+  "options": {},
+  "attributes": {
+    "headline": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.headline"
+    },
+    "cardsLayout": {
+      "type": "enumeration",
+      "enum": [
+        "carousel",
+        "grid"
+      ],
+      "default": "carousel"
+    },
+    "cards": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.card-numerated"
+    }
+  }
+}
