@@ -515,7 +515,8 @@ export interface SharedButton extends Struct.ComponentSchema {
         'solid-dark',
         'solid-light',
       ]
-    >;
+    > &
+      Schema.Attribute.DefaultTo<'dark'>;
   };
 }
 

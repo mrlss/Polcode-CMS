@@ -18,7 +18,8 @@
         "ghost-dark",
         "solid-dark",
         "solid-light"
-      ]
+      ],
+      "default": "dark"
     },
     "scrollTo": {
       "type": "string"
