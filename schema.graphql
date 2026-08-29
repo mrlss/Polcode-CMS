@@ -170,6 +170,7 @@ type Client {
   documentId: ID!
   link: String
   logo: UploadFile
+  name: String
   publishedAt: DateTime
   testimonials(filters: TestimonialFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Testimonial]!
   testimonials_connection(filters: TestimonialFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): TestimonialRelationResponseCollection
@@ -195,6 +196,7 @@ input ClientFiltersInput {
   createdAt: DateTimeFilterInput
   documentId: IDFilterInput
   link: StringFilterInput
+  name: StringFilterInput
   not: ClientFiltersInput
   or: [ClientFiltersInput]
   publishedAt: DateTimeFilterInput
@@ -206,6 +208,7 @@ input ClientInput {
   link: String
   locale: String
   logo: ID
+  name: String
   publishedAt: DateTime
   testimonials: [ID]
 }

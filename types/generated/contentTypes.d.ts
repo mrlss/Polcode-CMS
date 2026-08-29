@@ -559,6 +559,7 @@ export interface ApiClientClient extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     logo: Schema.Attribute.Media<'images'>;
+    name: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     testimonials: Schema.Attribute.Relation<
       'oneToMany',

@@ -81,6 +81,7 @@ const CONTENT_TYPE_LABELS: Record<
     client: toMeta("Client"),
   },
   "api::client.client": {
+    name: toMeta("Name"),
     logo: toMeta("Logo"),
     link: toMeta("Link"),
     testimonials: toMeta("Testimonials"),
@@ -386,6 +387,42 @@ export default {
         .plugin("content-manager")
         .service("content-types");
 
+      // Main field used by the admin to label related entries in pickers.
+      // Default to `title`; override for types that don't have one.
+      const MAIN_FIELD_OVERRIDES: Record<string, string> = {
+        "api::testimonial.testimonial": "author",
+        "api::team.team": "firstName",
+        "api::client.client": "name",
+      };
+
+      const mainFieldFor = (uid: string): string | undefined => {
+        if (MAIN_FIELD_OVERRIDES[uid]) return MAIN_FIELD_OVERRIDES[uid];
+        const schema = strapi.contentType(uid as UID.ContentType);
+        return schema && "title" in schema.attributes ? "title" : undefined;
+      };
+
+      // Relation fields resolve their picker label from the field's OWN
+      // metadata `mainField` (admin: `metadata.mainField || settings.mainField`,
+      // where `settings` is only populated for component attributes). Without it
+      // the picker falls back to the documentId → set it on every relation field
+      // (content types AND components), including block-level section pickers.
+      const applyRelationMainFields = (
+        attributes: Record<string, any>,
+        metadatas: Record<string, any>,
+      ) => {
+        for (const [name, attr] of Object.entries(attributes)) {
+          if (attr.type !== "relation" || !attr.target) continue;
+          const display = mainFieldFor(attr.target);
+          if (!display) continue;
+          const m = metadatas[name] ?? {};
+          metadatas[name] = {
+            ...m,
+            edit: { ...(m.edit ?? {}), mainField: display },
+            list: { ...(m.list ?? {}), mainField: display },
+          };
+        }
+      };
+
       for (const [uid, fields] of Object.entries(CONTENT_TYPE_LABELS)) {
         const schema = strapi.contentType(uid as UID.ContentType);
         if (!schema) continue;
@@ -395,10 +432,17 @@ export default {
         for (const [field, meta] of Object.entries(fields)) {
           metadatas[field] = { ...(metadatas[field] || {}), ...meta };
         }
+        applyRelationMainFields(schema.attributes, metadatas);
+        const mainField =
+          MAIN_FIELD_OVERRIDES[uid] ??
+          ("title" in schema.attributes ? "title" : undefined);
         await cmContentTypes.updateConfiguration(schema, {
           ...current,
           uid,
           metadatas,
+          settings: mainField
+            ? { ...current.settings, mainField }
+            : current.settings,
         });
       }
 
@@ -414,6 +458,7 @@ export default {
         for (const [field, meta] of Object.entries(fields)) {
           metadatas[field] = { ...(metadatas[field] || {}), ...meta };
         }
+        applyRelationMainFields(schema.attributes, metadatas);
         await cmComponents.updateConfiguration(schema, {
           ...current,
           uid,

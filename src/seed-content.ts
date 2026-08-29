@@ -258,14 +258,38 @@ export async function seedContent(strapi: Strapi) {
     "api::client.client",
     (e) => e.link,
     [
-      { link: "https://fintech-labs.io" },
-      { link: "https://healthplus.de" },
-      { link: "https://retailly.com" },
-      { link: "https://travelhub.io" },
-      { link: "https://edudot.org" },
-      { link: "https://manufacturo.com" },
+      { name: "Fintech Labs", link: "https://fintech-labs.io" },
+      { name: "HealthPlus", link: "https://healthplus.de" },
+      { name: "Retailly", link: "https://retailly.com" },
+      { name: "TravelHub", link: "https://travelhub.io" },
+      { name: "EduDot", link: "https://edudot.org" },
+      { name: "Manufacturo", link: "https://manufacturo.com" },
     ],
   );
+
+  // ensureCollection only creates — backfill names on pre-existing clients so
+  // the admin relation picker shows a label instead of the documentId.
+  const clientNamesByLink: Record<string, string> = {
+    "https://fintech-labs.io": "Fintech Labs",
+    "https://healthplus.de": "HealthPlus",
+    "https://retailly.com": "Retailly",
+    "https://travelhub.io": "TravelHub",
+    "https://edudot.org": "EduDot",
+    "https://manufacturo.com": "Manufacturo",
+  };
+  const clientRows = (await strapi.db
+    .query("api::client.client")
+    .findMany({})) as Entry[];
+  for (const row of clientRows) {
+    const name = clientNamesByLink[row.link];
+    if (name && row.name !== name) {
+      await strapi.documents("api::client.client").update({
+        documentId: row.documentId,
+        status: "published",
+        data: { name },
+      });
+    }
+  }
 
   const faqs = await ensureCollection(strapi, "api::faq.faq", (e) => e.title, [
     {
