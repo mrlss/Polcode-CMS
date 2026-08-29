@@ -321,7 +321,7 @@ export async function seedDemoData(strapi: Strapi) {
     title,
     linkType: "internal",
     url,
-    variant: "default",
+    variant: "dark",
   });
   const theme = (background: string, textColor = "dark") => ({
     __component: "shared.theme",

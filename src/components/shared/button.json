@@ -12,8 +12,12 @@
     "variant": {
       "type": "enumeration",
       "enum": [
-        "default",
-        "ghost"
+        "light",
+        "dark",
+        "ghost-light",
+        "ghost-dark",
+        "solid-dark",
+        "solid-light"
       ]
     },
     "scrollTo": {

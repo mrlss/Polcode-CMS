@@ -1475,8 +1475,12 @@ enum ENUM_COMPONENTSHAREDBUTTON_LINKTYPE {
 }
 
 enum ENUM_COMPONENTSHAREDBUTTON_VARIANT {
-  default
-  ghost
+  dark
+  ghost_dark
+  ghost_light
+  light
+  solid_dark
+  solid_light
 }
 
 enum ENUM_COMPONENTSHAREDTHEME_BACKGROUND {

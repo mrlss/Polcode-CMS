@@ -506,7 +506,16 @@ export interface SharedButton extends Struct.ComponentSchema {
     scrollTo: Schema.Attribute.String;
     title: Schema.Attribute.String;
     url: Schema.Attribute.String;
-    variant: Schema.Attribute.Enumeration<['default', 'ghost']>;
+    variant: Schema.Attribute.Enumeration<
+      [
+        'light',
+        'dark',
+        'ghost-light',
+        'ghost-dark',
+        'solid-dark',
+        'solid-light',
+      ]
+    >;
   };
 }
 
