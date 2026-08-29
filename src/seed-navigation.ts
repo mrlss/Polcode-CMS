@@ -217,6 +217,30 @@ const NAVIGATIONS: { name: string; items: NavItem[] }[] = [
       },
     ],
   },
+  {
+    name: "Footer Legal",
+    items: [
+      {
+        title: "Privacy & Terms",
+        type: "INTERNAL",
+        path: "/privacy-policy",
+        key: "footer-legal-privacy-terms",
+      },
+      {
+        title: "Cookies Policy",
+        type: "INTERNAL",
+        path: "/privacy-policy",
+        key: "footer-legal-cookies-policy",
+      },
+      // No path → the frontend renders this as a button (cookie-consent
+      // trigger) instead of a link.
+      {
+        title: "Manage Cookies",
+        type: "WRAPPER",
+        key: "footer-legal-manage-cookies",
+      },
+    ],
+  },
 ];
 
 const PAGES: { title: string; slug: string }[] = [
@@ -345,7 +369,9 @@ export async function seedNavigation(strapi: Strapi) {
   // Remove any leftover `industries` / `industries/*` pages from earlier seeds.
   const qPage = strapi.db.query("api::page.page");
   const removed = (await qPage.deleteMany({
-    where: { $or: [{ slug: "industries" }, { slug: { $startsWith: "industries/" } }] },
+    where: {
+      $or: [{ slug: "industries" }, { slug: { $startsWith: "industries/" } }],
+    },
   })) as { count: number };
   if (removed?.count) {
     log(`removed ${removed.count} stale industry page(s)`);

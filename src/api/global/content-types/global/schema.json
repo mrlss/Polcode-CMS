@@ -1,0 +1,21 @@
+{
+  "kind": "singleType",
+  "collectionName": "globals",
+  "info": {
+    "singularName": "global",
+    "pluralName": "globals",
+    "displayName": "Globals",
+    "description": "Site-wide content and settings (footer, etc.)"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "footer": {
+      "type": "component",
+      "repeatable": false,
+      "component": "global.footer"
+    }
+  }
+}

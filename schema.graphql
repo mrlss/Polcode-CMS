@@ -214,6 +214,57 @@ type ClientRelationResponseCollection {
   nodes: [Client!]!
 }
 
+type ComponentGlobalFooter {
+  contactContent: String
+  contactTitle: String
+  copyright: String
+  id: ID!
+  partners(filters: ComponentGlobalPartnerFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentGlobalPartner]
+  partnersTitle: String
+}
+
+input ComponentGlobalFooterFiltersInput {
+  and: [ComponentGlobalFooterFiltersInput]
+  contactContent: StringFilterInput
+  contactTitle: StringFilterInput
+  copyright: StringFilterInput
+  not: ComponentGlobalFooterFiltersInput
+  or: [ComponentGlobalFooterFiltersInput]
+  partners: ComponentGlobalPartnerFiltersInput
+  partnersTitle: StringFilterInput
+}
+
+input ComponentGlobalFooterInput {
+  contactContent: String
+  contactTitle: String
+  copyright: String
+  id: ID
+  partners: [ComponentGlobalPartnerInput]
+  partnersTitle: String
+}
+
+type ComponentGlobalPartner {
+  id: ID!
+  label: String
+  logo: UploadFile
+  url: String
+}
+
+input ComponentGlobalPartnerFiltersInput {
+  and: [ComponentGlobalPartnerFiltersInput]
+  label: StringFilterInput
+  not: ComponentGlobalPartnerFiltersInput
+  or: [ComponentGlobalPartnerFiltersInput]
+  url: StringFilterInput
+}
+
+input ComponentGlobalPartnerInput {
+  id: ID
+  label: String
+  logo: ID
+  url: String
+}
+
 type ComponentSectionsAchievements {
   achievements(filters: AchievementFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Achievement]!
   achievements_connection(filters: AchievementFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): AchievementRelationResponseCollection
@@ -1519,7 +1570,49 @@ input FloatFilterInput {
   startsWith: Float
 }
 
-union GenericMorph = Achievement | CaseStudy | Client | ComponentSectionsAchievements | ComponentSectionsCardsLargeNumerated | ComponentSectionsCaseStudies | ComponentSectionsContentColorBoxes | ComponentSectionsContentImageLeft | ComponentSectionsContentImageNumerated | ComponentSectionsContentNumerated | ComponentSectionsCta | ComponentSectionsFaq | ComponentSectionsForm | ComponentSectionsHeroRich | ComponentSectionsHeroSvg | ComponentSectionsHeroTwoColumns | ComponentSectionsIndustries | ComponentSectionsInsights | ComponentSectionsIntersectionFloatingBoxes | ComponentSectionsIntersectionMedia | ComponentSectionsIntroShowreel | ComponentSectionsPerson | ComponentSectionsProcess | ComponentSectionsProgressCards | ComponentSectionsServicesGroup | ComponentSectionsTeam | ComponentSectionsTeamGrid | ComponentSectionsTechStack | ComponentSectionsTestimonialsClients | ComponentSectionsTestimonialsTeam | ComponentSectionsUseCases | ComponentSharedButton | ComponentSharedCardMilestone | ComponentSharedCardNumerated | ComponentSharedColorBox | ComponentSharedContentItem | ComponentSharedFloatingCard | ComponentSharedHeadline | ComponentSharedSeo | ComponentSharedServiceGroup | ComponentSharedShowreel | ComponentSharedSocials | ComponentSharedTheme | ContentManagerOrganizerContentManagerConfiguration | Faq | I18NLocale | Industry | Insight | Page | Platform | Process | Region | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | Service | Team | TechStack | Technology | Testimonial | UploadFile | UseCase | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser
+union GenericMorph = Achievement | CaseStudy | Client | ComponentGlobalFooter | ComponentGlobalPartner | ComponentSectionsAchievements | ComponentSectionsCardsLargeNumerated | ComponentSectionsCaseStudies | ComponentSectionsContentColorBoxes | ComponentSectionsContentImageLeft | ComponentSectionsContentImageNumerated | ComponentSectionsContentNumerated | ComponentSectionsCta | ComponentSectionsFaq | ComponentSectionsForm | ComponentSectionsHeroRich | ComponentSectionsHeroSvg | ComponentSectionsHeroTwoColumns | ComponentSectionsIndustries | ComponentSectionsInsights | ComponentSectionsIntersectionFloatingBoxes | ComponentSectionsIntersectionMedia | ComponentSectionsIntroShowreel | ComponentSectionsPerson | ComponentSectionsProcess | ComponentSectionsProgressCards | ComponentSectionsServicesGroup | ComponentSectionsTeam | ComponentSectionsTeamGrid | ComponentSectionsTechStack | ComponentSectionsTestimonialsClients | ComponentSectionsTestimonialsTeam | ComponentSectionsUseCases | ComponentSharedButton | ComponentSharedCardMilestone | ComponentSharedCardNumerated | ComponentSharedColorBox | ComponentSharedContentItem | ComponentSharedFloatingCard | ComponentSharedHeadline | ComponentSharedSeo | ComponentSharedServiceGroup | ComponentSharedShowreel | ComponentSharedSocials | ComponentSharedTheme | ContentManagerOrganizerContentManagerConfiguration | Faq | Global | I18NLocale | Industry | Insight | Page | Platform | Process | Region | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | Service | Team | TechStack | Technology | Testimonial | UploadFile | UseCase | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser
+
+type Global {
+  createdAt: DateTime
+  documentId: ID!
+  footer: ComponentGlobalFooter
+  publishedAt: DateTime
+  updatedAt: DateTime
+}
+
+type GlobalEntity {
+  attributes: Global
+  id: ID
+}
+
+type GlobalEntityResponse {
+  data: Global
+}
+
+type GlobalEntityResponseCollection {
+  nodes: [Global!]!
+  pageInfo: Pagination!
+}
+
+input GlobalFiltersInput {
+  and: [GlobalFiltersInput]
+  createdAt: DateTimeFilterInput
+  footer: ComponentGlobalFooterFiltersInput
+  not: GlobalFiltersInput
+  or: [GlobalFiltersInput]
+  publishedAt: DateTimeFilterInput
+  updatedAt: DateTimeFilterInput
+}
+
+input GlobalInput {
+  footer: ComponentGlobalFooterInput
+  locale: String
+  publishedAt: DateTime
+}
+
+type GlobalRelationResponseCollection {
+  nodes: [Global!]!
+}
 
 type I18NLocale {
   code: String
@@ -1825,6 +1918,7 @@ type Mutation {
   deleteClient(documentId: ID!): DeleteMutationResponse
   deleteContentManagerOrganizerContentManagerConfiguration(documentId: ID!): DeleteMutationResponse
   deleteFaq(documentId: ID!): DeleteMutationResponse
+  deleteGlobal: DeleteMutationResponse
   deleteIndustry(documentId: ID!): DeleteMutationResponse
   deleteInsight(documentId: ID!): DeleteMutationResponse
   deletePage(documentId: ID!): DeleteMutationResponse
@@ -1866,6 +1960,7 @@ type Mutation {
   updateClient(data: ClientInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): Client
   updateContentManagerOrganizerContentManagerConfiguration(data: ContentManagerOrganizerContentManagerConfigurationInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): ContentManagerOrganizerContentManagerConfiguration
   updateFaq(data: FaqInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): Faq
+  updateGlobal(data: GlobalInput!, status: PublicationStatus = PUBLISHED): Global
   updateIndustry(data: IndustryInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): Industry
   updateInsight(data: InsightInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): Insight
   updatePage(data: PageInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): Page
@@ -2162,6 +2257,7 @@ type Query {
   faq(documentId: ID!, hasPublishedVersion: Boolean, publicationFilter: PublicationFilter, status: PublicationStatus = PUBLISHED): Faq
   faqs(filters: FaqFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): [Faq]!
   faqs_connection(filters: FaqFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): FaqEntityResponseCollection
+  global(hasPublishedVersion: Boolean, publicationFilter: PublicationFilter, status: PublicationStatus = PUBLISHED): Global
   i18NLocale(documentId: ID!, hasPublishedVersion: Boolean, publicationFilter: PublicationFilter, status: PublicationStatus = PUBLISHED): I18NLocale
   i18NLocales(filters: I18NLocaleFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): [I18NLocale]!
   i18NLocales_connection(filters: I18NLocaleFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): I18NLocaleEntityResponseCollection

@@ -133,6 +133,9 @@ const CONTENT_TYPE_LABELS: Record<
     description: toMeta("Description"),
     media: toMeta("Media"),
   },
+  "api::global.global": {
+    footer: toMeta("Footer"),
+  },
 };
 
 const COMPONENT_LABELS: Record<
@@ -495,8 +498,9 @@ export default {
     // Idempotent local demo data — opt-in via SEED_DEMO=true
     if (process.env.SEED_DEMO === "true") {
       try {
-        const { seedContent } = await import("./seed-content");
+        const { seedContent, seedGlobals } = await import("./seed-content");
         await seedContent(strapi);
+        await seedGlobals(strapi);
       } catch (error: any) {
         console.warn("Could not seed demo data:", error?.message);
         if (error?.details?.errors) {

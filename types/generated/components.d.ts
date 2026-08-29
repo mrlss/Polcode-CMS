@@ -1,5 +1,39 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface GlobalFooter extends Struct.ComponentSchema {
+  collectionName: 'components_global_footers';
+  info: {
+    description: 'Site-wide footer content';
+    displayName: 'Footer';
+  };
+  attributes: {
+    contactContent: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
+    contactTitle: Schema.Attribute.String;
+    copyright: Schema.Attribute.String;
+    partners: Schema.Attribute.Component<'global.partner', true>;
+    partnersTitle: Schema.Attribute.String;
+  };
+}
+
+export interface GlobalPartner extends Struct.ComponentSchema {
+  collectionName: 'components_global_partners';
+  info: {
+    description: 'Footer partner/technology logo';
+    displayName: 'Partner';
+  };
+  attributes: {
+    label: Schema.Attribute.String;
+    logo: Schema.Attribute.Media<'images'>;
+    url: Schema.Attribute.String;
+  };
+}
+
 export interface SectionsAchievements extends Struct.ComponentSchema {
   collectionName: 'components_sections_achievements';
   info: {
@@ -649,6 +683,8 @@ export interface SharedTheme extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export namespace Public {
     export interface ComponentSchemas {
+      'global.footer': GlobalFooter;
+      'global.partner': GlobalPartner;
       'sections.achievements': SectionsAchievements;
       'sections.cards-large-numerated': SectionsCardsLargeNumerated;
       'sections.case-studies': SectionsCaseStudies;

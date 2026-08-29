@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_global_footers",
+  "info": {
+    "displayName": "Footer",
+    "description": "Site-wide footer content"
+  },
+  "options": {},
+  "attributes": {
+    "contactTitle": {
+      "type": "string"
+    },
+    "contactContent": {
+      "type": "customField",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      }
+    },
+    "partnersTitle": {
+      "type": "string"
+    },
+    "partners": {
+      "type": "component",
+      "repeatable": true,
+      "component": "global.partner"
+    },
+    "copyright": {
+      "type": "string"
+    }
+  }
+}

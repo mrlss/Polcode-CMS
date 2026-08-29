@@ -12,6 +12,8 @@
 
 import type { Core } from "@strapi/strapi";
 import type { UID } from "@strapi/types";
+import fs from "fs";
+import path from "path";
 
 type Strapi = Core.Strapi;
 
@@ -1067,4 +1069,74 @@ export async function seedContent(strapi: Strapi) {
   };
   await strapi.entityService.create("api::page.page", { data: pageData });
   log(`demo page 'index' (re)created with ${sections.length} sections`);
+}
+
+/**
+ * Seed the `Globals` single type (api::global.global) with the footer content
+ * (contact block, partners, copyright, legal links). Partner logos are
+ * uploaded from `seed-assets/` so they become real Strapi media.
+ *
+ * Idempotent: deletes the single type (draft + published) then recreates it
+ * published, so re-running `SEED_DEMO=true` always reflects the seed values.
+ */
+export async function seedGlobals(strapi: Strapi) {
+  const log = (msg: string) => console.log(`[seed-globals] ${msg}`);
+  const uid = "api::global.global";
+
+  // Delete all rows (draft + published) then recreate — same idempotency
+  // strategy as the demo homepage.
+  const q = strapi.db.query(uid);
+  await q.deleteMany({});
+
+  // Upload partner logos from `<cwd>/seed-assets/` → real media ids.
+  // `process.cwd()` (the strapi project root under `npm run develop`) is used
+  // because the seeder runs from `dist/src/` where `__dirname` is unreliable.
+  const assetsDir = path.join(process.cwd(), "seed-assets");
+  const assets: { file: string; alt: string }[] = [
+    { file: "partners01.png", alt: "Twilio" },
+    { file: "partners02.png", alt: "Adobe Solution Partner" },
+    { file: "partners03.png", alt: "AWS Cloud Contact Center" },
+  ];
+  const uploadService = strapi.plugin("upload").service("upload");
+  const logoIds: (number | null)[] = [];
+  for (const asset of assets) {
+    const filePath = path.join(assetsDir, asset.file);
+    if (!fs.existsSync(filePath)) {
+      log(`seed asset missing, skipping: ${filePath}`);
+      logoIds.push(null);
+      continue;
+    }
+    const uploaded = await uploadService.upload({
+      data: { fileInfo: { alternativeText: asset.alt } },
+      files: {
+        filepath: filePath,
+        originalFilename: asset.file,
+        mimetype: "image/png",
+        size: fs.statSync(filePath).size,
+      },
+    });
+    logoIds.push(uploaded?.[0]?.id ?? null);
+  }
+
+  await strapi.entityService.create(
+    uid as UID.ContentType,
+    {
+      data: {
+        footer: {
+          contactTitle: "Contact",
+          contactContent:
+            "<p>PolCode Sp. z o.o.</p><p>Al. Jerozolimskie 94<br>00-807 Warszawa<br>Poland</p><p>VAT-ID: PL7010440690</p>",
+          partnersTitle: "We are partners of:",
+          partners: [
+            { label: "Twilio", url: "#", logo: logoIds[0] },
+            { label: "Adobe Solution Partner", url: "#", logo: logoIds[1] },
+            { label: "AWS Cloud Contact Center", url: "#", logo: logoIds[2] },
+          ],
+          copyright: "©[[year_now]] Polcode Sp. z o.o. All rights reserved.",
+        },
+        publishedAt: now.toISOString(),
+      },
+    } as never,
+  );
+  log("globals (footer) seeded & published");
 }
