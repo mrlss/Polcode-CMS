@@ -8,31 +8,42 @@
   "attributes": {
     "pick": {
       "type": "enumeration",
+      "default": "latest",
       "enum": [
         "latest",
-        "manual"
-      ],
-      "default": "latest"
+        "manual",
+        "next"
+      ]
     },
     "headline": {
       "type": "component",
-      "repeatable": false,
-      "component": "shared.headline"
+      "component": "shared.headline",
+      "repeatable": false
     },
     "theme": {
       "type": "component",
-      "repeatable": false,
-      "component": "shared.theme"
+      "component": "shared.theme",
+      "repeatable": false
     },
     "button": {
       "type": "component",
-      "repeatable": false,
-      "component": "shared.button"
+      "component": "shared.button",
+      "repeatable": false
     },
     "caseStudies": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::case-study.case-study"
+      "target": "api::case-study.case-study",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "pick"
+            },
+            "manual"
+          ]
+        }
+      }
     }
   }
 }

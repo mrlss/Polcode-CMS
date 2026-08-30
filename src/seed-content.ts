@@ -164,20 +164,6 @@ export async function seedContent(strapi: Strapi) {
     ],
   );
 
-  const technologies = await ensureCollection(
-    strapi,
-    "api::technology.technology",
-    (e) => e.title,
-    [
-      { title: "React", slug: "react" },
-      { title: "Node.js", slug: "node-js" },
-      { title: "TypeScript", slug: "typescript" },
-      { title: "PostgreSQL", slug: "postgresql" },
-      { title: "GraphQL", slug: "graphql" },
-      { title: "AWS", slug: "aws" },
-    ],
-  );
-
   const regions = await ensureCollection(
     strapi,
     "api::region.region",
@@ -535,44 +521,6 @@ export async function seedContent(strapi: Strapi) {
     ],
   );
 
-  const useCases = await ensureCollection(
-    strapi,
-    "api::use-case.use-case",
-    (e) => e.title,
-    [
-      {
-        title: "Marketplace rebuild",
-        slug: "marketplace-rebuild",
-        description: "<p>Use case description.</p>",
-      },
-      {
-        title: "Payments platform migration",
-        slug: "payments-platform-migration",
-        description: "<p>Use case description.</p>",
-      },
-      {
-        title: "Loyalty app redesign",
-        slug: "loyalty-app-redesign",
-        description: "<p>Use case description.</p>",
-      },
-      {
-        title: "Booking engine modernization",
-        slug: "booking-engine-modernization",
-        description: "<p>Use case description.</p>",
-      },
-      {
-        title: "Cloud data warehouse",
-        slug: "cloud-data-warehouse",
-        description: "<p>Use case description.</p>",
-      },
-      {
-        title: "CRM migration",
-        slug: "crm-migration",
-        description: "<p>Use case description.</p>",
-      },
-    ],
-  );
-
   const techStack = await ensureCollection(
     strapi,
     "api::tech-stack.tech-stack",
@@ -631,7 +579,7 @@ export async function seedContent(strapi: Strapi) {
   );
 
   log(
-    `collections: industries=${industries.length} services=${services.length} technologies=${technologies.length} regions=${regions.length} platforms=${platforms.length} achievements=${achievements.length} clients=${clients.length} faqs=${faqs.length} processes=${processes.length} team=${teamMembers.length} testimonials=${testimonials.length} insights=${insights.length} useCases=${useCases.length} techStack=${techStack.length}`,
+    `collections: industries=${industries.length} services=${services.length} regions=${regions.length} platforms=${platforms.length} achievements=${achievements.length} clients=${clients.length} faqs=${faqs.length} processes=${processes.length} team=${teamMembers.length} testimonials=${testimonials.length} insights=${insights.length} techStack=${techStack.length}`,
   );
 
   // ------------------------------------------------------------------
@@ -939,7 +887,7 @@ export async function seedContent(strapi: Strapi) {
           __component: "shared.service-group",
           title: "Product Engineering",
           services: services.map((e) => e.id),
-          relatedUseCases: useCases.map((e) => e.id),
+          relatedCaseStudies: [],
         },
       ],
     },
@@ -979,15 +927,6 @@ export async function seedContent(strapi: Strapi) {
       headline: h("Team testimonials"),
       cardsLayout: "carousel",
       cards: testimonials.map((e) => e.id),
-    },
-    // 28. use-cases (pick: latest)
-    {
-      __component: "sections.use-cases",
-      pick: "latest",
-      headline: h("Use cases"),
-      button: btn("All use cases", "/use-cases"),
-      theme: theme("cream"),
-      useCases: useCases.map((e) => e.id),
     },
   ];
 

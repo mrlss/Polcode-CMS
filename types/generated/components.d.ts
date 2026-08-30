@@ -1,5 +1,19 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface GlobalContentTypeUrl extends Struct.ComponentSchema {
+  collectionName: 'components_global_content_type_urls';
+  info: {
+    description: 'Maps a content-type detail page (case studies, insights) to its public URL prefix.';
+    displayName: 'Content Type URL';
+    icon: 'link';
+  };
+  attributes: {
+    kind: Schema.Attribute.Enumeration<['caseStudy', 'insight']> &
+      Schema.Attribute.DefaultTo<'caseStudy'>;
+    path: Schema.Attribute.String;
+  };
+}
+
 export interface GlobalFooter extends Struct.ComponentSchema {
   collectionName: 'components_global_footers';
   info: {
@@ -31,6 +45,51 @@ export interface GlobalPartner extends Struct.ComponentSchema {
     label: Schema.Attribute.String;
     logo: Schema.Attribute.Media<'images'>;
     url: Schema.Attribute.String;
+  };
+}
+
+export interface RichContentBlock extends Struct.ComponentSchema {
+  collectionName: 'components_rich_content_blocks';
+  info: {
+    description: 'A single article block: WYSIWYG prose (paragraphs/headings/images/video/table/quote/code) or a special widget (carousel / stats / audio).';
+    displayName: 'Block';
+    icon: 'grid';
+  };
+  attributes: {
+    addToNav: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    anchor: Schema.Attribute.String & Schema.Attribute.Unique;
+    audio: Schema.Attribute.Media<'audios' | 'videos'>;
+    author: Schema.Attribute.String;
+    content: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
+    image: Schema.Attribute.Media<'images'>;
+    images: Schema.Attribute.Media<'images', true>;
+    position: Schema.Attribute.String;
+    quote: Schema.Attribute.Text;
+    stats: Schema.Attribute.Component<'rich-content.stat', true>;
+    title: Schema.Attribute.String;
+    type: Schema.Attribute.Enumeration<
+      ['wysiwyg', 'carousel', 'stats', 'audio', 'blockquote']
+    > &
+      Schema.Attribute.DefaultTo<'wysiwyg'>;
+  };
+}
+
+export interface RichContentStat extends Struct.ComponentSchema {
+  collectionName: 'components_rich_content_stats';
+  info: {
+    description: 'A single value + label pair inside a stats block.';
+    displayName: 'Stat';
+    icon: 'chartBubble';
+  };
+  attributes: {
+    label: Schema.Attribute.Text;
+    value: Schema.Attribute.String;
   };
 }
 
@@ -78,7 +137,7 @@ export interface SectionsCaseStudies extends Struct.ComponentSchema {
       'api::case-study.case-study'
     >;
     headline: Schema.Attribute.Component<'shared.headline', false>;
-    pick: Schema.Attribute.Enumeration<['latest', 'manual']> &
+    pick: Schema.Attribute.Enumeration<['latest', 'manual', 'next']> &
       Schema.Attribute.DefaultTo<'latest'>;
     theme: Schema.Attribute.Component<'shared.theme', false>;
   };
@@ -179,6 +238,7 @@ export interface SectionsCta extends Struct.ComponentSchema {
         }
       >;
     label: Schema.Attribute.String;
+    mediaMobile: Schema.Attribute.Media<'images'>;
     theme: Schema.Attribute.Component<'shared.theme', false>;
     title: Schema.Attribute.String;
   };
@@ -428,6 +488,21 @@ export interface SectionsProgressCards extends Struct.ComponentSchema {
   };
 }
 
+export interface SectionsRichContentBody extends Struct.ComponentSchema {
+  collectionName: 'components_sections_rich_content_bodies';
+  info: {
+    description: 'Article body: ordered WYSIWYG chunks + special widgets (carousel/stats/audio), with an optional internal sections nav.';
+    displayName: 'Rich Content Body';
+    icon: 'file';
+  };
+  attributes: {
+    blocks: Schema.Attribute.Component<'rich-content.block', true>;
+    headline: Schema.Attribute.Component<'shared.headline', false>;
+    showNav: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    theme: Schema.Attribute.Component<'shared.theme', false>;
+  };
+}
+
 export interface SectionsServicesGroup extends Struct.ComponentSchema {
   collectionName: 'components_sections_services_groups';
   info: {
@@ -517,22 +592,6 @@ export interface SectionsTestimonialsTeam extends Struct.ComponentSchema {
       Schema.Attribute.DefaultTo<'carousel'>;
     headline: Schema.Attribute.Component<'shared.headline', false>;
     theme: Schema.Attribute.Component<'shared.theme', false>;
-  };
-}
-
-export interface SectionsUseCases extends Struct.ComponentSchema {
-  collectionName: 'components_sections_use_cases';
-  info: {
-    description: 'Use cases section, latest or manual';
-    displayName: 'Use Cases';
-  };
-  attributes: {
-    button: Schema.Attribute.Component<'shared.button', false>;
-    headline: Schema.Attribute.Component<'shared.headline', false>;
-    pick: Schema.Attribute.Enumeration<['latest', 'manual']> &
-      Schema.Attribute.DefaultTo<'latest'>;
-    theme: Schema.Attribute.Component<'shared.theme', false>;
-    useCases: Schema.Attribute.Relation<'oneToMany', 'api::use-case.use-case'>;
   };
 }
 
@@ -660,6 +719,18 @@ export interface SharedHeadline extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedSectionsNavController extends Struct.ComponentSchema {
+  collectionName: 'components_shared_sections_nav_controllers';
+  info: {
+    description: "Opts a block into the sections nav (label only \u2014 the scroll target is the block's own `anchor`).";
+    displayName: 'Sections Nav Controller';
+    icon: 'list';
+  };
+  attributes: {
+    label: Schema.Attribute.String;
+  };
+}
+
 export interface SharedSeo extends Struct.ComponentSchema {
   collectionName: 'components_shared_seos';
   info: {
@@ -680,9 +751,9 @@ export interface SharedServiceGroup extends Struct.ComponentSchema {
     displayName: 'Service Group';
   };
   attributes: {
-    relatedUseCases: Schema.Attribute.Relation<
+    relatedCaseStudies: Schema.Attribute.Relation<
       'oneToMany',
-      'api::use-case.use-case'
+      'api::case-study.case-study'
     >;
     services: Schema.Attribute.Relation<'oneToMany', 'api::service.service'>;
     title: Schema.Attribute.String;
@@ -746,8 +817,11 @@ export interface TestTest extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export namespace Public {
     export interface ComponentSchemas {
+      'global.content-type-url': GlobalContentTypeUrl;
       'global.footer': GlobalFooter;
       'global.partner': GlobalPartner;
+      'rich-content.block': RichContentBlock;
+      'rich-content.stat': RichContentStat;
       'sections.achievements': SectionsAchievements;
       'sections.cards-large-numerated': SectionsCardsLargeNumerated;
       'sections.case-studies': SectionsCaseStudies;
@@ -770,13 +844,13 @@ declare module '@strapi/strapi' {
       'sections.portfolio': SectionsPortfolio;
       'sections.process': SectionsProcess;
       'sections.progress-cards': SectionsProgressCards;
+      'sections.rich-content-body': SectionsRichContentBody;
       'sections.services-group': SectionsServicesGroup;
       'sections.team': SectionsTeam;
       'sections.team-grid': SectionsTeamGrid;
       'sections.tech-stack': SectionsTechStack;
       'sections.testimonials-clients': SectionsTestimonialsClients;
       'sections.testimonials-team': SectionsTestimonialsTeam;
-      'sections.use-cases': SectionsUseCases;
       'shared.button': SharedButton;
       'shared.card-milestone': SharedCardMilestone;
       'shared.card-numerated': SharedCardNumerated;
@@ -784,6 +858,7 @@ declare module '@strapi/strapi' {
       'shared.content-item': SharedContentItem;
       'shared.floating-card': SharedFloatingCard;
       'shared.headline': SharedHeadline;
+      'shared.sections-nav-controller': SharedSectionsNavController;
       'shared.seo': SharedSeo;
       'shared.service-group': SharedServiceGroup;
       'shared.showreel': SharedShowreel;

@@ -16,6 +16,11 @@
       "type": "component",
       "repeatable": false,
       "component": "global.footer"
+    },
+    "contentTypeUrls": {
+      "type": "component",
+      "repeatable": true,
+      "component": "global.content-type-url"
     }
   }
 }

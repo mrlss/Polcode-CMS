@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_rich_content_stats",
+  "info": {
+    "displayName": "Stat",
+    "icon": "chartBubble",
+    "description": "A single value + label pair inside a stats block."
+  },
+  "options": {},
+  "attributes": {
+    "value": {
+      "type": "string"
+    },
+    "label": {
+      "type": "text"
+    }
+  }
+}

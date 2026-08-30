@@ -54,7 +54,7 @@ export async function seedDemoData(strapi: Strapi) {
   const log = (msg: string) => console.log(`[seed] ${msg}`);
 
   // ------------------------------------------------------------------
-  // Filter collections (industries / services / technologies / regions / platforms)
+  // Filter collections (industries / services / regions / platforms / tech stack)
   // ------------------------------------------------------------------
   const industry = async (title: string, description: string) =>
     upsert(
@@ -91,16 +91,6 @@ export async function seedDemoData(strapi: Strapi) {
   const svcFrontend = await service("Frontend", "/what-we-do?service=frontend");
   const svcBackend = await service("Backend", "/what-we-do?service=backend");
   const svcDevOps = await service("DevOps", "/what-we-do?service=devops");
-
-  const technology = async (title: string) =>
-    upsert(
-      strapi,
-      "api::technology.technology",
-      { title },
-      { title, slug: slugify(title) },
-    );
-  const techReact = await technology("React");
-  const techNode = await technology("Node.js");
 
   const region = async (title: string) =>
     upsert(
@@ -244,20 +234,6 @@ export async function seedDemoData(strapi: Strapi) {
   const in1 = await insight("Five lessons from 2026", true);
   const in2 = await insight("Scaling teams without chaos", false);
   const in3 = await insight("The real cost of technical debt", false);
-
-  const useCase = async (title: string) =>
-    upsert(
-      strapi,
-      "api::use-case.use-case",
-      { title },
-      {
-        title,
-        slug: slugify(title),
-        description: "<p>Use case description.</p>",
-      },
-    );
-  const uc1 = await useCase("Marketplace rebuild");
-  const uc2 = await useCase("Payments platform migration");
 
   const techStack = async (title: string, link: string) =>
     upsert(
@@ -577,7 +553,7 @@ export async function seedDemoData(strapi: Strapi) {
           __component: "shared.service-group",
           title: "Product Engineering",
           services: [svcFrontend.id, svcBackend.id, svcDevOps.id],
-          relatedUseCases: [uc1.id, uc2.id],
+          relatedCaseStudies: [],
         },
       ],
     },
@@ -625,15 +601,6 @@ export async function seedDemoData(strapi: Strapi) {
       headline: h("Team testimonials"),
       cardsLayout: "carousel",
       cards: [t1.id, t2.id],
-    },
-    // 28. use-cases (pick: latest)
-    {
-      __component: "sections.use-cases",
-      pick: "latest",
-      headline: h("Use cases"),
-      button: btn("All use cases", "/use-cases"),
-      theme: theme("cream"),
-      useCases: [uc1.id, uc2.id],
     },
   ];
 

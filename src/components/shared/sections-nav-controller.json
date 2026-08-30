@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_shared_sections_nav_controllers",
+  "info": {
+    "displayName": "Sections Nav Controller",
+    "icon": "list",
+    "description": "Opts a block into the sections nav (label only — the scroll target is the block's own `anchor`)."
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string"
+    }
+  }
+}

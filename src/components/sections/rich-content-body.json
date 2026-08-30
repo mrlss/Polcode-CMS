@@ -1,0 +1,30 @@
+{
+  "collectionName": "components_sections_rich_content_bodies",
+  "info": {
+    "displayName": "Rich Content Body",
+    "icon": "file",
+    "description": "Article body: ordered WYSIWYG chunks + special widgets (carousel/stats/audio), with an optional internal sections nav."
+  },
+  "options": {},
+  "attributes": {
+    "headline": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.headline"
+    },
+    "theme": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.theme"
+    },
+    "showNav": {
+      "type": "boolean",
+      "default": true
+    },
+    "blocks": {
+      "type": "component",
+      "repeatable": true,
+      "component": "rich-content.block"
+    }
+  }
+}

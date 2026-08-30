@@ -1,0 +1,156 @@
+{
+  "collectionName": "components_rich_content_blocks",
+  "info": {
+    "displayName": "Block",
+    "icon": "grid",
+    "description": "A single article block: WYSIWYG prose (paragraphs/headings/images/video/table/quote/code) or a special widget (carousel / stats / audio)."
+  },
+  "options": {},
+  "attributes": {
+    "type": {
+      "type": "enumeration",
+      "default": "wysiwyg",
+      "enum": [
+        "wysiwyg",
+        "carousel",
+        "stats",
+        "audio",
+        "blockquote"
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "addToNav": {
+      "type": "boolean",
+      "default": true
+    },
+    "content": {
+      "type": "customField",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "type"
+            },
+            "wysiwyg"
+          ]
+        }
+      },
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      }
+    },
+    "images": {
+      "type": "media",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "type"
+            },
+            "carousel"
+          ]
+        }
+      },
+      "multiple": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "stats": {
+      "type": "component",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "type"
+            },
+            "stats"
+          ]
+        }
+      },
+      "component": "rich-content.stat",
+      "repeatable": true
+    },
+    "audio": {
+      "type": "media",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "type"
+            },
+            "audio"
+          ]
+        }
+      },
+      "multiple": false,
+      "allowedTypes": [
+        "audios",
+        "videos"
+      ]
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ],
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "type"
+            },
+            "blockquote"
+          ]
+        }
+      }
+    },
+    "quote": {
+      "type": "text",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "type"
+            },
+            "blockquote"
+          ]
+        }
+      }
+    },
+    "author": {
+      "type": "string",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "type"
+            },
+            "blockquote"
+          ]
+        }
+      }
+    },
+    "position": {
+      "type": "string",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "type"
+            },
+            "blockquote"
+          ]
+        }
+      }
+    },
+    "anchor": {
+      "type": "string",
+      "unique": true
+    }
+  }
+}

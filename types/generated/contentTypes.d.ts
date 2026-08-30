@@ -479,7 +479,7 @@ export interface ApiAchievementAchievement extends Struct.CollectionTypeSchema {
 export interface ApiCaseStudyCaseStudy extends Struct.CollectionTypeSchema {
   collectionName: 'case_studies';
   info: {
-    description: 'Case study entries, filterable by industry/service/technology/region';
+    description: 'Case study entries, filterable by industry/service/tech stack/region';
     displayName: 'Case Studies';
     pluralName: 'case-studies';
     singularName: 'case-study';
@@ -518,6 +518,16 @@ export interface ApiCaseStudyCaseStudy extends Struct.CollectionTypeSchema {
     logo: Schema.Attribute.Media<'images'>;
     publishedAt: Schema.Attribute.DateTime;
     regions: Schema.Attribute.Relation<'manyToMany', 'api::region.region'>;
+    sections: Schema.Attribute.DynamicZone<
+      [
+        'sections.rich-content-body',
+        'sections.process',
+        'sections.achievements',
+        'sections.tech-stack',
+        'sections.cta',
+        'sections.case-studies',
+      ]
+    >;
     seo: Schema.Attribute.Component<'shared.seo', false>;
     services: Schema.Attribute.Relation<'manyToMany', 'api::service.service'>;
     shortDescription: Schema.Attribute.RichText &
@@ -529,9 +539,9 @@ export interface ApiCaseStudyCaseStudy extends Struct.CollectionTypeSchema {
       >;
     shortTitle: Schema.Attribute.String;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
-    technologies: Schema.Attribute.Relation<
+    techStack: Schema.Attribute.Relation<
       'manyToMany',
-      'api::technology.technology'
+      'api::tech-stack.tech-stack'
     >;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
@@ -620,6 +630,10 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    contentTypeUrls: Schema.Attribute.Component<
+      'global.content-type-url',
+      true
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -712,6 +726,9 @@ export interface ApiInsightInsight extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    sections: Schema.Attribute.DynamicZone<
+      ['sections.rich-content-body', 'sections.cta', 'sections.insights']
+    >;
     seo: Schema.Attribute.Component<'shared.seo', false>;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     title: Schema.Attribute.String & Schema.Attribute.Required;
@@ -770,7 +787,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'sections.testimonials-clients',
         'sections.testimonials-team',
         'sections.portfolio',
-        'sections.use-cases',
+        'sections.rich-content-body',
       ]
     >;
     seo: Schema.Attribute.Component<'shared.seo', false>;
@@ -930,6 +947,10 @@ export interface ApiServiceService extends Struct.CollectionTypeSchema {
     media: Schema.Attribute.Media<'images'>;
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    techStack: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::tech-stack.tech-stack'
+    >;
     title: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
@@ -989,6 +1010,10 @@ export interface ApiTechStackTechStack extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    caseStudies: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::case-study.case-study'
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1008,42 +1033,7 @@ export interface ApiTechStackTechStack extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
-    title: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.Unique;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
-export interface ApiTechnologyTechnology extends Struct.CollectionTypeSchema {
-  collectionName: 'technologies';
-  info: {
-    description: 'Case Study filter';
-    displayName: 'Technologies';
-    pluralName: 'technologies';
-    singularName: 'technology';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    caseStudies: Schema.Attribute.Relation<
-      'manyToMany',
-      'api::case-study.case-study'
-    >;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::technology.technology'
-    > &
-      Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
+    services: Schema.Attribute.Relation<'manyToMany', 'api::service.service'>;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     title: Schema.Attribute.String &
       Schema.Attribute.Required &
@@ -1087,45 +1077,6 @@ export interface ApiTestimonialTestimonial extends Struct.CollectionTypeSchema {
           preset: 'defaultHtml';
         }
       >;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
-export interface ApiUseCaseUseCase extends Struct.CollectionTypeSchema {
-  collectionName: 'use_cases';
-  info: {
-    description: 'Use case entries';
-    displayName: 'Use Cases';
-    pluralName: 'use-cases';
-    singularName: 'use-case';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    description: Schema.Attribute.RichText &
-      Schema.Attribute.CustomField<
-        'plugin::ckeditor5.CKEditor',
-        {
-          preset: 'defaultHtml';
-        }
-      >;
-    featuredMedia: Schema.Attribute.Media<'images' | 'videos'>;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::use-case.use-case'
-    > &
-      Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    seo: Schema.Attribute.Component<'shared.seo', false>;
-    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
-    title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1850,9 +1801,7 @@ declare module '@strapi/strapi' {
       'api::service.service': ApiServiceService;
       'api::team.team': ApiTeamTeam;
       'api::tech-stack.tech-stack': ApiTechStackTechStack;
-      'api::technology.technology': ApiTechnologyTechnology;
       'api::testimonial.testimonial': ApiTestimonialTestimonial;
-      'api::use-case.use-case': ApiUseCaseUseCase;
       'plugin::content-manager-organizer.content-manager-configuration': PluginContentManagerOrganizerContentManagerConfiguration;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

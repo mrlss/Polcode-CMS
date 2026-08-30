@@ -21,8 +21,8 @@
     },
     "buttons": {
       "type": "component",
-      "repeatable": true,
-      "component": "shared.button"
+      "component": "shared.button",
+      "repeatable": true
     },
     "backgroundImage": {
       "type": "media",
@@ -34,8 +34,15 @@
     },
     "theme": {
       "type": "component",
-      "repeatable": false,
-      "component": "shared.theme"
+      "component": "shared.theme",
+      "repeatable": false
+    },
+    "mediaMobile": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
     }
   }
 }

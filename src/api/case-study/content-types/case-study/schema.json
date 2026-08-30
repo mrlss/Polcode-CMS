@@ -5,7 +5,7 @@
     "singularName": "case-study",
     "pluralName": "case-studies",
     "displayName": "Case Studies",
-    "description": "Case study entries, filterable by industry/service/technology/region"
+    "description": "Case study entries, filterable by industry/service/tech stack/region"
   },
   "options": {
     "draftAndPublish": true
@@ -79,10 +79,10 @@
       "target": "api::service.service",
       "mappedBy": "caseStudies"
     },
-    "technologies": {
+    "techStack": {
       "type": "relation",
       "relation": "manyToMany",
-      "target": "api::technology.technology",
+      "target": "api::tech-stack.tech-stack",
       "mappedBy": "caseStudies"
     },
     "regions": {
@@ -99,6 +99,17 @@
         "gray",
         "yellow",
         "blue"
+      ]
+    },
+    "sections": {
+      "type": "dynamiczone",
+      "components": [
+        "sections.rich-content-body",
+        "sections.process",
+        "sections.achievements",
+        "sections.tech-stack",
+        "sections.cta",
+        "sections.case-studies"
       ]
     }
   }
