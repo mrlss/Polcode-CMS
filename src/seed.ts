@@ -297,9 +297,8 @@ export async function seedDemoData(strapi: Strapi) {
   const btn = (title: string, url = "/contact-us") => ({
     __component: "shared.button",
     title,
-    linkType: "internal",
+    linkType: "url",
     url,
-    variant: "dark",
   });
   const theme = (background: string, textColor = "dark") => ({
     __component: "shared.theme",

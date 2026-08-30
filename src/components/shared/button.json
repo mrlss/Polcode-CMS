@@ -2,24 +2,12 @@
   "collectionName": "components_shared_buttons",
   "info": {
     "displayName": "Button",
-    "description": "Reusable CTA button: title, variant, scroll-to, and a link target (external URL or internal Page / Case Study / Insight)"
+    "description": "Reusable CTA button: title, optional scroll-to, and a single link target (external URL or internal Page / Case Study / Insight)"
   },
   "options": {},
   "attributes": {
     "title": {
       "type": "string"
-    },
-    "variant": {
-      "type": "enumeration",
-      "enum": [
-        "dark",
-        "light",
-        "ghost-dark",
-        "ghost-light",
-        "solid-dark",
-        "solid-light"
-      ],
-      "default": "dark"
     },
     "scrollTo": {
       "type": "string"
@@ -27,28 +15,70 @@
     "linkType": {
       "type": "enumeration",
       "enum": [
-        "external",
-        "internal"
+        "url",
+        "page",
+        "caseStudy",
+        "insight"
       ],
-      "default": "external"
+      "default": "url"
     },
     "url": {
-      "type": "string"
+      "type": "string",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "linkType"
+            },
+            "url"
+          ]
+        }
+      }
     },
     "page": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "api::page.page"
+      "target": "api::page.page",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "linkType"
+            },
+            "page"
+          ]
+        }
+      }
     },
     "caseStudy": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "api::case-study.case-study"
+      "target": "api::case-study.case-study",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "linkType"
+            },
+            "caseStudy"
+          ]
+        }
+      }
     },
     "insight": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "api::insight.insight"
+      "target": "api::insight.insight",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "linkType"
+            },
+            "insight"
+          ]
+        }
+      }
     }
   }
 }

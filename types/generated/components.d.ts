@@ -539,7 +539,7 @@ export interface SectionsUseCases extends Struct.ComponentSchema {
 export interface SharedButton extends Struct.ComponentSchema {
   collectionName: 'components_shared_buttons';
   info: {
-    description: 'Reusable CTA button: title, variant, scroll-to, and a link target (external URL or internal Page / Case Study / Insight)';
+    description: 'Reusable CTA button: title, optional scroll-to, and a single link target (external URL or internal Page / Case Study / Insight)';
     displayName: 'Button';
   };
   attributes: {
@@ -548,23 +548,14 @@ export interface SharedButton extends Struct.ComponentSchema {
       'api::case-study.case-study'
     >;
     insight: Schema.Attribute.Relation<'oneToOne', 'api::insight.insight'>;
-    linkType: Schema.Attribute.Enumeration<['external', 'internal']> &
-      Schema.Attribute.DefaultTo<'external'>;
+    linkType: Schema.Attribute.Enumeration<
+      ['url', 'page', 'caseStudy', 'insight']
+    > &
+      Schema.Attribute.DefaultTo<'url'>;
     page: Schema.Attribute.Relation<'oneToOne', 'api::page.page'>;
     scrollTo: Schema.Attribute.String;
     title: Schema.Attribute.String;
     url: Schema.Attribute.String;
-    variant: Schema.Attribute.Enumeration<
-      [
-        'dark',
-        'light',
-        'ghost-dark',
-        'ghost-light',
-        'solid-dark',
-        'solid-light',
-      ]
-    > &
-      Schema.Attribute.DefaultTo<'dark'>;
   };
 }
 

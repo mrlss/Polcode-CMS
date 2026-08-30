@@ -1109,7 +1109,6 @@ type ComponentSharedButton {
   scrollTo: String
   title: String
   url: String
-  variant: ENUM_COMPONENTSHAREDBUTTON_VARIANT
 }
 
 input ComponentSharedButtonFiltersInput {
@@ -1123,7 +1122,6 @@ input ComponentSharedButtonFiltersInput {
   scrollTo: StringFilterInput
   title: StringFilterInput
   url: StringFilterInput
-  variant: StringFilterInput
 }
 
 input ComponentSharedButtonInput {
@@ -1135,7 +1133,6 @@ input ComponentSharedButtonInput {
   scrollTo: String
   title: String
   url: String
-  variant: ENUM_COMPONENTSHAREDBUTTON_VARIANT
 }
 
 type ComponentSharedCardMilestone {
@@ -1609,17 +1606,10 @@ enum ENUM_COMPONENTSECTIONSUSECASES_PICK {
 }
 
 enum ENUM_COMPONENTSHAREDBUTTON_LINKTYPE {
-  external
-  internal
-}
-
-enum ENUM_COMPONENTSHAREDBUTTON_VARIANT {
-  dark
-  ghost_dark
-  ghost_light
-  light
-  solid_dark
-  solid_light
+  caseStudy
+  insight
+  page
+  url
 }
 
 enum ENUM_COMPONENTSHAREDTHEME_BACKGROUND {
