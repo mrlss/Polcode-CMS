@@ -11,12 +11,12 @@
     },
     "services": {
       "type": "relation",
-      "relation": "manyToMany",
+      "relation": "oneToMany",
       "target": "api::service.service"
     },
     "relatedUseCases": {
       "type": "relation",
-      "relation": "manyToMany",
+      "relation": "oneToMany",
       "target": "api::use-case.use-case"
     }
   }

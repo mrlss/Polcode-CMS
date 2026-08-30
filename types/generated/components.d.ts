@@ -42,7 +42,7 @@ export interface SectionsAchievements extends Struct.ComponentSchema {
   };
   attributes: {
     achievements: Schema.Attribute.Relation<
-      'manyToMany',
+      'oneToMany',
       'api::achievement.achievement'
     >;
     headline: Schema.Attribute.Component<'shared.headline', false>;
@@ -61,6 +61,7 @@ export interface SectionsCardsLargeNumerated extends Struct.ComponentSchema {
     cardsLayout: Schema.Attribute.Enumeration<['carousel', 'grid']> &
       Schema.Attribute.DefaultTo<'carousel'>;
     headline: Schema.Attribute.Component<'shared.headline', false>;
+    theme: Schema.Attribute.Component<'shared.theme', false>;
   };
 }
 
@@ -73,7 +74,7 @@ export interface SectionsCaseStudies extends Struct.ComponentSchema {
   attributes: {
     button: Schema.Attribute.Component<'shared.button', false>;
     caseStudies: Schema.Attribute.Relation<
-      'manyToMany',
+      'oneToMany',
       'api::case-study.case-study'
     >;
     headline: Schema.Attribute.Component<'shared.headline', false>;
@@ -100,6 +101,7 @@ export interface SectionsContentColorBoxes extends Struct.ComponentSchema {
       >;
     headline: Schema.Attribute.Component<'shared.headline', false>;
     subtitle: Schema.Attribute.String;
+    theme: Schema.Attribute.Component<'shared.theme', false>;
   };
 }
 
@@ -121,6 +123,7 @@ export interface SectionsContentImageLeft extends Struct.ComponentSchema {
     headline: Schema.Attribute.Component<'shared.headline', false>;
     label: Schema.Attribute.String;
     media: Schema.Attribute.Media<'images' | 'videos'>;
+    theme: Schema.Attribute.Component<'shared.theme', false>;
     title: Schema.Attribute.String;
   };
 }
@@ -137,6 +140,7 @@ export interface SectionsContentImageNumerated extends Struct.ComponentSchema {
     headline: Schema.Attribute.Component<'shared.headline', false>;
     media: Schema.Attribute.Media<'images' | 'videos'>;
     subtitle: Schema.Attribute.String;
+    theme: Schema.Attribute.Component<'shared.theme', false>;
   };
 }
 
@@ -154,6 +158,7 @@ export interface SectionsContentNumerated extends Struct.ComponentSchema {
     items: Schema.Attribute.Component<'shared.content-item', true>;
     layout: Schema.Attribute.Enumeration<['buttonBelow', 'buttonOnSide']> &
       Schema.Attribute.DefaultTo<'buttonBelow'>;
+    theme: Schema.Attribute.Component<'shared.theme', false>;
   };
 }
 
@@ -186,7 +191,7 @@ export interface SectionsFaq extends Struct.ComponentSchema {
     displayName: 'FAQ';
   };
   attributes: {
-    faqs: Schema.Attribute.Relation<'manyToMany', 'api::faq.faq'>;
+    faqs: Schema.Attribute.Relation<'oneToMany', 'api::faq.faq'>;
     headline: Schema.Attribute.Component<'shared.headline', false>;
     theme: Schema.Attribute.Component<'shared.theme', false>;
   };
@@ -208,6 +213,7 @@ export interface SectionsForm extends Struct.ComponentSchema {
       >;
     label: Schema.Attribute.String;
     media: Schema.Attribute.Media<'images' | 'videos'>;
+    theme: Schema.Attribute.Component<'shared.theme', false>;
     title: Schema.Attribute.String;
     variant: Schema.Attribute.Enumeration<['contact', 'cv']> &
       Schema.Attribute.DefaultTo<'contact'>;
@@ -231,6 +237,7 @@ export interface SectionsHeroRich extends Struct.ComponentSchema {
         }
       >;
     label: Schema.Attribute.String;
+    theme: Schema.Attribute.Component<'shared.theme', false>;
     title: Schema.Attribute.Text;
     variant: Schema.Attribute.Enumeration<['titleAbove', 'titleBelow']> &
       Schema.Attribute.DefaultTo<'titleAbove'>;
@@ -245,6 +252,7 @@ export interface SectionsHeroSvg extends Struct.ComponentSchema {
   };
   attributes: {
     image: Schema.Attribute.Media<'images'>;
+    theme: Schema.Attribute.Component<'shared.theme', false>;
     title: Schema.Attribute.String;
   };
 }
@@ -260,6 +268,7 @@ export interface SectionsHeroTwoColumns extends Struct.ComponentSchema {
     description: Schema.Attribute.Text;
     indicatorText: Schema.Attribute.String;
     label: Schema.Attribute.String;
+    theme: Schema.Attribute.Component<'shared.theme', false>;
     title: Schema.Attribute.String;
   };
 }
@@ -275,9 +284,10 @@ export interface SectionsIndustries extends Struct.ComponentSchema {
     button: Schema.Attribute.Component<'shared.button', false>;
     headline: Schema.Attribute.Component<'shared.headline', false>;
     industries: Schema.Attribute.Relation<
-      'manyToMany',
+      'oneToMany',
       'api::industry.industry'
     >;
+    theme: Schema.Attribute.Component<'shared.theme', false>;
   };
 }
 
@@ -290,7 +300,7 @@ export interface SectionsInsights extends Struct.ComponentSchema {
   attributes: {
     button: Schema.Attribute.Component<'shared.button', false>;
     headline: Schema.Attribute.Component<'shared.headline', false>;
-    insights: Schema.Attribute.Relation<'manyToMany', 'api::insight.insight'>;
+    insights: Schema.Attribute.Relation<'oneToMany', 'api::insight.insight'>;
     pick: Schema.Attribute.Enumeration<['latest', 'manual']> &
       Schema.Attribute.DefaultTo<'latest'>;
     theme: Schema.Attribute.Component<'shared.theme', false>;
@@ -308,6 +318,7 @@ export interface SectionsIntersectionFloatingBoxes
     blocks: Schema.Attribute.Component<'shared.floating-card', true>;
     headline: Schema.Attribute.Component<'shared.headline', false>;
     media: Schema.Attribute.Media<'images' | 'videos'>;
+    theme: Schema.Attribute.Component<'shared.theme', false>;
   };
 }
 
@@ -320,6 +331,7 @@ export interface SectionsIntersectionMedia extends Struct.ComponentSchema {
   attributes: {
     button: Schema.Attribute.Component<'shared.button', false>;
     media: Schema.Attribute.Media<'images' | 'videos'>;
+    theme: Schema.Attribute.Component<'shared.theme', false>;
     title: Schema.Attribute.String;
   };
 }
@@ -342,6 +354,7 @@ export interface SectionsIntroShowreel extends Struct.ComponentSchema {
     label: Schema.Attribute.String;
     media: Schema.Attribute.Media<'images' | 'videos'>;
     showreel: Schema.Attribute.Component<'shared.showreel', false>;
+    theme: Schema.Attribute.Component<'shared.theme', false>;
     title: Schema.Attribute.String;
   };
 }
@@ -356,8 +369,35 @@ export interface SectionsPerson extends Struct.ComponentSchema {
     address: Schema.Attribute.Text;
     button: Schema.Attribute.Component<'shared.button', false>;
     email: Schema.Attribute.Email;
-    person: Schema.Attribute.Relation<'manyToOne', 'api::team.team'>;
+    person: Schema.Attribute.Relation<'oneToOne', 'api::team.team'>;
     socials: Schema.Attribute.Component<'shared.socials', true>;
+    theme: Schema.Attribute.Component<'shared.theme', false>;
+  };
+}
+
+export interface SectionsPortfolio extends Struct.ComponentSchema {
+  collectionName: 'components_sections_portfolios';
+  info: {
+    description: 'Featured + other case studies with taxonomy filters and optional show-more/less';
+    displayName: 'Portfolio';
+    icon: 'briefcase';
+  };
+  attributes: {
+    featuredCases: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::case-study.case-study'
+    >;
+    headline: Schema.Attribute.Component<'shared.headline', false>;
+    manualCasesControl: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
+    otherCases: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::case-study.case-study'
+    >;
+    showMoreLess: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    sort: Schema.Attribute.Enumeration<['asc', 'desc']> &
+      Schema.Attribute.DefaultTo<'asc'>;
+    theme: Schema.Attribute.Component<'shared.theme', false>;
   };
 }
 
@@ -368,9 +408,10 @@ export interface SectionsProcess extends Struct.ComponentSchema {
     displayName: 'Process';
   };
   attributes: {
-    blocks: Schema.Attribute.Relation<'manyToMany', 'api::process.process'>;
+    blocks: Schema.Attribute.Relation<'oneToMany', 'api::process.process'>;
     button: Schema.Attribute.Component<'shared.button', false>;
     headline: Schema.Attribute.Component<'shared.headline', false>;
+    theme: Schema.Attribute.Component<'shared.theme', false>;
   };
 }
 
@@ -383,6 +424,7 @@ export interface SectionsProgressCards extends Struct.ComponentSchema {
   attributes: {
     cards: Schema.Attribute.Component<'shared.card-milestone', true>;
     headline: Schema.Attribute.Component<'shared.headline', false>;
+    theme: Schema.Attribute.Component<'shared.theme', false>;
   };
 }
 
@@ -395,6 +437,7 @@ export interface SectionsServicesGroup extends Struct.ComponentSchema {
   attributes: {
     groups: Schema.Attribute.Component<'shared.service-group', true>;
     headline: Schema.Attribute.Component<'shared.headline', false>;
+    theme: Schema.Attribute.Component<'shared.theme', false>;
   };
 }
 
@@ -405,7 +448,8 @@ export interface SectionsTeam extends Struct.ComponentSchema {
     displayName: 'Team';
   };
   attributes: {
-    members: Schema.Attribute.Relation<'manyToMany', 'api::team.team'>;
+    members: Schema.Attribute.Relation<'oneToMany', 'api::team.team'>;
+    theme: Schema.Attribute.Component<'shared.theme', false>;
     title: Schema.Attribute.String;
   };
 }
@@ -419,7 +463,8 @@ export interface SectionsTeamGrid extends Struct.ComponentSchema {
   attributes: {
     content: Schema.Attribute.Component<'shared.content-item', false>;
     headline: Schema.Attribute.Component<'shared.headline', false>;
-    team: Schema.Attribute.Relation<'manyToMany', 'api::team.team'>;
+    team: Schema.Attribute.Relation<'oneToMany', 'api::team.team'>;
+    theme: Schema.Attribute.Component<'shared.theme', false>;
   };
 }
 
@@ -432,11 +477,12 @@ export interface SectionsTechStack extends Struct.ComponentSchema {
   attributes: {
     anchor: Schema.Attribute.String;
     blocks: Schema.Attribute.Relation<
-      'manyToMany',
+      'oneToMany',
       'api::tech-stack.tech-stack'
     >;
     button: Schema.Attribute.Component<'shared.button', false>;
     headline: Schema.Attribute.Component<'shared.headline', false>;
+    theme: Schema.Attribute.Component<'shared.theme', false>;
   };
 }
 
@@ -448,10 +494,11 @@ export interface SectionsTestimonialsClients extends Struct.ComponentSchema {
   };
   attributes: {
     cards: Schema.Attribute.Relation<
-      'manyToMany',
+      'oneToMany',
       'api::testimonial.testimonial'
     >;
     headline: Schema.Attribute.Component<'shared.headline', false>;
+    theme: Schema.Attribute.Component<'shared.theme', false>;
   };
 }
 
@@ -463,12 +510,13 @@ export interface SectionsTestimonialsTeam extends Struct.ComponentSchema {
   };
   attributes: {
     cards: Schema.Attribute.Relation<
-      'manyToMany',
+      'oneToMany',
       'api::testimonial.testimonial'
     >;
     cardsLayout: Schema.Attribute.Enumeration<['carousel', 'grid']> &
       Schema.Attribute.DefaultTo<'carousel'>;
     headline: Schema.Attribute.Component<'shared.headline', false>;
+    theme: Schema.Attribute.Component<'shared.theme', false>;
   };
 }
 
@@ -484,7 +532,7 @@ export interface SectionsUseCases extends Struct.ComponentSchema {
     pick: Schema.Attribute.Enumeration<['latest', 'manual']> &
       Schema.Attribute.DefaultTo<'latest'>;
     theme: Schema.Attribute.Component<'shared.theme', false>;
-    useCases: Schema.Attribute.Relation<'manyToMany', 'api::use-case.use-case'>;
+    useCases: Schema.Attribute.Relation<'oneToMany', 'api::use-case.use-case'>;
   };
 }
 
@@ -496,17 +544,27 @@ export interface SharedButton extends Struct.ComponentSchema {
   };
   attributes: {
     caseStudy: Schema.Attribute.Relation<
-      'manyToOne',
+      'oneToOne',
       'api::case-study.case-study'
     >;
-    insight: Schema.Attribute.Relation<'manyToOne', 'api::insight.insight'>;
+    insight: Schema.Attribute.Relation<'oneToOne', 'api::insight.insight'>;
     linkType: Schema.Attribute.Enumeration<['external', 'internal']> &
       Schema.Attribute.DefaultTo<'external'>;
-    page: Schema.Attribute.Relation<'manyToOne', 'api::page.page'>;
+    page: Schema.Attribute.Relation<'oneToOne', 'api::page.page'>;
     scrollTo: Schema.Attribute.String;
     title: Schema.Attribute.String;
     url: Schema.Attribute.String;
-    variant: Schema.Attribute.Enumeration<['default', 'ghost']>;
+    variant: Schema.Attribute.Enumeration<
+      [
+        'dark',
+        'light',
+        'ghost-dark',
+        'ghost-light',
+        'solid-dark',
+        'solid-light',
+      ]
+    > &
+      Schema.Attribute.DefaultTo<'dark'>;
   };
 }
 
@@ -632,10 +690,10 @@ export interface SharedServiceGroup extends Struct.ComponentSchema {
   };
   attributes: {
     relatedUseCases: Schema.Attribute.Relation<
-      'manyToMany',
+      'oneToMany',
       'api::use-case.use-case'
     >;
-    services: Schema.Attribute.Relation<'manyToMany', 'api::service.service'>;
+    services: Schema.Attribute.Relation<'oneToMany', 'api::service.service'>;
     title: Schema.Attribute.String;
   };
 }
@@ -676,7 +734,21 @@ export interface SharedTheme extends Struct.ComponentSchema {
     > &
       Schema.Attribute.DefaultTo<'white'>;
     textColor: Schema.Attribute.Enumeration<['light', 'dark']> &
-      Schema.Attribute.DefaultTo<'light'>;
+      Schema.Attribute.DefaultTo<'dark'>;
+  };
+}
+
+export interface TestTest extends Struct.ComponentSchema {
+  collectionName: 'components_test_tests';
+  info: {
+    displayName: 'test';
+  };
+  attributes: {
+    case_studies: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::case-study.case-study'
+    >;
+    test: Schema.Attribute.Boolean;
   };
 }
 
@@ -704,6 +776,7 @@ declare module '@strapi/strapi' {
       'sections.intersection-media': SectionsIntersectionMedia;
       'sections.intro-showreel': SectionsIntroShowreel;
       'sections.person': SectionsPerson;
+      'sections.portfolio': SectionsPortfolio;
       'sections.process': SectionsProcess;
       'sections.progress-cards': SectionsProgressCards;
       'sections.services-group': SectionsServicesGroup;
@@ -725,6 +798,7 @@ declare module '@strapi/strapi' {
       'shared.showreel': SharedShowreel;
       'shared.socials': SharedSocials;
       'shared.theme': SharedTheme;
+      'test.test': TestTest;
     }
   }
 }

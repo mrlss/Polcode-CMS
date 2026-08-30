@@ -35,6 +35,11 @@
         "images",
         "videos"
       ]
+    },
+    "theme": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.theme"
     }
   }
 }

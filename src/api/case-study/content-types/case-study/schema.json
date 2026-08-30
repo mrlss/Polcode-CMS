@@ -14,8 +14,8 @@
   "attributes": {
     "seo": {
       "type": "component",
-      "repeatable": false,
-      "component": "shared.seo"
+      "component": "shared.seo",
+      "repeatable": false
     },
     "slug": {
       "type": "uid",
@@ -90,6 +90,16 @@
       "relation": "manyToMany",
       "target": "api::region.region",
       "mappedBy": "caseStudies"
+    },
+    "foreground": {
+      "type": "enumeration",
+      "default": "purple",
+      "enum": [
+        "purple",
+        "gray",
+        "yellow",
+        "blue"
+      ]
     }
   }
 }

@@ -8,7 +8,7 @@
   "attributes": {
     "person": {
       "type": "relation",
-      "relation": "manyToOne",
+      "relation": "oneToOne",
       "target": "api::team.team"
     },
     "address": {
@@ -26,6 +26,11 @@
       "type": "component",
       "repeatable": false,
       "component": "shared.button"
+    },
+    "theme": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.theme"
     }
   }
 }

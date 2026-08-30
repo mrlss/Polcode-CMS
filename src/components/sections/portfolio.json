@@ -1,0 +1,77 @@
+{
+  "collectionName": "components_sections_portfolios",
+  "info": {
+    "displayName": "Portfolio",
+    "icon": "briefcase",
+    "description": "Featured + other case studies with taxonomy filters and optional show-more/less"
+  },
+  "options": {},
+  "attributes": {
+    "headline": {
+      "type": "component",
+      "component": "shared.headline",
+      "repeatable": false
+    },
+    "theme": {
+      "type": "component",
+      "component": "shared.theme",
+      "repeatable": false
+    },
+    "showMoreLess": {
+      "type": "boolean",
+      "default": true
+    },
+    "manualCasesControl": {
+      "type": "boolean",
+      "default": false
+    },
+    "sort": {
+      "type": "enumeration",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "manualCasesControl"
+            },
+            false
+          ]
+        }
+      },
+      "default": "asc",
+      "enum": [
+        "asc",
+        "desc"
+      ]
+    },
+    "featuredCases": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::case-study.case-study",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "manualCasesControl"
+            },
+            true
+          ]
+        }
+      }
+    },
+    "otherCases": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::case-study.case-study",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "manualCasesControl"
+            },
+            true
+          ]
+        }
+      }
+    }
+  }
+}

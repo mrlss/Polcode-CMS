@@ -86,6 +86,7 @@ type CaseStudy {
   description: String
   documentId: ID!
   featuredMedia: UploadFile
+  foreground: ENUM_CASESTUDY_FOREGROUND
   industries(filters: IndustryFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Industry]!
   industries_connection(filters: IndustryFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): IndustryRelationResponseCollection
   isFeatured: Boolean
@@ -125,6 +126,7 @@ input CaseStudyFiltersInput {
   createdAt: DateTimeFilterInput
   description: StringFilterInput
   documentId: IDFilterInput
+  foreground: StringFilterInput
   industries: IndustryFiltersInput
   isFeatured: BooleanFilterInput
   label: StringFilterInput
@@ -145,6 +147,7 @@ input CaseStudyFiltersInput {
 input CaseStudyInput {
   description: String
   featuredMedia: ID
+  foreground: ENUM_CASESTUDY_FOREGROUND
   industries: [ID]
   isFeatured: Boolean
   label: String
@@ -297,6 +300,7 @@ type ComponentSectionsCardsLargeNumerated {
   cardsLayout: ENUM_COMPONENTSECTIONSCARDSLARGENUMERATED_CARDSLAYOUT
   headline: ComponentSharedHeadline
   id: ID!
+  theme: ComponentSharedTheme
 }
 
 input ComponentSectionsCardsLargeNumeratedFiltersInput {
@@ -306,6 +310,7 @@ input ComponentSectionsCardsLargeNumeratedFiltersInput {
   headline: ComponentSharedHeadlineFiltersInput
   not: ComponentSectionsCardsLargeNumeratedFiltersInput
   or: [ComponentSectionsCardsLargeNumeratedFiltersInput]
+  theme: ComponentSharedThemeFiltersInput
 }
 
 input ComponentSectionsCardsLargeNumeratedInput {
@@ -313,6 +318,7 @@ input ComponentSectionsCardsLargeNumeratedInput {
   cardsLayout: ENUM_COMPONENTSECTIONSCARDSLARGENUMERATED_CARDSLAYOUT
   headline: ComponentSharedHeadlineInput
   id: ID
+  theme: ComponentSharedThemeInput
 }
 
 type ComponentSectionsCaseStudies {
@@ -351,6 +357,7 @@ type ComponentSectionsContentColorBoxes {
   headline: ComponentSharedHeadline
   id: ID!
   subtitle: String
+  theme: ComponentSharedTheme
 }
 
 input ComponentSectionsContentColorBoxesFiltersInput {
@@ -361,6 +368,7 @@ input ComponentSectionsContentColorBoxesFiltersInput {
   not: ComponentSectionsContentColorBoxesFiltersInput
   or: [ComponentSectionsContentColorBoxesFiltersInput]
   subtitle: StringFilterInput
+  theme: ComponentSharedThemeFiltersInput
 }
 
 input ComponentSectionsContentColorBoxesInput {
@@ -369,6 +377,7 @@ input ComponentSectionsContentColorBoxesInput {
   headline: ComponentSharedHeadlineInput
   id: ID
   subtitle: String
+  theme: ComponentSharedThemeInput
 }
 
 type ComponentSectionsContentImageLeft {
@@ -378,6 +387,7 @@ type ComponentSectionsContentImageLeft {
   id: ID!
   label: String
   media: UploadFile
+  theme: ComponentSharedTheme
   title: String
 }
 
@@ -389,6 +399,7 @@ input ComponentSectionsContentImageLeftFiltersInput {
   label: StringFilterInput
   not: ComponentSectionsContentImageLeftFiltersInput
   or: [ComponentSectionsContentImageLeftFiltersInput]
+  theme: ComponentSharedThemeFiltersInput
   title: StringFilterInput
 }
 
@@ -399,6 +410,7 @@ input ComponentSectionsContentImageLeftInput {
   id: ID
   label: String
   media: ID
+  theme: ComponentSharedThemeInput
   title: String
 }
 
@@ -409,6 +421,7 @@ type ComponentSectionsContentImageNumerated {
   id: ID!
   media: UploadFile
   subtitle: String
+  theme: ComponentSharedTheme
 }
 
 input ComponentSectionsContentImageNumeratedFiltersInput {
@@ -419,6 +432,7 @@ input ComponentSectionsContentImageNumeratedFiltersInput {
   not: ComponentSectionsContentImageNumeratedFiltersInput
   or: [ComponentSectionsContentImageNumeratedFiltersInput]
   subtitle: StringFilterInput
+  theme: ComponentSharedThemeFiltersInput
 }
 
 input ComponentSectionsContentImageNumeratedInput {
@@ -428,6 +442,7 @@ input ComponentSectionsContentImageNumeratedInput {
   id: ID
   media: ID
   subtitle: String
+  theme: ComponentSharedThemeInput
 }
 
 type ComponentSectionsContentNumerated {
@@ -437,6 +452,7 @@ type ComponentSectionsContentNumerated {
   id: ID!
   items(filters: ComponentSharedContentItemFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSharedContentItem]
   layout: ENUM_COMPONENTSECTIONSCONTENTNUMERATED_LAYOUT
+  theme: ComponentSharedTheme
 }
 
 input ComponentSectionsContentNumeratedFiltersInput {
@@ -448,6 +464,7 @@ input ComponentSectionsContentNumeratedFiltersInput {
   layout: StringFilterInput
   not: ComponentSectionsContentNumeratedFiltersInput
   or: [ComponentSectionsContentNumeratedFiltersInput]
+  theme: ComponentSharedThemeFiltersInput
 }
 
 input ComponentSectionsContentNumeratedInput {
@@ -457,6 +474,7 @@ input ComponentSectionsContentNumeratedInput {
   id: ID
   items: [ComponentSharedContentItemInput]
   layout: ENUM_COMPONENTSECTIONSCONTENTNUMERATED_LAYOUT
+  theme: ComponentSharedThemeInput
 }
 
 type ComponentSectionsCta {
@@ -519,6 +537,7 @@ type ComponentSectionsForm {
   id: ID!
   label: String
   media: UploadFile
+  theme: ComponentSharedTheme
   title: String
   variant: ENUM_COMPONENTSECTIONSFORM_VARIANT
 }
@@ -529,6 +548,7 @@ input ComponentSectionsFormFiltersInput {
   label: StringFilterInput
   not: ComponentSectionsFormFiltersInput
   or: [ComponentSectionsFormFiltersInput]
+  theme: ComponentSharedThemeFiltersInput
   title: StringFilterInput
   variant: StringFilterInput
 }
@@ -538,6 +558,7 @@ input ComponentSectionsFormInput {
   id: ID
   label: String
   media: ID
+  theme: ComponentSharedThemeInput
   title: String
   variant: ENUM_COMPONENTSECTIONSFORM_VARIANT
 }
@@ -548,6 +569,7 @@ type ComponentSectionsHeroRich {
   description: String
   id: ID!
   label: String
+  theme: ComponentSharedTheme
   title: String
   variant: ENUM_COMPONENTSECTIONSHERORICH_VARIANT
 }
@@ -560,6 +582,7 @@ input ComponentSectionsHeroRichFiltersInput {
   label: StringFilterInput
   not: ComponentSectionsHeroRichFiltersInput
   or: [ComponentSectionsHeroRichFiltersInput]
+  theme: ComponentSharedThemeFiltersInput
   title: StringFilterInput
   variant: StringFilterInput
 }
@@ -570,6 +593,7 @@ input ComponentSectionsHeroRichInput {
   description: String
   id: ID
   label: String
+  theme: ComponentSharedThemeInput
   title: String
   variant: ENUM_COMPONENTSECTIONSHERORICH_VARIANT
 }
@@ -577,6 +601,7 @@ input ComponentSectionsHeroRichInput {
 type ComponentSectionsHeroSvg {
   id: ID!
   image: UploadFile
+  theme: ComponentSharedTheme
   title: String
 }
 
@@ -584,12 +609,14 @@ input ComponentSectionsHeroSvgFiltersInput {
   and: [ComponentSectionsHeroSvgFiltersInput]
   not: ComponentSectionsHeroSvgFiltersInput
   or: [ComponentSectionsHeroSvgFiltersInput]
+  theme: ComponentSharedThemeFiltersInput
   title: StringFilterInput
 }
 
 input ComponentSectionsHeroSvgInput {
   id: ID
   image: ID
+  theme: ComponentSharedThemeInput
   title: String
 }
 
@@ -599,6 +626,7 @@ type ComponentSectionsHeroTwoColumns {
   id: ID!
   indicatorText: String
   label: String
+  theme: ComponentSharedTheme
   title: String
 }
 
@@ -610,6 +638,7 @@ input ComponentSectionsHeroTwoColumnsFiltersInput {
   label: StringFilterInput
   not: ComponentSectionsHeroTwoColumnsFiltersInput
   or: [ComponentSectionsHeroTwoColumnsFiltersInput]
+  theme: ComponentSharedThemeFiltersInput
   title: StringFilterInput
 }
 
@@ -619,6 +648,7 @@ input ComponentSectionsHeroTwoColumnsInput {
   id: ID
   indicatorText: String
   label: String
+  theme: ComponentSharedThemeInput
   title: String
 }
 
@@ -629,6 +659,7 @@ type ComponentSectionsIndustries {
   id: ID!
   industries(filters: IndustryFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Industry]!
   industries_connection(filters: IndustryFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): IndustryRelationResponseCollection
+  theme: ComponentSharedTheme
 }
 
 input ComponentSectionsIndustriesFiltersInput {
@@ -639,6 +670,7 @@ input ComponentSectionsIndustriesFiltersInput {
   industries: IndustryFiltersInput
   not: ComponentSectionsIndustriesFiltersInput
   or: [ComponentSectionsIndustriesFiltersInput]
+  theme: ComponentSharedThemeFiltersInput
 }
 
 input ComponentSectionsIndustriesInput {
@@ -647,6 +679,7 @@ input ComponentSectionsIndustriesInput {
   headline: ComponentSharedHeadlineInput
   id: ID
   industries: [ID]
+  theme: ComponentSharedThemeInput
 }
 
 type ComponentSectionsInsights {
@@ -684,6 +717,7 @@ type ComponentSectionsIntersectionFloatingBoxes {
   headline: ComponentSharedHeadline
   id: ID!
   media: UploadFile
+  theme: ComponentSharedTheme
 }
 
 input ComponentSectionsIntersectionFloatingBoxesFiltersInput {
@@ -692,6 +726,7 @@ input ComponentSectionsIntersectionFloatingBoxesFiltersInput {
   headline: ComponentSharedHeadlineFiltersInput
   not: ComponentSectionsIntersectionFloatingBoxesFiltersInput
   or: [ComponentSectionsIntersectionFloatingBoxesFiltersInput]
+  theme: ComponentSharedThemeFiltersInput
 }
 
 input ComponentSectionsIntersectionFloatingBoxesInput {
@@ -699,12 +734,14 @@ input ComponentSectionsIntersectionFloatingBoxesInput {
   headline: ComponentSharedHeadlineInput
   id: ID
   media: ID
+  theme: ComponentSharedThemeInput
 }
 
 type ComponentSectionsIntersectionMedia {
   button: ComponentSharedButton
   id: ID!
   media: UploadFile
+  theme: ComponentSharedTheme
   title: String
 }
 
@@ -713,6 +750,7 @@ input ComponentSectionsIntersectionMediaFiltersInput {
   button: ComponentSharedButtonFiltersInput
   not: ComponentSectionsIntersectionMediaFiltersInput
   or: [ComponentSectionsIntersectionMediaFiltersInput]
+  theme: ComponentSharedThemeFiltersInput
   title: StringFilterInput
 }
 
@@ -720,6 +758,7 @@ input ComponentSectionsIntersectionMediaInput {
   button: ComponentSharedButtonInput
   id: ID
   media: ID
+  theme: ComponentSharedThemeInput
   title: String
 }
 
@@ -730,6 +769,7 @@ type ComponentSectionsIntroShowreel {
   label: String
   media: UploadFile
   showreel: ComponentSharedShowreel
+  theme: ComponentSharedTheme
   title: String
 }
 
@@ -741,6 +781,7 @@ input ComponentSectionsIntroShowreelFiltersInput {
   not: ComponentSectionsIntroShowreelFiltersInput
   or: [ComponentSectionsIntroShowreelFiltersInput]
   showreel: ComponentSharedShowreelFiltersInput
+  theme: ComponentSharedThemeFiltersInput
   title: StringFilterInput
 }
 
@@ -751,6 +792,7 @@ input ComponentSectionsIntroShowreelInput {
   label: String
   media: ID
   showreel: ComponentSharedShowreelInput
+  theme: ComponentSharedThemeInput
   title: String
 }
 
@@ -761,6 +803,7 @@ type ComponentSectionsPerson {
   id: ID!
   person: Team
   socials(filters: ComponentSharedSocialsFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSharedSocials]
+  theme: ComponentSharedTheme
 }
 
 input ComponentSectionsPersonFiltersInput {
@@ -772,6 +815,7 @@ input ComponentSectionsPersonFiltersInput {
   or: [ComponentSectionsPersonFiltersInput]
   person: TeamFiltersInput
   socials: ComponentSharedSocialsFiltersInput
+  theme: ComponentSharedThemeFiltersInput
 }
 
 input ComponentSectionsPersonInput {
@@ -781,6 +825,44 @@ input ComponentSectionsPersonInput {
   id: ID
   person: ID
   socials: [ComponentSharedSocialsInput]
+  theme: ComponentSharedThemeInput
+}
+
+type ComponentSectionsPortfolio {
+  featuredCases(filters: CaseStudyFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [CaseStudy]!
+  featuredCases_connection(filters: CaseStudyFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): CaseStudyRelationResponseCollection
+  headline: ComponentSharedHeadline
+  id: ID!
+  manualCasesControl: Boolean
+  otherCases(filters: CaseStudyFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [CaseStudy]!
+  otherCases_connection(filters: CaseStudyFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): CaseStudyRelationResponseCollection
+  showMoreLess: Boolean
+  sort: ENUM_COMPONENTSECTIONSPORTFOLIO_SORT
+  theme: ComponentSharedTheme
+}
+
+input ComponentSectionsPortfolioFiltersInput {
+  and: [ComponentSectionsPortfolioFiltersInput]
+  featuredCases: CaseStudyFiltersInput
+  headline: ComponentSharedHeadlineFiltersInput
+  manualCasesControl: BooleanFilterInput
+  not: ComponentSectionsPortfolioFiltersInput
+  or: [ComponentSectionsPortfolioFiltersInput]
+  otherCases: CaseStudyFiltersInput
+  showMoreLess: BooleanFilterInput
+  sort: StringFilterInput
+  theme: ComponentSharedThemeFiltersInput
+}
+
+input ComponentSectionsPortfolioInput {
+  featuredCases: [ID]
+  headline: ComponentSharedHeadlineInput
+  id: ID
+  manualCasesControl: Boolean
+  otherCases: [ID]
+  showMoreLess: Boolean
+  sort: ENUM_COMPONENTSECTIONSPORTFOLIO_SORT
+  theme: ComponentSharedThemeInput
 }
 
 type ComponentSectionsProcess {
@@ -789,6 +871,7 @@ type ComponentSectionsProcess {
   button: ComponentSharedButton
   headline: ComponentSharedHeadline
   id: ID!
+  theme: ComponentSharedTheme
 }
 
 input ComponentSectionsProcessFiltersInput {
@@ -798,6 +881,7 @@ input ComponentSectionsProcessFiltersInput {
   headline: ComponentSharedHeadlineFiltersInput
   not: ComponentSectionsProcessFiltersInput
   or: [ComponentSectionsProcessFiltersInput]
+  theme: ComponentSharedThemeFiltersInput
 }
 
 input ComponentSectionsProcessInput {
@@ -805,12 +889,14 @@ input ComponentSectionsProcessInput {
   button: ComponentSharedButtonInput
   headline: ComponentSharedHeadlineInput
   id: ID
+  theme: ComponentSharedThemeInput
 }
 
 type ComponentSectionsProgressCards {
   cards(filters: ComponentSharedCardMilestoneFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSharedCardMilestone]
   headline: ComponentSharedHeadline
   id: ID!
+  theme: ComponentSharedTheme
 }
 
 input ComponentSectionsProgressCardsFiltersInput {
@@ -819,18 +905,21 @@ input ComponentSectionsProgressCardsFiltersInput {
   headline: ComponentSharedHeadlineFiltersInput
   not: ComponentSectionsProgressCardsFiltersInput
   or: [ComponentSectionsProgressCardsFiltersInput]
+  theme: ComponentSharedThemeFiltersInput
 }
 
 input ComponentSectionsProgressCardsInput {
   cards: [ComponentSharedCardMilestoneInput]
   headline: ComponentSharedHeadlineInput
   id: ID
+  theme: ComponentSharedThemeInput
 }
 
 type ComponentSectionsServicesGroup {
   groups(filters: ComponentSharedServiceGroupFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSharedServiceGroup]
   headline: ComponentSharedHeadline
   id: ID!
+  theme: ComponentSharedTheme
 }
 
 input ComponentSectionsServicesGroupFiltersInput {
@@ -839,18 +928,21 @@ input ComponentSectionsServicesGroupFiltersInput {
   headline: ComponentSharedHeadlineFiltersInput
   not: ComponentSectionsServicesGroupFiltersInput
   or: [ComponentSectionsServicesGroupFiltersInput]
+  theme: ComponentSharedThemeFiltersInput
 }
 
 input ComponentSectionsServicesGroupInput {
   groups: [ComponentSharedServiceGroupInput]
   headline: ComponentSharedHeadlineInput
   id: ID
+  theme: ComponentSharedThemeInput
 }
 
 type ComponentSectionsTeam {
   id: ID!
   members(filters: TeamFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Team]!
   members_connection(filters: TeamFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): TeamRelationResponseCollection
+  theme: ComponentSharedTheme
   title: String
 }
 
@@ -859,6 +951,7 @@ input ComponentSectionsTeamFiltersInput {
   members: TeamFiltersInput
   not: ComponentSectionsTeamFiltersInput
   or: [ComponentSectionsTeamFiltersInput]
+  theme: ComponentSharedThemeFiltersInput
   title: StringFilterInput
 }
 
@@ -868,6 +961,7 @@ type ComponentSectionsTeamGrid {
   id: ID!
   team(filters: TeamFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Team]!
   team_connection(filters: TeamFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): TeamRelationResponseCollection
+  theme: ComponentSharedTheme
 }
 
 input ComponentSectionsTeamGridFiltersInput {
@@ -877,6 +971,7 @@ input ComponentSectionsTeamGridFiltersInput {
   not: ComponentSectionsTeamGridFiltersInput
   or: [ComponentSectionsTeamGridFiltersInput]
   team: TeamFiltersInput
+  theme: ComponentSharedThemeFiltersInput
 }
 
 input ComponentSectionsTeamGridInput {
@@ -884,11 +979,13 @@ input ComponentSectionsTeamGridInput {
   headline: ComponentSharedHeadlineInput
   id: ID
   team: [ID]
+  theme: ComponentSharedThemeInput
 }
 
 input ComponentSectionsTeamInput {
   id: ID
   members: [ID]
+  theme: ComponentSharedThemeInput
   title: String
 }
 
@@ -899,6 +996,7 @@ type ComponentSectionsTechStack {
   button: ComponentSharedButton
   headline: ComponentSharedHeadline
   id: ID!
+  theme: ComponentSharedTheme
 }
 
 input ComponentSectionsTechStackFiltersInput {
@@ -909,6 +1007,7 @@ input ComponentSectionsTechStackFiltersInput {
   headline: ComponentSharedHeadlineFiltersInput
   not: ComponentSectionsTechStackFiltersInput
   or: [ComponentSectionsTechStackFiltersInput]
+  theme: ComponentSharedThemeFiltersInput
 }
 
 input ComponentSectionsTechStackInput {
@@ -917,6 +1016,7 @@ input ComponentSectionsTechStackInput {
   button: ComponentSharedButtonInput
   headline: ComponentSharedHeadlineInput
   id: ID
+  theme: ComponentSharedThemeInput
 }
 
 type ComponentSectionsTestimonialsClients {
@@ -924,6 +1024,7 @@ type ComponentSectionsTestimonialsClients {
   cards_connection(filters: TestimonialFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): TestimonialRelationResponseCollection
   headline: ComponentSharedHeadline
   id: ID!
+  theme: ComponentSharedTheme
 }
 
 input ComponentSectionsTestimonialsClientsFiltersInput {
@@ -932,12 +1033,14 @@ input ComponentSectionsTestimonialsClientsFiltersInput {
   headline: ComponentSharedHeadlineFiltersInput
   not: ComponentSectionsTestimonialsClientsFiltersInput
   or: [ComponentSectionsTestimonialsClientsFiltersInput]
+  theme: ComponentSharedThemeFiltersInput
 }
 
 input ComponentSectionsTestimonialsClientsInput {
   cards: [ID]
   headline: ComponentSharedHeadlineInput
   id: ID
+  theme: ComponentSharedThemeInput
 }
 
 type ComponentSectionsTestimonialsTeam {
@@ -946,6 +1049,7 @@ type ComponentSectionsTestimonialsTeam {
   cards_connection(filters: TestimonialFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): TestimonialRelationResponseCollection
   headline: ComponentSharedHeadline
   id: ID!
+  theme: ComponentSharedTheme
 }
 
 input ComponentSectionsTestimonialsTeamFiltersInput {
@@ -955,6 +1059,7 @@ input ComponentSectionsTestimonialsTeamFiltersInput {
   headline: ComponentSharedHeadlineFiltersInput
   not: ComponentSectionsTestimonialsTeamFiltersInput
   or: [ComponentSectionsTestimonialsTeamFiltersInput]
+  theme: ComponentSharedThemeFiltersInput
 }
 
 input ComponentSectionsTestimonialsTeamInput {
@@ -962,6 +1067,7 @@ input ComponentSectionsTestimonialsTeamInput {
   cardsLayout: ENUM_COMPONENTSECTIONSTESTIMONIALSTEAM_CARDSLAYOUT
   headline: ComponentSharedHeadlineInput
   id: ID
+  theme: ComponentSharedThemeInput
 }
 
 type ComponentSectionsUseCases {
@@ -1270,6 +1376,27 @@ input ComponentSharedThemeInput {
   textColor: ENUM_COMPONENTSHAREDTHEME_TEXTCOLOR
 }
 
+type ComponentTestTest {
+  case_studies(filters: CaseStudyFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [CaseStudy]!
+  case_studies_connection(filters: CaseStudyFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): CaseStudyRelationResponseCollection
+  id: ID!
+  test: Boolean
+}
+
+input ComponentTestTestFiltersInput {
+  and: [ComponentTestTestFiltersInput]
+  case_studies: CaseStudyFiltersInput
+  not: ComponentTestTestFiltersInput
+  or: [ComponentTestTestFiltersInput]
+  test: BooleanFilterInput
+}
+
+input ComponentTestTestInput {
+  case_studies: [ID]
+  id: ID
+  test: Boolean
+}
+
 type ContentManagerOrganizerContentManagerConfiguration {
   config: JSON!
   createdAt: DateTime
@@ -1424,6 +1551,13 @@ type DeleteMutationResponse {
   documentId: ID!
 }
 
+enum ENUM_CASESTUDY_FOREGROUND {
+  blue
+  gray
+  purple
+  yellow
+}
+
 enum ENUM_COMPONENTSECTIONSCARDSLARGENUMERATED_CARDSLAYOUT {
   carousel
   grid
@@ -1459,6 +1593,11 @@ enum ENUM_COMPONENTSECTIONSINSIGHTS_PICK {
   manual
 }
 
+enum ENUM_COMPONENTSECTIONSPORTFOLIO_SORT {
+  asc
+  desc
+}
+
 enum ENUM_COMPONENTSECTIONSTESTIMONIALSTEAM_CARDSLAYOUT {
   carousel
   grid
@@ -1475,8 +1614,12 @@ enum ENUM_COMPONENTSHAREDBUTTON_LINKTYPE {
 }
 
 enum ENUM_COMPONENTSHAREDBUTTON_VARIANT {
-  default
-  ghost
+  dark
+  ghost_dark
+  ghost_light
+  light
+  solid_dark
+  solid_light
 }
 
 enum ENUM_COMPONENTSHAREDTHEME_BACKGROUND {
@@ -1573,7 +1716,7 @@ input FloatFilterInput {
   startsWith: Float
 }
 
-union GenericMorph = Achievement | CaseStudy | Client | ComponentGlobalFooter | ComponentGlobalPartner | ComponentSectionsAchievements | ComponentSectionsCardsLargeNumerated | ComponentSectionsCaseStudies | ComponentSectionsContentColorBoxes | ComponentSectionsContentImageLeft | ComponentSectionsContentImageNumerated | ComponentSectionsContentNumerated | ComponentSectionsCta | ComponentSectionsFaq | ComponentSectionsForm | ComponentSectionsHeroRich | ComponentSectionsHeroSvg | ComponentSectionsHeroTwoColumns | ComponentSectionsIndustries | ComponentSectionsInsights | ComponentSectionsIntersectionFloatingBoxes | ComponentSectionsIntersectionMedia | ComponentSectionsIntroShowreel | ComponentSectionsPerson | ComponentSectionsProcess | ComponentSectionsProgressCards | ComponentSectionsServicesGroup | ComponentSectionsTeam | ComponentSectionsTeamGrid | ComponentSectionsTechStack | ComponentSectionsTestimonialsClients | ComponentSectionsTestimonialsTeam | ComponentSectionsUseCases | ComponentSharedButton | ComponentSharedCardMilestone | ComponentSharedCardNumerated | ComponentSharedColorBox | ComponentSharedContentItem | ComponentSharedFloatingCard | ComponentSharedHeadline | ComponentSharedSeo | ComponentSharedServiceGroup | ComponentSharedShowreel | ComponentSharedSocials | ComponentSharedTheme | ContentManagerOrganizerContentManagerConfiguration | Faq | Global | I18NLocale | Industry | Insight | Page | Platform | Process | Region | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | Service | Team | TechStack | Technology | Testimonial | UploadFile | UseCase | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser
+union GenericMorph = Achievement | CaseStudy | Client | ComponentGlobalFooter | ComponentGlobalPartner | ComponentSectionsAchievements | ComponentSectionsCardsLargeNumerated | ComponentSectionsCaseStudies | ComponentSectionsContentColorBoxes | ComponentSectionsContentImageLeft | ComponentSectionsContentImageNumerated | ComponentSectionsContentNumerated | ComponentSectionsCta | ComponentSectionsFaq | ComponentSectionsForm | ComponentSectionsHeroRich | ComponentSectionsHeroSvg | ComponentSectionsHeroTwoColumns | ComponentSectionsIndustries | ComponentSectionsInsights | ComponentSectionsIntersectionFloatingBoxes | ComponentSectionsIntersectionMedia | ComponentSectionsIntroShowreel | ComponentSectionsPerson | ComponentSectionsPortfolio | ComponentSectionsProcess | ComponentSectionsProgressCards | ComponentSectionsServicesGroup | ComponentSectionsTeam | ComponentSectionsTeamGrid | ComponentSectionsTechStack | ComponentSectionsTestimonialsClients | ComponentSectionsTestimonialsTeam | ComponentSectionsUseCases | ComponentSharedButton | ComponentSharedCardMilestone | ComponentSharedCardNumerated | ComponentSharedColorBox | ComponentSharedContentItem | ComponentSharedFloatingCard | ComponentSharedHeadline | ComponentSharedSeo | ComponentSharedServiceGroup | ComponentSharedShowreel | ComponentSharedSocials | ComponentSharedTheme | ComponentTestTest | ContentManagerOrganizerContentManagerConfiguration | Faq | Global | I18NLocale | Industry | Insight | Page | Platform | Process | Region | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | Service | Team | TechStack | Technology | Testimonial | UploadFile | UseCase | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser
 
 type Global {
   createdAt: DateTime
@@ -2113,7 +2256,7 @@ type PageRelationResponseCollection {
   nodes: [Page!]!
 }
 
-union PageSectionsDynamicZone = ComponentSectionsAchievements | ComponentSectionsCardsLargeNumerated | ComponentSectionsCaseStudies | ComponentSectionsContentColorBoxes | ComponentSectionsContentImageLeft | ComponentSectionsContentImageNumerated | ComponentSectionsContentNumerated | ComponentSectionsCta | ComponentSectionsFaq | ComponentSectionsForm | ComponentSectionsHeroRich | ComponentSectionsHeroSvg | ComponentSectionsHeroTwoColumns | ComponentSectionsIndustries | ComponentSectionsInsights | ComponentSectionsIntersectionFloatingBoxes | ComponentSectionsIntersectionMedia | ComponentSectionsIntroShowreel | ComponentSectionsPerson | ComponentSectionsProcess | ComponentSectionsProgressCards | ComponentSectionsServicesGroup | ComponentSectionsTeam | ComponentSectionsTeamGrid | ComponentSectionsTechStack | ComponentSectionsTestimonialsClients | ComponentSectionsTestimonialsTeam | ComponentSectionsUseCases | Error
+union PageSectionsDynamicZone = ComponentSectionsAchievements | ComponentSectionsCardsLargeNumerated | ComponentSectionsCaseStudies | ComponentSectionsContentColorBoxes | ComponentSectionsContentImageLeft | ComponentSectionsContentImageNumerated | ComponentSectionsContentNumerated | ComponentSectionsCta | ComponentSectionsFaq | ComponentSectionsForm | ComponentSectionsHeroRich | ComponentSectionsHeroSvg | ComponentSectionsHeroTwoColumns | ComponentSectionsIndustries | ComponentSectionsInsights | ComponentSectionsIntersectionFloatingBoxes | ComponentSectionsIntersectionMedia | ComponentSectionsIntroShowreel | ComponentSectionsPerson | ComponentSectionsPortfolio | ComponentSectionsProcess | ComponentSectionsProgressCards | ComponentSectionsServicesGroup | ComponentSectionsTeam | ComponentSectionsTeamGrid | ComponentSectionsTechStack | ComponentSectionsTestimonialsClients | ComponentSectionsTestimonialsTeam | ComponentSectionsUseCases | Error
 
 scalar PageSectionsDynamicZoneInput
 

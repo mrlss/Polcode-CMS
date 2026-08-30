@@ -13,8 +13,13 @@
     },
     "cards": {
       "type": "relation",
-      "relation": "manyToMany",
+      "relation": "oneToMany",
       "target": "api::testimonial.testimonial"
+    },
+    "theme": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.theme"
     }
   }
 }

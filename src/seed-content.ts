@@ -573,92 +573,6 @@ export async function seedContent(strapi: Strapi) {
     ],
   );
 
-  const caseStudies = await ensureCollection(
-    strapi,
-    "api::case-study.case-study",
-    (e) => e.title,
-    [
-      {
-        title: "FinTech platform revamp",
-        slug: "fintech-platform-revamp",
-        label: "Case study",
-        shortTitle: "FinTech platform revamp",
-        shortDescription: "<p>Short description.</p>",
-        description: "<p>Full case study description.</p>",
-        isFeatured: true,
-        industries: [industries[0].id],
-        services: [services[0].id],
-        technologies: [technologies[0].id],
-        regions: [regions[0].id],
-      },
-      {
-        title: "Retail e-commerce launch",
-        slug: "retail-e-commerce-launch",
-        label: "Case study",
-        shortTitle: "Retail e-commerce launch",
-        shortDescription: "<p>Short description.</p>",
-        description: "<p>Full case study description.</p>",
-        isFeatured: false,
-        industries: [industries[2].id],
-        services: [services[0].id],
-        technologies: [technologies[0].id],
-        regions: [regions[1].id],
-      },
-      {
-        title: "Healthcare patient portal",
-        slug: "healthcare-patient-portal",
-        label: "Case study",
-        shortTitle: "Healthcare patient portal",
-        shortDescription: "<p>Short description.</p>",
-        description: "<p>Full case study description.</p>",
-        isFeatured: false,
-        industries: [industries[1].id],
-        services: [services[1].id],
-        technologies: [technologies[3].id],
-        regions: [regions[0].id],
-      },
-      {
-        title: "Travel booking engine",
-        slug: "travel-booking-engine",
-        label: "Case study",
-        shortTitle: "Travel booking engine",
-        shortDescription: "<p>Short description.</p>",
-        description: "<p>Full case study description.</p>",
-        isFeatured: false,
-        industries: [industries[3].id],
-        services: [services[4].id],
-        technologies: [technologies[2].id],
-        regions: [regions[3].id],
-      },
-      {
-        title: "Manufacturing IoT dashboard",
-        slug: "manufacturing-iot-dashboard",
-        label: "Case study",
-        shortTitle: "Manufacturing IoT dashboard",
-        shortDescription: "<p>Short description.</p>",
-        description: "<p>Full case study description.</p>",
-        isFeatured: false,
-        industries: [industries[4].id],
-        services: [services[5].id],
-        technologies: [technologies[5].id],
-        regions: [regions[2].id],
-      },
-      {
-        title: "EdTech LMS platform",
-        slug: "edtech-lms-platform",
-        label: "Case study",
-        shortTitle: "EdTech LMS platform",
-        shortDescription: "<p>Short description.</p>",
-        description: "<p>Full case study description.</p>",
-        isFeatured: false,
-        industries: [industries[5].id],
-        services: [services[2].id],
-        technologies: [technologies[1].id],
-        regions: [regions[4].id],
-      },
-    ],
-  );
-
   const techStack = await ensureCollection(
     strapi,
     "api::tech-stack.tech-stack",
@@ -717,7 +631,7 @@ export async function seedContent(strapi: Strapi) {
   );
 
   log(
-    `collections: industries=${industries.length} services=${services.length} technologies=${technologies.length} regions=${regions.length} platforms=${platforms.length} achievements=${achievements.length} clients=${clients.length} faqs=${faqs.length} processes=${processes.length} team=${teamMembers.length} testimonials=${testimonials.length} insights=${insights.length} useCases=${useCases.length} caseStudies=${caseStudies.length} techStack=${techStack.length}`,
+    `collections: industries=${industries.length} services=${services.length} technologies=${technologies.length} regions=${regions.length} platforms=${platforms.length} achievements=${achievements.length} clients=${clients.length} faqs=${faqs.length} processes=${processes.length} team=${teamMembers.length} testimonials=${testimonials.length} insights=${insights.length} useCases=${useCases.length} techStack=${techStack.length}`,
   );
 
   // ------------------------------------------------------------------
@@ -733,7 +647,7 @@ export async function seedContent(strapi: Strapi) {
     title,
     linkType: "internal",
     url,
-    variant: "default",
+    variant: "dark",
   });
   const theme = (background: string, textColor = "dark") => ({
     __component: "shared.theme",
@@ -808,7 +722,7 @@ export async function seedContent(strapi: Strapi) {
       headline: h("Case studies"),
       button: btn("All cases", "/case-studies"),
       theme: theme("cream"),
-      caseStudies: caseStudies.map((e) => e.id),
+      caseStudies: [],
     },
     // 5. content-color-boxes
     {
@@ -1078,11 +992,16 @@ export async function seedContent(strapi: Strapi) {
     },
   ];
 
-  // Recreate the demo page so the dynamiczone is rebuilt from scratch.
-  // (Dev-only seeder — avoids Strapi 5.52's flaky update-merge on dynamiczone
-  // relations, which left stale partial links on repeated updates.)
+  // Only create the demo homepage if none exists. Never delete/recreate an
+  // existing homepage — that would wipe CMS-authored content on every boot.
   const qPage = strapi.db.query("api::page.page");
-  await qPage.deleteMany({ where: { slug: "index" } });
+  const existingHome = (await qPage.findOne({ where: { slug: "index" } })) as {
+    id: number;
+  } | null;
+  if (existingHome) {
+    log("homepage 'index' already exists — leaving it untouched");
+    return;
+  }
   const pageData = {
     title: "Home",
     slug: "index",
@@ -1092,7 +1011,7 @@ export async function seedContent(strapi: Strapi) {
     sections,
   };
   await strapi.entityService.create("api::page.page", { data: pageData });
-  log(`demo page 'index' (re)created with ${sections.length} sections`);
+  log(`demo page 'index' created with ${sections.length} sections`);
 }
 
 /**

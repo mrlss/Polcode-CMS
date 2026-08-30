@@ -259,28 +259,6 @@ export async function seedDemoData(strapi: Strapi) {
   const uc1 = await useCase("Marketplace rebuild");
   const uc2 = await useCase("Payments platform migration");
 
-  const caseStudy = async (title: string, isFeatured = false) =>
-    upsert(
-      strapi,
-      "api::case-study.case-study",
-      { title },
-      {
-        title,
-        slug: slugify(title),
-        label: "Case study",
-        shortTitle: title,
-        shortDescription: "<p>Short description.</p>",
-        description: "<p>Full case study description.</p>",
-        isFeatured,
-        industries: [fintech.id],
-        services: [svcFrontend.id],
-        technologies: [techReact.id],
-        regions: [regionEu.id],
-      },
-    );
-  const cs1 = await caseStudy("FinTech platform revamp", true);
-  const cs2 = await caseStudy("Retail e-commerce launch", false);
-
   const techStack = async (title: string, link: string) =>
     upsert(
       strapi,
@@ -321,7 +299,7 @@ export async function seedDemoData(strapi: Strapi) {
     title,
     linkType: "internal",
     url,
-    variant: "default",
+    variant: "dark",
   });
   const theme = (background: string, textColor = "dark") => ({
     __component: "shared.theme",
@@ -388,7 +366,7 @@ export async function seedDemoData(strapi: Strapi) {
       headline: h("Case studies"),
       button: btn("All cases", "/case-studies"),
       theme: theme("cream"),
-      caseStudies: [cs1.id, cs2.id],
+      caseStudies: [],
     },
     // 5. content-color-boxes
     {

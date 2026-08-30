@@ -499,6 +499,10 @@ export interface ApiCaseStudyCaseStudy extends Struct.CollectionTypeSchema {
         }
       >;
     featuredMedia: Schema.Attribute.Media<'images' | 'videos'>;
+    foreground: Schema.Attribute.Enumeration<
+      ['purple', 'gray', 'yellow', 'blue']
+    > &
+      Schema.Attribute.DefaultTo<'purple'>;
     industries: Schema.Attribute.Relation<
       'manyToMany',
       'api::industry.industry'
@@ -765,6 +769,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'sections.tech-stack',
         'sections.testimonials-clients',
         'sections.testimonials-team',
+        'sections.portfolio',
         'sections.use-cases',
       ]
     >;

@@ -8,21 +8,21 @@
   "attributes": {
     "background": {
       "type": "enumeration",
+      "default": "white",
       "enum": [
         "white",
         "black",
         "cream",
         "purple"
-      ],
-      "default": "white"
+      ]
     },
     "textColor": {
       "type": "enumeration",
+      "default": "dark",
       "enum": [
         "light",
         "dark"
-      ],
-      "default": "light"
+      ]
     }
   }
 }

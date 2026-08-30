@@ -31,7 +31,7 @@
     },
     "useCases": {
       "type": "relation",
-      "relation": "manyToMany",
+      "relation": "oneToMany",
       "target": "api::use-case.use-case"
     }
   }

@@ -12,9 +12,14 @@
     "variant": {
       "type": "enumeration",
       "enum": [
-        "default",
-        "ghost"
-      ]
+        "dark",
+        "light",
+        "ghost-dark",
+        "ghost-light",
+        "solid-dark",
+        "solid-light"
+      ],
+      "default": "dark"
     },
     "scrollTo": {
       "type": "string"
@@ -32,17 +37,17 @@
     },
     "page": {
       "type": "relation",
-      "relation": "manyToOne",
+      "relation": "oneToOne",
       "target": "api::page.page"
     },
     "caseStudy": {
       "type": "relation",
-      "relation": "manyToOne",
+      "relation": "oneToOne",
       "target": "api::case-study.case-study"
     },
     "insight": {
       "type": "relation",
-      "relation": "manyToOne",
+      "relation": "oneToOne",
       "target": "api::insight.insight"
     }
   }

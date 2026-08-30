@@ -22,6 +22,11 @@
     },
     "indicatorText": {
       "type": "string"
+    },
+    "theme": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.theme"
     }
   }
 }

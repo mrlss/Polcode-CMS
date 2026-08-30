@@ -16,6 +16,11 @@
       "allowedTypes": [
         "images"
       ]
+    },
+    "theme": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.theme"
     }
   }
 }

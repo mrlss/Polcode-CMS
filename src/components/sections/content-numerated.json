@@ -36,6 +36,11 @@
       "type": "component",
       "repeatable": true,
       "component": "shared.content-item"
+    },
+    "theme": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.theme"
     }
   }
 }

@@ -13,13 +13,18 @@
     },
     "blocks": {
       "type": "relation",
-      "relation": "manyToMany",
+      "relation": "oneToMany",
       "target": "api::process.process"
     },
     "button": {
       "type": "component",
       "repeatable": false,
       "component": "shared.button"
+    },
+    "theme": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.theme"
     }
   }
 }

@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_test_tests",
+  "info": {
+    "displayName": "test"
+  },
+  "options": {},
+  "attributes": {
+    "test": {
+      "type": "boolean"
+    },
+    "case_studies": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::case-study.case-study",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "test"
+            },
+            true
+          ]
+        }
+      }
+    }
+  },
+  "config": {}
+}

@@ -37,6 +37,11 @@
       "type": "component",
       "repeatable": false,
       "component": "shared.showreel"
+    },
+    "theme": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.theme"
     }
   }
 }
