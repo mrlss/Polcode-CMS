@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_global_content_type_urls",
+  "info": {
+    "displayName": "Content Type URL",
+    "icon": "link",
+    "description": "Maps a content-type detail page (case studies, insights) to its public URL prefix."
+  },
+  "options": {},
+  "attributes": {
+    "kind": {
+      "type": "enumeration",
+      "enum": [
+        "caseStudy",
+        "insight"
+      ],
+      "default": "caseStudy"
+    },
+    "path": {
+      "type": "string"
+    }
+  }
+}

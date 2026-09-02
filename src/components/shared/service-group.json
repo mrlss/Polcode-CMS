@@ -14,10 +14,10 @@
       "relation": "oneToMany",
       "target": "api::service.service"
     },
-    "relatedUseCases": {
+    "relatedCaseStudies": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::use-case.use-case"
+      "target": "api::case-study.case-study"
     }
   }
 }

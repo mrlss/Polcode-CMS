@@ -45,6 +45,14 @@
     "isFeatured": {
       "type": "boolean",
       "default": false
+    },
+    "sections": {
+      "type": "dynamiczone",
+      "components": [
+        "sections.rich-content-body",
+        "sections.cta",
+        "sections.insights"
+      ]
     }
   }
 }

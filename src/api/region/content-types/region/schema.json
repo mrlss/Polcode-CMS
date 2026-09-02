@@ -24,9 +24,9 @@
     },
     "caseStudies": {
       "type": "relation",
-      "relation": "manyToMany",
+      "relation": "oneToMany",
       "target": "api::case-study.case-study",
-      "inversedBy": "regions"
+      "mappedBy": "regions"
     }
   }
 }

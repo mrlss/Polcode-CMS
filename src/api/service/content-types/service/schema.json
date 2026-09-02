@@ -45,6 +45,12 @@
       "relation": "manyToMany",
       "target": "api::case-study.case-study",
       "inversedBy": "services"
+    },
+    "techStack": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::tech-stack.tech-stack",
+      "inversedBy": "services"
     }
   }
 }

@@ -39,6 +39,18 @@
     },
     "link": {
       "type": "string"
+    },
+    "services": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::service.service",
+      "mappedBy": "techStack"
+    },
+    "caseStudies": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::case-study.case-study",
+      "inversedBy": "techStack"
     }
   }
 }

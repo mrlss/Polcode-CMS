@@ -27,7 +27,7 @@ export default {
                   label: "Content",
                   defaultExpanded: true,
                   kind: "collectionType",
-                  items: ["case-study", "use-case", "insight", "faq"],
+                  items: ["case-study", "insight", "faq"],
                 },
                 {
                   id: "company",
@@ -50,9 +50,9 @@ export default {
                   items: [
                     "industry",
                     "service",
-                    "technology",
                     "region",
                     "platform",
+                    "tech-stack",
                   ],
                 },
                 {
@@ -60,7 +60,7 @@ export default {
                   label: "Site",
                   defaultExpanded: false,
                   kind: "collectionType",
-                  items: ["page", "tech-stack"],
+                  items: ["page"],
                 },
               ],
             },
