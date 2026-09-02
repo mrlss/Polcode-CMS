@@ -40,9 +40,9 @@
     },
     "relatedCases": {
       "type": "relation",
-      "relation": "manyToMany",
+      "relation": "oneToMany",
       "target": "api::case-study.case-study",
-      "inversedBy": "industries"
+      "mappedBy": "industries"
     }
   }
 }

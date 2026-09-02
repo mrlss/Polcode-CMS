@@ -87,14 +87,12 @@ type CaseStudy {
   documentId: ID!
   featuredMedia: UploadFile
   foreground: ENUM_CASESTUDY_FOREGROUND
-  industries(filters: IndustryFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Industry]!
-  industries_connection(filters: IndustryFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): IndustryRelationResponseCollection
+  industries: Industry
   isFeatured: Boolean
   label: String
   logo: UploadFile
   publishedAt: DateTime
-  regions(filters: RegionFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Region]!
-  regions_connection(filters: RegionFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): RegionRelationResponseCollection
+  regions: Region
   sections: [CaseStudySectionsDynamicZone]
   seo: ComponentSharedSeo
   services(filters: ServiceFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Service]!
@@ -149,13 +147,13 @@ input CaseStudyInput {
   description: String
   featuredMedia: ID
   foreground: ENUM_CASESTUDY_FOREGROUND
-  industries: [ID]
+  industries: ID
   isFeatured: Boolean
   label: String
   locale: String
   logo: ID
   publishedAt: DateTime
-  regions: [ID]
+  regions: ID
   sections: [CaseStudySectionsDynamicZoneInput!]
   seo: ComponentSharedSeoInput
   services: [ID]

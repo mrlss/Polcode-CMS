@@ -69,9 +69,9 @@
     },
     "industries": {
       "type": "relation",
-      "relation": "manyToMany",
+      "relation": "manyToOne",
       "target": "api::industry.industry",
-      "mappedBy": "relatedCases"
+      "inversedBy": "relatedCases"
     },
     "services": {
       "type": "relation",
@@ -87,9 +87,9 @@
     },
     "regions": {
       "type": "relation",
-      "relation": "manyToMany",
+      "relation": "manyToOne",
       "target": "api::region.region",
-      "mappedBy": "caseStudies"
+      "inversedBy": "caseStudies"
     },
     "foreground": {
       "type": "enumeration",

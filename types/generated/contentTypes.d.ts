@@ -504,7 +504,7 @@ export interface ApiCaseStudyCaseStudy extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.DefaultTo<'purple'>;
     industries: Schema.Attribute.Relation<
-      'manyToMany',
+      'manyToOne',
       'api::industry.industry'
     >;
     isFeatured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
@@ -517,7 +517,7 @@ export interface ApiCaseStudyCaseStudy extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     logo: Schema.Attribute.Media<'images'>;
     publishedAt: Schema.Attribute.DateTime;
-    regions: Schema.Attribute.Relation<'manyToMany', 'api::region.region'>;
+    regions: Schema.Attribute.Relation<'manyToOne', 'api::region.region'>;
     sections: Schema.Attribute.DynamicZone<
       [
         'sections.rich-content-body',
@@ -682,7 +682,7 @@ export interface ApiIndustryIndustry extends Struct.CollectionTypeSchema {
     media: Schema.Attribute.Media<'images' | 'videos'>;
     publishedAt: Schema.Attribute.DateTime;
     relatedCases: Schema.Attribute.Relation<
-      'manyToMany',
+      'oneToMany',
       'api::case-study.case-study'
     >;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
@@ -888,7 +888,7 @@ export interface ApiRegionRegion extends Struct.CollectionTypeSchema {
   };
   attributes: {
     caseStudies: Schema.Attribute.Relation<
-      'manyToMany',
+      'oneToMany',
       'api::case-study.case-study'
     >;
     createdAt: Schema.Attribute.DateTime;
