@@ -29,7 +29,7 @@
     "testimonials": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::testimonial.testimonial",
+      "target": "api::client-testimonial.client-testimonial",
       "mappedBy": "client"
     }
   }

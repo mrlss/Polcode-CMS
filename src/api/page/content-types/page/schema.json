@@ -39,7 +39,7 @@
       "type": "dynamiczone",
       "components": [
         "sections.cta",
-        "sections.achievements",
+        "sections.carousel",
         "sections.cards-large-numerated",
         "sections.case-studies",
         "sections.content-color-boxes",
@@ -48,11 +48,8 @@
         "sections.content-numerated",
         "sections.faq",
         "sections.form",
-        "sections.hero-rich",
-        "sections.hero-svg",
-        "sections.hero-two-columns",
+        "sections.hero",
         "sections.industries",
-        "sections.insights",
         "sections.intersection-floating-boxes",
         "sections.intersection-media",
         "sections.intro-showreel",
@@ -63,8 +60,6 @@
         "sections.team-grid",
         "sections.team",
         "sections.tech-stack",
-        "sections.testimonials-clients",
-        "sections.testimonials-team",
         "sections.portfolio",
         "sections.rich-content-body"
       ]

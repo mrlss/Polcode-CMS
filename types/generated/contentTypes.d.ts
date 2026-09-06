@@ -522,7 +522,7 @@ export interface ApiCaseStudyCaseStudy extends Struct.CollectionTypeSchema {
       [
         'sections.rich-content-body',
         'sections.process',
-        'sections.achievements',
+        'sections.carousel',
         'sections.tech-stack',
         'sections.cta',
         'sections.case-studies',
@@ -544,6 +544,46 @@ export interface ApiCaseStudyCaseStudy extends Struct.CollectionTypeSchema {
       'api::tech-stack.tech-stack'
     >;
     title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiClientTestimonialClientTestimonial
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'client_testimonials';
+  info: {
+    description: 'Client testimonials \u2014 each one belongs to a single client';
+    displayName: 'Client Testimonials';
+    pluralName: 'client-testimonials';
+    singularName: 'client-testimonial';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    author: Schema.Attribute.String & Schema.Attribute.Required;
+    client: Schema.Attribute.Relation<'manyToOne', 'api::client.client'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::client-testimonial.client-testimonial'
+    > &
+      Schema.Attribute.Private;
+    media: Schema.Attribute.Media<'images' | 'videos'>;
+    position: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    text: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -577,7 +617,7 @@ export interface ApiClientClient extends Struct.CollectionTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     testimonials: Schema.Attribute.Relation<
       'oneToMany',
-      'api::testimonial.testimonial'
+      'api::client-testimonial.client-testimonial'
     >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -645,6 +685,43 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiHiringProcessHiringProcess
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'hiring_processes';
+  info: {
+    description: 'Hiring process steps';
+    displayName: 'Hiring Process';
+    pluralName: 'hiring-processes';
+    singularName: 'hiring-process';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::hiring-process.hiring-process'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -727,7 +804,7 @@ export interface ApiInsightInsight extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
     sections: Schema.Attribute.DynamicZone<
-      ['sections.rich-content-body', 'sections.cta', 'sections.insights']
+      ['sections.rich-content-body', 'sections.cta', 'sections.carousel']
     >;
     seo: Schema.Attribute.Component<'shared.seo', false>;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
@@ -760,7 +837,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
     sections: Schema.Attribute.DynamicZone<
       [
         'sections.cta',
-        'sections.achievements',
+        'sections.carousel',
         'sections.cards-large-numerated',
         'sections.case-studies',
         'sections.content-color-boxes',
@@ -769,11 +846,8 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'sections.content-numerated',
         'sections.faq',
         'sections.form',
-        'sections.hero-rich',
-        'sections.hero-svg',
-        'sections.hero-two-columns',
+        'sections.hero',
         'sections.industries',
-        'sections.insights',
         'sections.intersection-floating-boxes',
         'sections.intersection-media',
         'sections.intro-showreel',
@@ -784,8 +858,6 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'sections.team-grid',
         'sections.team',
         'sections.tech-stack',
-        'sections.testimonials-clients',
-        'sections.testimonials-team',
         'sections.portfolio',
         'sections.rich-content-body',
       ]
@@ -960,6 +1032,45 @@ export interface ApiServiceService extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiTeamTestimonialTeamTestimonial
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'team_testimonials';
+  info: {
+    description: 'Team testimonials \u2014 no client relation, optional image';
+    displayName: 'Team Testimonials';
+    pluralName: 'team-testimonials';
+    singularName: 'team-testimonial';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    author: Schema.Attribute.String & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::team-testimonial.team-testimonial'
+    > &
+      Schema.Attribute.Private;
+    media: Schema.Attribute.Media<'images' | 'videos'>;
+    position: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    text: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiTeamTeam extends Struct.CollectionTypeSchema {
   collectionName: 'teams';
   info: {
@@ -1038,45 +1149,6 @@ export interface ApiTechStackTechStack extends Struct.CollectionTypeSchema {
     title: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
-export interface ApiTestimonialTestimonial extends Struct.CollectionTypeSchema {
-  collectionName: 'testimonials';
-  info: {
-    description: 'Client testimonials';
-    displayName: 'Testimonials';
-    pluralName: 'testimonials';
-    singularName: 'testimonial';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    author: Schema.Attribute.String & Schema.Attribute.Required;
-    client: Schema.Attribute.Relation<'manyToOne', 'api::client.client'>;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::testimonial.testimonial'
-    > &
-      Schema.Attribute.Private;
-    media: Schema.Attribute.Media<'images' | 'videos'>;
-    position: Schema.Attribute.String;
-    publishedAt: Schema.Attribute.DateTime;
-    text: Schema.Attribute.RichText &
-      Schema.Attribute.CustomField<
-        'plugin::ckeditor5.CKEditor',
-        {
-          preset: 'defaultHtml';
-        }
-      >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1789,9 +1861,11 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::achievement.achievement': ApiAchievementAchievement;
       'api::case-study.case-study': ApiCaseStudyCaseStudy;
+      'api::client-testimonial.client-testimonial': ApiClientTestimonialClientTestimonial;
       'api::client.client': ApiClientClient;
       'api::faq.faq': ApiFaqFaq;
       'api::global.global': ApiGlobalGlobal;
+      'api::hiring-process.hiring-process': ApiHiringProcessHiringProcess;
       'api::industry.industry': ApiIndustryIndustry;
       'api::insight.insight': ApiInsightInsight;
       'api::page.page': ApiPagePage;
@@ -1799,9 +1873,9 @@ declare module '@strapi/strapi' {
       'api::process.process': ApiProcessProcess;
       'api::region.region': ApiRegionRegion;
       'api::service.service': ApiServiceService;
+      'api::team-testimonial.team-testimonial': ApiTeamTestimonialTeamTestimonial;
       'api::team.team': ApiTeamTeam;
       'api::tech-stack.tech-stack': ApiTechStackTechStack;
-      'api::testimonial.testimonial': ApiTestimonialTestimonial;
       'plugin::content-manager-organizer.content-manager-configuration': PluginContentManagerOrganizerContentManagerConfiguration;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "hiring_processes",
+  "info": {
+    "singularName": "hiring-process",
+    "pluralName": "hiring-processes",
+    "displayName": "Hiring Process",
+    "description": "Hiring process steps"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "customField",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_shared_hero_promos",
+  "info": {
+    "displayName": "Hero Promo",
+    "description": "Small promo slide inside the hero carousel"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "label": {
+      "type": "string"
+    },
+    "button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.button"
+    }
+  }
+}

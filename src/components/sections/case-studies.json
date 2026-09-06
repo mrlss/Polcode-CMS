@@ -2,7 +2,7 @@
   "collectionName": "components_sections_case_studies",
   "info": {
     "displayName": "Case Studies",
-    "description": "Case studies section, latest or manual"
+    "description": "Case studies section: featured, latest, next or manual"
   },
   "options": {},
   "attributes": {
@@ -12,8 +12,14 @@
       "enum": [
         "latest",
         "manual",
-        "next"
+        "next",
+        "featured"
       ]
+    },
+    "limit": {
+      "type": "integer",
+      "default": 5,
+      "min": 1
     },
     "headline": {
       "type": "component",
