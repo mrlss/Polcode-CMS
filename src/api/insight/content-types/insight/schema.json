@@ -51,7 +51,7 @@
       "components": [
         "sections.rich-content-body",
         "sections.cta",
-        "sections.insights"
+        "sections.carousel"
       ]
     }
   }

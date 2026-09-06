@@ -168,7 +168,7 @@ type CaseStudyRelationResponseCollection {
   nodes: [CaseStudy!]!
 }
 
-union CaseStudySectionsDynamicZone = ComponentSectionsAchievements | ComponentSectionsCaseStudies | ComponentSectionsCta | ComponentSectionsProcess | ComponentSectionsRichContentBody | ComponentSectionsTechStack | Error
+union CaseStudySectionsDynamicZone = ComponentSectionsCarousel | ComponentSectionsCaseStudies | ComponentSectionsCta | ComponentSectionsProcess | ComponentSectionsRichContentBody | ComponentSectionsTechStack | Error
 
 scalar CaseStudySectionsDynamicZoneInput
 
@@ -179,8 +179,8 @@ type Client {
   logo: UploadFile
   name: String
   publishedAt: DateTime
-  testimonials(filters: TestimonialFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Testimonial]!
-  testimonials_connection(filters: TestimonialFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): TestimonialRelationResponseCollection
+  testimonials(filters: ClientTestimonialFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ClientTestimonial]!
+  testimonials_connection(filters: ClientTestimonialFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): ClientTestimonialRelationResponseCollection
   updatedAt: DateTime
 }
 
@@ -207,7 +207,7 @@ input ClientFiltersInput {
   not: ClientFiltersInput
   or: [ClientFiltersInput]
   publishedAt: DateTimeFilterInput
-  testimonials: TestimonialFiltersInput
+  testimonials: ClientTestimonialFiltersInput
   updatedAt: DateTimeFilterInput
 }
 
@@ -222,6 +222,60 @@ input ClientInput {
 
 type ClientRelationResponseCollection {
   nodes: [Client!]!
+}
+
+type ClientTestimonial {
+  author: String!
+  client: Client
+  createdAt: DateTime
+  documentId: ID!
+  media: UploadFile
+  position: String
+  publishedAt: DateTime
+  text: String
+  updatedAt: DateTime
+}
+
+type ClientTestimonialEntity {
+  attributes: ClientTestimonial
+  id: ID
+}
+
+type ClientTestimonialEntityResponse {
+  data: ClientTestimonial
+}
+
+type ClientTestimonialEntityResponseCollection {
+  nodes: [ClientTestimonial!]!
+  pageInfo: Pagination!
+}
+
+input ClientTestimonialFiltersInput {
+  and: [ClientTestimonialFiltersInput]
+  author: StringFilterInput
+  client: ClientFiltersInput
+  createdAt: DateTimeFilterInput
+  documentId: IDFilterInput
+  not: ClientTestimonialFiltersInput
+  or: [ClientTestimonialFiltersInput]
+  position: StringFilterInput
+  publishedAt: DateTimeFilterInput
+  text: StringFilterInput
+  updatedAt: DateTimeFilterInput
+}
+
+input ClientTestimonialInput {
+  author: String
+  client: ID
+  locale: String
+  media: ID
+  position: String
+  publishedAt: DateTime
+  text: String
+}
+
+type ClientTestimonialRelationResponseCollection {
+  nodes: [ClientTestimonial!]!
 }
 
 type ComponentGlobalContentTypeUrl {
@@ -363,30 +417,6 @@ input ComponentRichContentStatInput {
   value: String
 }
 
-type ComponentSectionsAchievements {
-  achievements(filters: AchievementFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Achievement]!
-  achievements_connection(filters: AchievementFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): AchievementRelationResponseCollection
-  headline: ComponentSharedHeadline
-  id: ID!
-  theme: ComponentSharedTheme
-}
-
-input ComponentSectionsAchievementsFiltersInput {
-  achievements: AchievementFiltersInput
-  and: [ComponentSectionsAchievementsFiltersInput]
-  headline: ComponentSharedHeadlineFiltersInput
-  not: ComponentSectionsAchievementsFiltersInput
-  or: [ComponentSectionsAchievementsFiltersInput]
-  theme: ComponentSharedThemeFiltersInput
-}
-
-input ComponentSectionsAchievementsInput {
-  achievements: [ID]
-  headline: ComponentSharedHeadlineInput
-  id: ID
-  theme: ComponentSharedThemeInput
-}
-
 type ComponentSectionsCardsLargeNumerated {
   cards(filters: ComponentSharedCardNumeratedFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSharedCardNumerated]
   cardsLayout: ENUM_COMPONENTSECTIONSCARDSLARGENUMERATED_CARDSLAYOUT
@@ -413,12 +443,77 @@ input ComponentSectionsCardsLargeNumeratedInput {
   theme: ComponentSharedThemeInput
 }
 
+type ComponentSectionsCarousel {
+  achievements(filters: AchievementFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Achievement]!
+  achievements_connection(filters: AchievementFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): AchievementRelationResponseCollection
+  button: ComponentSharedButton
+  clientTestimonials(filters: ClientTestimonialFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ClientTestimonial]!
+  clientTestimonials_connection(filters: ClientTestimonialFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): ClientTestimonialRelationResponseCollection
+  collectionType: ENUM_COMPONENTSECTIONSCAROUSEL_COLLECTIONTYPE
+  headline: ComponentSharedHeadline
+  hiringProcessSteps(filters: HiringProcessFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [HiringProcess]!
+  hiringProcessSteps_connection(filters: HiringProcessFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): HiringProcessRelationResponseCollection
+  id: ID!
+  insights(filters: InsightFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Insight]!
+  insightsLimit: Int
+  insightsPick: ENUM_COMPONENTSECTIONSCAROUSEL_INSIGHTSPICK
+  insights_connection(filters: InsightFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): InsightRelationResponseCollection
+  showLogos: Boolean
+  showNavigation: Boolean
+  showPagination: Boolean
+  smallCards: Boolean
+  teamTestimonials(filters: TeamTestimonialFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [TeamTestimonial]!
+  teamTestimonials_connection(filters: TeamTestimonialFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): TeamTestimonialRelationResponseCollection
+  theme: ComponentSharedTheme
+}
+
+input ComponentSectionsCarouselFiltersInput {
+  achievements: AchievementFiltersInput
+  and: [ComponentSectionsCarouselFiltersInput]
+  button: ComponentSharedButtonFiltersInput
+  clientTestimonials: ClientTestimonialFiltersInput
+  collectionType: StringFilterInput
+  headline: ComponentSharedHeadlineFiltersInput
+  hiringProcessSteps: HiringProcessFiltersInput
+  insights: InsightFiltersInput
+  insightsLimit: IntFilterInput
+  insightsPick: StringFilterInput
+  not: ComponentSectionsCarouselFiltersInput
+  or: [ComponentSectionsCarouselFiltersInput]
+  showLogos: BooleanFilterInput
+  showNavigation: BooleanFilterInput
+  showPagination: BooleanFilterInput
+  smallCards: BooleanFilterInput
+  teamTestimonials: TeamTestimonialFiltersInput
+  theme: ComponentSharedThemeFiltersInput
+}
+
+input ComponentSectionsCarouselInput {
+  achievements: [ID]
+  button: ComponentSharedButtonInput
+  clientTestimonials: [ID]
+  collectionType: ENUM_COMPONENTSECTIONSCAROUSEL_COLLECTIONTYPE
+  headline: ComponentSharedHeadlineInput
+  hiringProcessSteps: [ID]
+  id: ID
+  insights: [ID]
+  insightsLimit: Int
+  insightsPick: ENUM_COMPONENTSECTIONSCAROUSEL_INSIGHTSPICK
+  showLogos: Boolean
+  showNavigation: Boolean
+  showPagination: Boolean
+  smallCards: Boolean
+  teamTestimonials: [ID]
+  theme: ComponentSharedThemeInput
+}
+
 type ComponentSectionsCaseStudies {
   button: ComponentSharedButton
   caseStudies(filters: CaseStudyFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [CaseStudy]!
   caseStudies_connection(filters: CaseStudyFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): CaseStudyRelationResponseCollection
   headline: ComponentSharedHeadline
   id: ID!
+  limit: Int
   pick: ENUM_COMPONENTSECTIONSCASESTUDIES_PICK
   theme: ComponentSharedTheme
 }
@@ -428,6 +523,7 @@ input ComponentSectionsCaseStudiesFiltersInput {
   button: ComponentSharedButtonFiltersInput
   caseStudies: CaseStudyFiltersInput
   headline: ComponentSharedHeadlineFiltersInput
+  limit: IntFilterInput
   not: ComponentSectionsCaseStudiesFiltersInput
   or: [ComponentSectionsCaseStudiesFiltersInput]
   pick: StringFilterInput
@@ -439,6 +535,7 @@ input ComponentSectionsCaseStudiesInput {
   caseStudies: [ID]
   headline: ComponentSharedHeadlineInput
   id: ID
+  limit: Int
   pick: ENUM_COMPONENTSECTIONSCASESTUDIES_PICK
   theme: ComponentSharedThemeInput
 }
@@ -657,93 +754,55 @@ input ComponentSectionsFormInput {
   variant: ENUM_COMPONENTSECTIONSFORM_VARIANT
 }
 
-type ComponentSectionsHeroRich {
+type ComponentSectionsHero {
   button: ComponentSharedButton
-  carousel(filters: ComponentSharedContentItemFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSharedContentItem]
+  carousel(filters: ComponentSharedHeroPromoFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSharedHeroPromo]
   description: String
+  headingSize: ENUM_COMPONENTSECTIONSHERO_HEADINGSIZE
   id: ID!
+  image: UploadFile
+  indicatorText: String
   label: String
+  media: UploadFile
+  showreel: ComponentSharedShowreel
+  subtitle: String
   theme: ComponentSharedTheme
   title: String
-  variant: ENUM_COMPONENTSECTIONSHERORICH_VARIANT
+  variant: ENUM_COMPONENTSECTIONSHERO_VARIANT
 }
 
-input ComponentSectionsHeroRichFiltersInput {
-  and: [ComponentSectionsHeroRichFiltersInput]
+input ComponentSectionsHeroFiltersInput {
+  and: [ComponentSectionsHeroFiltersInput]
   button: ComponentSharedButtonFiltersInput
-  carousel: ComponentSharedContentItemFiltersInput
+  carousel: ComponentSharedHeroPromoFiltersInput
   description: StringFilterInput
+  headingSize: StringFilterInput
+  indicatorText: StringFilterInput
   label: StringFilterInput
-  not: ComponentSectionsHeroRichFiltersInput
-  or: [ComponentSectionsHeroRichFiltersInput]
+  not: ComponentSectionsHeroFiltersInput
+  or: [ComponentSectionsHeroFiltersInput]
+  showreel: ComponentSharedShowreelFiltersInput
+  subtitle: StringFilterInput
   theme: ComponentSharedThemeFiltersInput
   title: StringFilterInput
   variant: StringFilterInput
 }
 
-input ComponentSectionsHeroRichInput {
+input ComponentSectionsHeroInput {
   button: ComponentSharedButtonInput
-  carousel: [ComponentSharedContentItemInput]
+  carousel: [ComponentSharedHeroPromoInput]
   description: String
-  id: ID
-  label: String
-  theme: ComponentSharedThemeInput
-  title: String
-  variant: ENUM_COMPONENTSECTIONSHERORICH_VARIANT
-}
-
-type ComponentSectionsHeroSvg {
-  id: ID!
-  image: UploadFile
-  theme: ComponentSharedTheme
-  title: String
-}
-
-input ComponentSectionsHeroSvgFiltersInput {
-  and: [ComponentSectionsHeroSvgFiltersInput]
-  not: ComponentSectionsHeroSvgFiltersInput
-  or: [ComponentSectionsHeroSvgFiltersInput]
-  theme: ComponentSharedThemeFiltersInput
-  title: StringFilterInput
-}
-
-input ComponentSectionsHeroSvgInput {
+  headingSize: ENUM_COMPONENTSECTIONSHERO_HEADINGSIZE
   id: ID
   image: ID
-  theme: ComponentSharedThemeInput
-  title: String
-}
-
-type ComponentSectionsHeroTwoColumns {
-  button: ComponentSharedButton
-  description: String
-  id: ID!
   indicatorText: String
   label: String
-  theme: ComponentSharedTheme
-  title: String
-}
-
-input ComponentSectionsHeroTwoColumnsFiltersInput {
-  and: [ComponentSectionsHeroTwoColumnsFiltersInput]
-  button: ComponentSharedButtonFiltersInput
-  description: StringFilterInput
-  indicatorText: StringFilterInput
-  label: StringFilterInput
-  not: ComponentSectionsHeroTwoColumnsFiltersInput
-  or: [ComponentSectionsHeroTwoColumnsFiltersInput]
-  theme: ComponentSharedThemeFiltersInput
-  title: StringFilterInput
-}
-
-input ComponentSectionsHeroTwoColumnsInput {
-  button: ComponentSharedButtonInput
-  description: String
-  id: ID
-  indicatorText: String
-  label: String
+  media: ID
+  showreel: ComponentSharedShowreelInput
+  subtitle: String
   theme: ComponentSharedThemeInput
   title: String
+  variant: ENUM_COMPONENTSECTIONSHERO_VARIANT
 }
 
 type ComponentSectionsIndustries {
@@ -773,36 +832,6 @@ input ComponentSectionsIndustriesInput {
   headline: ComponentSharedHeadlineInput
   id: ID
   industries: [ID]
-  theme: ComponentSharedThemeInput
-}
-
-type ComponentSectionsInsights {
-  button: ComponentSharedButton
-  headline: ComponentSharedHeadline
-  id: ID!
-  insights(filters: InsightFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Insight]!
-  insights_connection(filters: InsightFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): InsightRelationResponseCollection
-  pick: ENUM_COMPONENTSECTIONSINSIGHTS_PICK
-  theme: ComponentSharedTheme
-}
-
-input ComponentSectionsInsightsFiltersInput {
-  and: [ComponentSectionsInsightsFiltersInput]
-  button: ComponentSharedButtonFiltersInput
-  headline: ComponentSharedHeadlineFiltersInput
-  insights: InsightFiltersInput
-  not: ComponentSectionsInsightsFiltersInput
-  or: [ComponentSectionsInsightsFiltersInput]
-  pick: StringFilterInput
-  theme: ComponentSharedThemeFiltersInput
-}
-
-input ComponentSectionsInsightsInput {
-  button: ComponentSharedButtonInput
-  headline: ComponentSharedHeadlineInput
-  id: ID
-  insights: [ID]
-  pick: ENUM_COMPONENTSECTIONSINSIGHTS_PICK
   theme: ComponentSharedThemeInput
 }
 
@@ -1139,57 +1168,6 @@ input ComponentSectionsTechStackInput {
   theme: ComponentSharedThemeInput
 }
 
-type ComponentSectionsTestimonialsClients {
-  cards(filters: TestimonialFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Testimonial]!
-  cards_connection(filters: TestimonialFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): TestimonialRelationResponseCollection
-  headline: ComponentSharedHeadline
-  id: ID!
-  theme: ComponentSharedTheme
-}
-
-input ComponentSectionsTestimonialsClientsFiltersInput {
-  and: [ComponentSectionsTestimonialsClientsFiltersInput]
-  cards: TestimonialFiltersInput
-  headline: ComponentSharedHeadlineFiltersInput
-  not: ComponentSectionsTestimonialsClientsFiltersInput
-  or: [ComponentSectionsTestimonialsClientsFiltersInput]
-  theme: ComponentSharedThemeFiltersInput
-}
-
-input ComponentSectionsTestimonialsClientsInput {
-  cards: [ID]
-  headline: ComponentSharedHeadlineInput
-  id: ID
-  theme: ComponentSharedThemeInput
-}
-
-type ComponentSectionsTestimonialsTeam {
-  cards(filters: TestimonialFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Testimonial]!
-  cardsLayout: ENUM_COMPONENTSECTIONSTESTIMONIALSTEAM_CARDSLAYOUT
-  cards_connection(filters: TestimonialFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): TestimonialRelationResponseCollection
-  headline: ComponentSharedHeadline
-  id: ID!
-  theme: ComponentSharedTheme
-}
-
-input ComponentSectionsTestimonialsTeamFiltersInput {
-  and: [ComponentSectionsTestimonialsTeamFiltersInput]
-  cards: TestimonialFiltersInput
-  cardsLayout: StringFilterInput
-  headline: ComponentSharedHeadlineFiltersInput
-  not: ComponentSectionsTestimonialsTeamFiltersInput
-  or: [ComponentSectionsTestimonialsTeamFiltersInput]
-  theme: ComponentSharedThemeFiltersInput
-}
-
-input ComponentSectionsTestimonialsTeamInput {
-  cards: [ID]
-  cardsLayout: ENUM_COMPONENTSECTIONSTESTIMONIALSTEAM_CARDSLAYOUT
-  headline: ComponentSharedHeadlineInput
-  id: ID
-  theme: ComponentSharedThemeInput
-}
-
 type ComponentSharedButton {
   caseStudy: CaseStudy
   id: ID!
@@ -1199,6 +1177,7 @@ type ComponentSharedButton {
   scrollTo: String
   title: String
   url: String
+  variant: ENUM_COMPONENTSHAREDBUTTON_VARIANT
 }
 
 input ComponentSharedButtonFiltersInput {
@@ -1212,6 +1191,7 @@ input ComponentSharedButtonFiltersInput {
   scrollTo: StringFilterInput
   title: StringFilterInput
   url: StringFilterInput
+  variant: StringFilterInput
 }
 
 input ComponentSharedButtonInput {
@@ -1223,6 +1203,7 @@ input ComponentSharedButtonInput {
   scrollTo: String
   title: String
   url: String
+  variant: ENUM_COMPONENTSHAREDBUTTON_VARIANT
 }
 
 type ComponentSharedCardMilestone {
@@ -1355,6 +1336,29 @@ input ComponentSharedHeadlineFiltersInput {
 input ComponentSharedHeadlineInput {
   addCount: Boolean
   id: ID
+  title: String
+}
+
+type ComponentSharedHeroPromo {
+  button: ComponentSharedButton
+  id: ID!
+  label: String
+  title: String
+}
+
+input ComponentSharedHeroPromoFiltersInput {
+  and: [ComponentSharedHeroPromoFiltersInput]
+  button: ComponentSharedButtonFiltersInput
+  label: StringFilterInput
+  not: ComponentSharedHeroPromoFiltersInput
+  or: [ComponentSharedHeroPromoFiltersInput]
+  title: StringFilterInput
+}
+
+input ComponentSharedHeroPromoInput {
+  button: ComponentSharedButtonInput
+  id: ID
+  label: String
   title: String
 }
 
@@ -1680,7 +1684,22 @@ enum ENUM_COMPONENTSECTIONSCARDSLARGENUMERATED_CARDSLAYOUT {
   grid
 }
 
+enum ENUM_COMPONENTSECTIONSCAROUSEL_COLLECTIONTYPE {
+  achievements
+  clientTestimonials
+  hiringProcess
+  insights
+  teamTestimonials
+}
+
+enum ENUM_COMPONENTSECTIONSCAROUSEL_INSIGHTSPICK {
+  featured
+  latest
+  manual
+}
+
 enum ENUM_COMPONENTSECTIONSCASESTUDIES_PICK {
+  featured
   latest
   manual
   next
@@ -1701,14 +1720,16 @@ enum ENUM_COMPONENTSECTIONSFORM_VARIANT {
   cv
 }
 
-enum ENUM_COMPONENTSECTIONSHERORICH_VARIANT {
-  titleAbove
-  titleBelow
+enum ENUM_COMPONENTSECTIONSHERO_HEADINGSIZE {
+  large
+  small
 }
 
-enum ENUM_COMPONENTSECTIONSINSIGHTS_PICK {
-  latest
-  manual
+enum ENUM_COMPONENTSECTIONSHERO_VARIANT {
+  default
+  simple
+  withCarousel
+  withShowreel
 }
 
 enum ENUM_COMPONENTSECTIONSPORTFOLIO_SORT {
@@ -1716,16 +1737,21 @@ enum ENUM_COMPONENTSECTIONSPORTFOLIO_SORT {
   desc
 }
 
-enum ENUM_COMPONENTSECTIONSTESTIMONIALSTEAM_CARDSLAYOUT {
-  carousel
-  grid
-}
-
 enum ENUM_COMPONENTSHAREDBUTTON_LINKTYPE {
   caseStudy
   insight
   page
   url
+}
+
+enum ENUM_COMPONENTSHAREDBUTTON_VARIANT {
+  dark
+  ghostDark
+  ghostLight
+  light
+  link
+  solidDark
+  solidLight
 }
 
 enum ENUM_COMPONENTSHAREDTHEME_BACKGROUND {
@@ -1822,7 +1848,7 @@ input FloatFilterInput {
   startsWith: Float
 }
 
-union GenericMorph = Achievement | CaseStudy | Client | ComponentGlobalContentTypeUrl | ComponentGlobalFooter | ComponentGlobalPartner | ComponentRichContentBlock | ComponentRichContentStat | ComponentSectionsAchievements | ComponentSectionsCardsLargeNumerated | ComponentSectionsCaseStudies | ComponentSectionsContentColorBoxes | ComponentSectionsContentImageLeft | ComponentSectionsContentImageNumerated | ComponentSectionsContentNumerated | ComponentSectionsCta | ComponentSectionsFaq | ComponentSectionsForm | ComponentSectionsHeroRich | ComponentSectionsHeroSvg | ComponentSectionsHeroTwoColumns | ComponentSectionsIndustries | ComponentSectionsInsights | ComponentSectionsIntersectionFloatingBoxes | ComponentSectionsIntersectionMedia | ComponentSectionsIntroShowreel | ComponentSectionsPerson | ComponentSectionsPortfolio | ComponentSectionsProcess | ComponentSectionsProgressCards | ComponentSectionsRichContentBody | ComponentSectionsServicesGroup | ComponentSectionsTeam | ComponentSectionsTeamGrid | ComponentSectionsTechStack | ComponentSectionsTestimonialsClients | ComponentSectionsTestimonialsTeam | ComponentSharedButton | ComponentSharedCardMilestone | ComponentSharedCardNumerated | ComponentSharedColorBox | ComponentSharedContentItem | ComponentSharedFloatingCard | ComponentSharedHeadline | ComponentSharedSectionsNavController | ComponentSharedSeo | ComponentSharedServiceGroup | ComponentSharedShowreel | ComponentSharedSocials | ComponentSharedTheme | ComponentTestTest | ContentManagerOrganizerContentManagerConfiguration | Faq | Global | I18NLocale | Industry | Insight | Page | Platform | Process | Region | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | Service | Team | TechStack | Testimonial | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser
+union GenericMorph = Achievement | CaseStudy | Client | ClientTestimonial | ComponentGlobalContentTypeUrl | ComponentGlobalFooter | ComponentGlobalPartner | ComponentRichContentBlock | ComponentRichContentStat | ComponentSectionsCardsLargeNumerated | ComponentSectionsCarousel | ComponentSectionsCaseStudies | ComponentSectionsContentColorBoxes | ComponentSectionsContentImageLeft | ComponentSectionsContentImageNumerated | ComponentSectionsContentNumerated | ComponentSectionsCta | ComponentSectionsFaq | ComponentSectionsForm | ComponentSectionsHero | ComponentSectionsIndustries | ComponentSectionsIntersectionFloatingBoxes | ComponentSectionsIntersectionMedia | ComponentSectionsIntroShowreel | ComponentSectionsPerson | ComponentSectionsPortfolio | ComponentSectionsProcess | ComponentSectionsProgressCards | ComponentSectionsRichContentBody | ComponentSectionsServicesGroup | ComponentSectionsTeam | ComponentSectionsTeamGrid | ComponentSectionsTechStack | ComponentSharedButton | ComponentSharedCardMilestone | ComponentSharedCardNumerated | ComponentSharedColorBox | ComponentSharedContentItem | ComponentSharedFloatingCard | ComponentSharedHeadline | ComponentSharedHeroPromo | ComponentSharedSectionsNavController | ComponentSharedSeo | ComponentSharedServiceGroup | ComponentSharedShowreel | ComponentSharedSocials | ComponentSharedTheme | ComponentTestTest | ContentManagerOrganizerContentManagerConfiguration | Faq | Global | HiringProcess | I18NLocale | Industry | Insight | Page | Platform | Process | Region | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | Service | Team | TeamTestimonial | TechStack | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser
 
 type Global {
   contentTypeUrls(filters: ComponentGlobalContentTypeUrlFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentGlobalContentTypeUrl]
@@ -1867,6 +1893,52 @@ input GlobalInput {
 
 type GlobalRelationResponseCollection {
   nodes: [Global!]!
+}
+
+type HiringProcess {
+  createdAt: DateTime
+  description: String
+  documentId: ID!
+  publishedAt: DateTime
+  title: String!
+  updatedAt: DateTime
+}
+
+type HiringProcessEntity {
+  attributes: HiringProcess
+  id: ID
+}
+
+type HiringProcessEntityResponse {
+  data: HiringProcess
+}
+
+type HiringProcessEntityResponseCollection {
+  nodes: [HiringProcess!]!
+  pageInfo: Pagination!
+}
+
+input HiringProcessFiltersInput {
+  and: [HiringProcessFiltersInput]
+  createdAt: DateTimeFilterInput
+  description: StringFilterInput
+  documentId: IDFilterInput
+  not: HiringProcessFiltersInput
+  or: [HiringProcessFiltersInput]
+  publishedAt: DateTimeFilterInput
+  title: StringFilterInput
+  updatedAt: DateTimeFilterInput
+}
+
+input HiringProcessInput {
+  description: String
+  locale: String
+  publishedAt: DateTime
+  title: String
+}
+
+type HiringProcessRelationResponseCollection {
+  nodes: [HiringProcess!]!
 }
 
 type I18NLocale {
@@ -2057,7 +2129,7 @@ type InsightRelationResponseCollection {
   nodes: [Insight!]!
 }
 
-union InsightSectionsDynamicZone = ComponentSectionsCta | ComponentSectionsInsights | ComponentSectionsRichContentBody | Error
+union InsightSectionsDynamicZone = ComponentSectionsCarousel | ComponentSectionsCta | ComponentSectionsRichContentBody | Error
 
 scalar InsightSectionsDynamicZoneInput
 
@@ -2152,8 +2224,10 @@ type Mutation {
   createAchievement(data: AchievementInput!, status: PublicationStatus = PUBLISHED): Achievement
   createCaseStudy(data: CaseStudyInput!, status: PublicationStatus = PUBLISHED): CaseStudy
   createClient(data: ClientInput!, status: PublicationStatus = PUBLISHED): Client
+  createClientTestimonial(data: ClientTestimonialInput!, status: PublicationStatus = PUBLISHED): ClientTestimonial
   createContentManagerOrganizerContentManagerConfiguration(data: ContentManagerOrganizerContentManagerConfigurationInput!, status: PublicationStatus = PUBLISHED): ContentManagerOrganizerContentManagerConfiguration
   createFaq(data: FaqInput!, status: PublicationStatus = PUBLISHED): Faq
+  createHiringProcess(data: HiringProcessInput!, status: PublicationStatus = PUBLISHED): HiringProcess
   createIndustry(data: IndustryInput!, status: PublicationStatus = PUBLISHED): Industry
   createInsight(data: InsightInput!, status: PublicationStatus = PUBLISHED): Insight
   createPage(data: PageInput!, status: PublicationStatus = PUBLISHED): Page
@@ -2164,8 +2238,8 @@ type Mutation {
   createReviewWorkflowsWorkflowStage(data: ReviewWorkflowsWorkflowStageInput!, status: PublicationStatus = PUBLISHED): ReviewWorkflowsWorkflowStage
   createService(data: ServiceInput!, status: PublicationStatus = PUBLISHED): Service
   createTeam(data: TeamInput!, status: PublicationStatus = PUBLISHED): Team
+  createTeamTestimonial(data: TeamTestimonialInput!, status: PublicationStatus = PUBLISHED): TeamTestimonial
   createTechStack(data: TechStackInput!, status: PublicationStatus = PUBLISHED): TechStack
-  createTestimonial(data: TestimonialInput!, status: PublicationStatus = PUBLISHED): Testimonial
 
   """Create a new role"""
   createUsersPermissionsRole(data: UsersPermissionsRoleInput!): UsersPermissionsCreateRolePayload
@@ -2175,9 +2249,11 @@ type Mutation {
   deleteAchievement(documentId: ID!): DeleteMutationResponse
   deleteCaseStudy(documentId: ID!): DeleteMutationResponse
   deleteClient(documentId: ID!): DeleteMutationResponse
+  deleteClientTestimonial(documentId: ID!): DeleteMutationResponse
   deleteContentManagerOrganizerContentManagerConfiguration(documentId: ID!): DeleteMutationResponse
   deleteFaq(documentId: ID!): DeleteMutationResponse
   deleteGlobal: DeleteMutationResponse
+  deleteHiringProcess(documentId: ID!): DeleteMutationResponse
   deleteIndustry(documentId: ID!): DeleteMutationResponse
   deleteInsight(documentId: ID!): DeleteMutationResponse
   deletePage(documentId: ID!): DeleteMutationResponse
@@ -2188,8 +2264,8 @@ type Mutation {
   deleteReviewWorkflowsWorkflowStage(documentId: ID!): DeleteMutationResponse
   deleteService(documentId: ID!): DeleteMutationResponse
   deleteTeam(documentId: ID!): DeleteMutationResponse
+  deleteTeamTestimonial(documentId: ID!): DeleteMutationResponse
   deleteTechStack(documentId: ID!): DeleteMutationResponse
-  deleteTestimonial(documentId: ID!): DeleteMutationResponse
   deleteUploadFile(id: ID!): UploadFile
 
   """Delete an existing role"""
@@ -2215,9 +2291,11 @@ type Mutation {
   updateAchievement(data: AchievementInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): Achievement
   updateCaseStudy(data: CaseStudyInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): CaseStudy
   updateClient(data: ClientInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): Client
+  updateClientTestimonial(data: ClientTestimonialInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): ClientTestimonial
   updateContentManagerOrganizerContentManagerConfiguration(data: ContentManagerOrganizerContentManagerConfigurationInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): ContentManagerOrganizerContentManagerConfiguration
   updateFaq(data: FaqInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): Faq
   updateGlobal(data: GlobalInput!, status: PublicationStatus = PUBLISHED): Global
+  updateHiringProcess(data: HiringProcessInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): HiringProcess
   updateIndustry(data: IndustryInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): Industry
   updateInsight(data: InsightInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): Insight
   updatePage(data: PageInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): Page
@@ -2228,8 +2306,8 @@ type Mutation {
   updateReviewWorkflowsWorkflowStage(data: ReviewWorkflowsWorkflowStageInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): ReviewWorkflowsWorkflowStage
   updateService(data: ServiceInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): Service
   updateTeam(data: TeamInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): Team
+  updateTeamTestimonial(data: TeamTestimonialInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): TeamTestimonial
   updateTechStack(data: TechStackInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): TechStack
-  updateTestimonial(data: TestimonialInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): Testimonial
   updateUploadFile(id: ID!, info: FileInfoInput): UploadFile!
 
   """Update an existing role"""
@@ -2365,7 +2443,7 @@ type PageRelationResponseCollection {
   nodes: [Page!]!
 }
 
-union PageSectionsDynamicZone = ComponentSectionsAchievements | ComponentSectionsCardsLargeNumerated | ComponentSectionsCaseStudies | ComponentSectionsContentColorBoxes | ComponentSectionsContentImageLeft | ComponentSectionsContentImageNumerated | ComponentSectionsContentNumerated | ComponentSectionsCta | ComponentSectionsFaq | ComponentSectionsForm | ComponentSectionsHeroRich | ComponentSectionsHeroSvg | ComponentSectionsHeroTwoColumns | ComponentSectionsIndustries | ComponentSectionsInsights | ComponentSectionsIntersectionFloatingBoxes | ComponentSectionsIntersectionMedia | ComponentSectionsIntroShowreel | ComponentSectionsPerson | ComponentSectionsPortfolio | ComponentSectionsProcess | ComponentSectionsProgressCards | ComponentSectionsRichContentBody | ComponentSectionsServicesGroup | ComponentSectionsTeam | ComponentSectionsTeamGrid | ComponentSectionsTechStack | ComponentSectionsTestimonialsClients | ComponentSectionsTestimonialsTeam | Error
+union PageSectionsDynamicZone = ComponentSectionsCardsLargeNumerated | ComponentSectionsCarousel | ComponentSectionsCaseStudies | ComponentSectionsContentColorBoxes | ComponentSectionsContentImageLeft | ComponentSectionsContentImageNumerated | ComponentSectionsContentNumerated | ComponentSectionsCta | ComponentSectionsFaq | ComponentSectionsForm | ComponentSectionsHero | ComponentSectionsIndustries | ComponentSectionsIntersectionFloatingBoxes | ComponentSectionsIntersectionMedia | ComponentSectionsIntroShowreel | ComponentSectionsPerson | ComponentSectionsPortfolio | ComponentSectionsProcess | ComponentSectionsProgressCards | ComponentSectionsRichContentBody | ComponentSectionsServicesGroup | ComponentSectionsTeam | ComponentSectionsTeamGrid | ComponentSectionsTechStack | Error
 
 scalar PageSectionsDynamicZoneInput
 
@@ -2504,6 +2582,9 @@ type Query {
   caseStudies_connection(filters: CaseStudyFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): CaseStudyEntityResponseCollection
   caseStudy(documentId: ID!, hasPublishedVersion: Boolean, publicationFilter: PublicationFilter, status: PublicationStatus = PUBLISHED): CaseStudy
   client(documentId: ID!, hasPublishedVersion: Boolean, publicationFilter: PublicationFilter, status: PublicationStatus = PUBLISHED): Client
+  clientTestimonial(documentId: ID!, hasPublishedVersion: Boolean, publicationFilter: PublicationFilter, status: PublicationStatus = PUBLISHED): ClientTestimonial
+  clientTestimonials(filters: ClientTestimonialFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): [ClientTestimonial]!
+  clientTestimonials_connection(filters: ClientTestimonialFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): ClientTestimonialEntityResponseCollection
   clients(filters: ClientFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): [Client]!
   clients_connection(filters: ClientFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): ClientEntityResponseCollection
   contentManagerOrganizerContentManagerConfiguration(documentId: ID!, hasPublishedVersion: Boolean, publicationFilter: PublicationFilter, status: PublicationStatus = PUBLISHED): ContentManagerOrganizerContentManagerConfiguration
@@ -2513,6 +2594,9 @@ type Query {
   faqs(filters: FaqFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): [Faq]!
   faqs_connection(filters: FaqFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): FaqEntityResponseCollection
   global(hasPublishedVersion: Boolean, publicationFilter: PublicationFilter, status: PublicationStatus = PUBLISHED): Global
+  hiringProcess(documentId: ID!, hasPublishedVersion: Boolean, publicationFilter: PublicationFilter, status: PublicationStatus = PUBLISHED): HiringProcess
+  hiringProcesses(filters: HiringProcessFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): [HiringProcess]!
+  hiringProcesses_connection(filters: HiringProcessFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): HiringProcessEntityResponseCollection
   i18NLocale(documentId: ID!, hasPublishedVersion: Boolean, publicationFilter: PublicationFilter, status: PublicationStatus = PUBLISHED): I18NLocale
   i18NLocales(filters: I18NLocaleFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): [I18NLocale]!
   i18NLocales_connection(filters: I18NLocaleFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): I18NLocaleEntityResponseCollection
@@ -2547,14 +2631,14 @@ type Query {
   services(filters: ServiceFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): [Service]!
   services_connection(filters: ServiceFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): ServiceEntityResponseCollection
   team(documentId: ID!, hasPublishedVersion: Boolean, publicationFilter: PublicationFilter, status: PublicationStatus = PUBLISHED): Team
+  teamTestimonial(documentId: ID!, hasPublishedVersion: Boolean, publicationFilter: PublicationFilter, status: PublicationStatus = PUBLISHED): TeamTestimonial
+  teamTestimonials(filters: TeamTestimonialFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): [TeamTestimonial]!
+  teamTestimonials_connection(filters: TeamTestimonialFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): TeamTestimonialEntityResponseCollection
   teams(filters: TeamFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): [Team]!
   teams_connection(filters: TeamFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): TeamEntityResponseCollection
   techStack(documentId: ID!, hasPublishedVersion: Boolean, publicationFilter: PublicationFilter, status: PublicationStatus = PUBLISHED): TechStack
   techStacks(filters: TechStackFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): [TechStack]!
   techStacks_connection(filters: TechStackFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): TechStackEntityResponseCollection
-  testimonial(documentId: ID!, hasPublishedVersion: Boolean, publicationFilter: PublicationFilter, status: PublicationStatus = PUBLISHED): Testimonial
-  testimonials(filters: TestimonialFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): [Testimonial]!
-  testimonials_connection(filters: TestimonialFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): TestimonialEntityResponseCollection
   uploadFile(documentId: ID!, hasPublishedVersion: Boolean, publicationFilter: PublicationFilter, status: PublicationStatus = PUBLISHED): UploadFile
   uploadFiles(filters: UploadFileFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): [UploadFile]!
   uploadFiles_connection(filters: UploadFileFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): UploadFileEntityResponseCollection
@@ -2869,6 +2953,57 @@ type TeamRelationResponseCollection {
   nodes: [Team!]!
 }
 
+type TeamTestimonial {
+  author: String!
+  createdAt: DateTime
+  documentId: ID!
+  media: UploadFile
+  position: String
+  publishedAt: DateTime
+  text: String
+  updatedAt: DateTime
+}
+
+type TeamTestimonialEntity {
+  attributes: TeamTestimonial
+  id: ID
+}
+
+type TeamTestimonialEntityResponse {
+  data: TeamTestimonial
+}
+
+type TeamTestimonialEntityResponseCollection {
+  nodes: [TeamTestimonial!]!
+  pageInfo: Pagination!
+}
+
+input TeamTestimonialFiltersInput {
+  and: [TeamTestimonialFiltersInput]
+  author: StringFilterInput
+  createdAt: DateTimeFilterInput
+  documentId: IDFilterInput
+  not: TeamTestimonialFiltersInput
+  or: [TeamTestimonialFiltersInput]
+  position: StringFilterInput
+  publishedAt: DateTimeFilterInput
+  text: StringFilterInput
+  updatedAt: DateTimeFilterInput
+}
+
+input TeamTestimonialInput {
+  author: String
+  locale: String
+  media: ID
+  position: String
+  publishedAt: DateTime
+  text: String
+}
+
+type TeamTestimonialRelationResponseCollection {
+  nodes: [TeamTestimonial!]!
+}
+
 type TechStack {
   caseStudies(filters: CaseStudyFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [CaseStudy]!
   caseStudies_connection(filters: CaseStudyFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): CaseStudyRelationResponseCollection
@@ -2929,60 +3064,6 @@ input TechStackInput {
 
 type TechStackRelationResponseCollection {
   nodes: [TechStack!]!
-}
-
-type Testimonial {
-  author: String!
-  client: Client
-  createdAt: DateTime
-  documentId: ID!
-  media: UploadFile
-  position: String
-  publishedAt: DateTime
-  text: String
-  updatedAt: DateTime
-}
-
-type TestimonialEntity {
-  attributes: Testimonial
-  id: ID
-}
-
-type TestimonialEntityResponse {
-  data: Testimonial
-}
-
-type TestimonialEntityResponseCollection {
-  nodes: [Testimonial!]!
-  pageInfo: Pagination!
-}
-
-input TestimonialFiltersInput {
-  and: [TestimonialFiltersInput]
-  author: StringFilterInput
-  client: ClientFiltersInput
-  createdAt: DateTimeFilterInput
-  documentId: IDFilterInput
-  not: TestimonialFiltersInput
-  or: [TestimonialFiltersInput]
-  position: StringFilterInput
-  publishedAt: DateTimeFilterInput
-  text: StringFilterInput
-  updatedAt: DateTimeFilterInput
-}
-
-input TestimonialInput {
-  author: String
-  client: ID
-  locale: String
-  media: ID
-  position: String
-  publishedAt: DateTime
-  text: String
-}
-
-type TestimonialRelationResponseCollection {
-  nodes: [Testimonial!]!
 }
 
 """A time string with format HH:mm:ss.SSS"""

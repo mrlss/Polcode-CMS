@@ -9,6 +9,19 @@
     "title": {
       "type": "string"
     },
+    "variant": {
+      "type": "enumeration",
+      "enum": [
+        "light",
+        "dark",
+        "ghostLight",
+        "ghostDark",
+        "solidLight",
+        "solidDark",
+        "link"
+      ],
+      "default": null
+    },
     "scrollTo": {
       "type": "string"
     },

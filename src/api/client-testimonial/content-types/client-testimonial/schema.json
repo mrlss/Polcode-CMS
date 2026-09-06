@@ -1,11 +1,11 @@
 {
   "kind": "collectionType",
-  "collectionName": "testimonials",
+  "collectionName": "client_testimonials",
   "info": {
-    "singularName": "testimonial",
-    "pluralName": "testimonials",
-    "displayName": "Testimonials",
-    "description": "Client testimonials"
+    "singularName": "client-testimonial",
+    "pluralName": "client-testimonials",
+    "displayName": "Client Testimonials",
+    "description": "Client testimonials — each one belongs to a single client"
   },
   "options": {
     "draftAndPublish": true

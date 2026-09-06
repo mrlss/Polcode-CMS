@@ -76,6 +76,37 @@ async function ensureCollection(
   return entries.slice(0, target);
 }
 
+/**
+ * Upload a single file from `<cwd>/seed-assets/` and return its media id
+ * (or null when the file is missing). `process.cwd()` is the strapi project
+ * root because the seeder runs from `dist/src/` where `__dirname` is
+ * unreliable.
+ */
+async function uploadAsset(
+  strapi: Strapi,
+  file: string,
+  alternativeText: string,
+): Promise<number | null> {
+  const filePath = path.join(process.cwd(), "seed-assets", file);
+  if (!fs.existsSync(filePath)) {
+    console.log(`[seed-content] seed asset missing, skipping: ${filePath}`);
+    return null;
+  }
+  const ext = path.extname(file).slice(1);
+  const mimetype = ext === "svg" ? "image/svg+xml" : `image/${ext}`;
+  const uploadService = strapi.plugin("upload").service("upload");
+  const uploaded = await uploadService.upload({
+    data: { fileInfo: { alternativeText } },
+    files: {
+      filepath: filePath,
+      originalFilename: file,
+      mimetype,
+      size: fs.statSync(filePath).size,
+    },
+  });
+  return uploaded?.[0]?.id ?? null;
+}
+
 export async function seedContent(strapi: Strapi) {
   const log = (msg: string) => console.log(`[seed-content] ${msg}`);
 
@@ -433,46 +464,182 @@ export async function seedContent(strapi: Strapi) {
     ],
   );
 
-  const testimonials = await ensureCollection(
+  // Upload testimonial placeholder visuals (`seed-assets/*.svg`) as real media
+  // so every item below is fully populated (text + media + client).
+  const uploadTestimonialMedia = (prefix: string) =>
+    Promise.all(
+      Array.from({ length: 8 }, (_, i) =>
+        uploadAsset(
+          strapi,
+          `${prefix}-${String(i + 1).padStart(2, "0")}.svg`,
+          `Testimonial visual ${i + 1}`,
+        ),
+      ),
+    );
+  const clientMedia = await uploadTestimonialMedia("client-testimonial");
+  const teamMedia = await uploadTestimonialMedia("team-testimonial");
+
+  // Match by client NAME (not array index) — ensureCollection returns entries
+  // ordered by DB id, which may differ from the seed list order above.
+  const clientIdByName = (name: string) =>
+    clients.find((c) => c.name === name)?.id;
+
+  const clientTestimonials = await ensureCollection(
     strapi,
-    "api::testimonial.testimonial",
+    "api::client-testimonial.client-testimonial",
     (e) => e.author,
     [
       {
         author: "Maria Kowalski",
-        position: "CPO, FinTech Labs",
-        text: "<p>Delivered on time and above expectations.</p>",
-        client: clients[0].id,
+        position: "Chief Product Officer, Fintech Labs",
+        text: "<p>Polcode rebuilt our onboarding flow in ten weeks and it paid for itself within the first month. Senior engineers, clear ownership, no babysitting.</p>",
+        client: clientIdByName("Fintech Labs"),
+        media: clientMedia[0],
       },
       {
         author: "Tom Müller",
-        position: "CTO, HealthPlus",
-        text: "<p>A true engineering partner, not a vendor.</p>",
-        client: clients[1].id,
+        position: "Chief Technology Officer, HealthPlus",
+        text: "<p>A true engineering partner, not a vendor. They understood our compliance constraints and still shipped faster than our in-house team could have.</p>",
+        client: clientIdByName("HealthPlus"),
+        media: clientMedia[1],
       },
       {
         author: "Sofia Ricci",
-        position: "CEO, TravelHub",
-        text: "<p>They turned a legacy system into a platform we are proud of.</p>",
-        client: clients[3].id,
+        position: "Chief Executive Officer, TravelHub",
+        text: "<p>They turned a legacy booking system into a platform we are genuinely proud of. Migration, a new mobile app, and a 40% drop in support tickets.</p>",
+        client: clientIdByName("TravelHub"),
+        media: clientMedia[2],
       },
       {
         author: "David Chen",
         position: "VP Engineering, Retailly",
-        text: "<p>Fast, senior, and genuinely invested in our product.</p>",
-        client: clients[2].id,
+        text: "<p>Fast, senior, and genuinely invested in our product. Code review, docs, pairing — the quality bar we would expect from our own staff.</p>",
+        client: clientIdByName("Retailly"),
+        media: clientMedia[3],
       },
       {
         author: "Ola Jensen",
-        position: "COO, Edudot",
-        text: "<p>Reliable delivery across every single sprint.</p>",
-        client: clients[4].id,
+        position: "Chief Operating Officer, EduDot",
+        text: "<p>Reliable delivery across every single sprint. The roadmap they gave us in week one is the roadmap they delivered in month nine.</p>",
+        client: clientIdByName("EduDot"),
+        media: clientMedia[4],
       },
       {
         author: "Ravi Patel",
-        position: "Product Lead, Manufacturo",
-        text: "<p>Our go-to team for anything complex.</p>",
-        client: clients[5].id,
+        position: "Head of Product, Manufacturo",
+        text: "<p>Our go-to team for anything complex. They untangled a decade of IoT data and gave our operators a dashboard they actually open.</p>",
+        client: clientIdByName("Manufacturo"),
+        media: clientMedia[5],
+      },
+      {
+        author: "Lena Fischer",
+        position: "Head of Product, Fintech Labs",
+        text: "<p>The second project we did with them, because the first one shipped on time. Their discovery phase alone saved us from building the wrong thing.</p>",
+        client: clientIdByName("Fintech Labs"),
+        media: clientMedia[6],
+      },
+      {
+        author: "Marco Bianchi",
+        position: "Chief Technology Officer, TravelHub",
+        text: "<p>They scaled our checkout for Black Friday without a single incident. Real engineers who measure things and tell you the truth.</p>",
+        client: clientIdByName("TravelHub"),
+        media: clientMedia[7],
+      },
+    ],
+    8,
+  );
+
+  const teamTestimonials = await ensureCollection(
+    strapi,
+    "api::team-testimonial.team-testimonial",
+    (e) => e.author,
+    [
+      {
+        author: "Anna Nowak",
+        position: "Principal Consultant",
+        text: "<p>Senior people who take real ownership end to end. The kind of team that treats your deadlines as their own.</p>",
+        media: teamMedia[0],
+      },
+      {
+        author: "Piotr Zieliński",
+        position: "Engineering Manager",
+        text: "<p>Clear process, zero drama. Every sprint ends with something you can actually use.</p>",
+        media: teamMedia[1],
+      },
+      {
+        author: "Marta Kowalczyk",
+        position: "Head of Design",
+        text: "<p>Design that ships — not just decks. Every prototype is tested with real users before a line of code is written.</p>",
+        media: teamMedia[2],
+      },
+      {
+        author: "Tomasz Lis",
+        position: "QA Lead",
+        text: "<p>Quality is built in, not bolted on. Automated checks and honest release notes on every single delivery.</p>",
+        media: teamMedia[3],
+      },
+      {
+        author: "Julia Wiśniewska",
+        position: "Delivery Manager",
+        text: "<p>Transparent by default. You always know what is done, what is next, and what changed along the way.</p>",
+        media: teamMedia[4],
+      },
+      {
+        author: "Kacper Mazur",
+        position: "Senior Backend Engineer",
+        text: "<p>Clean architecture and boring, reliable technology. The most exciting feature is the one that never breaks.</p>",
+        media: teamMedia[5],
+      },
+      {
+        author: "Natalia Szymańska",
+        position: "DevOps Engineer",
+        text: "<p>Environments that deploy themselves. We spend our time improving the product instead of fighting servers.</p>",
+        media: teamMedia[6],
+      },
+      {
+        author: "Jan Nowicki",
+        position: "Business Analyst",
+        text: "<p>We start from the business question, not the ticket. That is why so many of our projects outlive the original scope.</p>",
+        media: teamMedia[7],
+      },
+    ],
+    8,
+  );
+
+  const hiringProcesses = await ensureCollection(
+    strapi,
+    "api::hiring-process.hiring-process",
+    (e) => e.title,
+    [
+      {
+        title: "Apply",
+        description:
+          "<p>Tell us about yourself and the kind of problems you enjoy solving. We reply within a few days, always.</p>",
+      },
+      {
+        title: "Intro call",
+        description:
+          "<p>A relaxed chat about your experience, the role and the team. You get a clear picture of what we build and how we work.</p>",
+      },
+      {
+        title: "Technical interview",
+        description:
+          "<p>A practical conversation with the engineers you would work with — no whiteboard puzzles, just real problem solving.</p>",
+      },
+      {
+        title: "Take-home task",
+        description:
+          "<p>A small, realistic piece of work with a generous timebox. We pay for your time and review it together.</p>",
+      },
+      {
+        title: "Team fit & offer",
+        description:
+          "<p>Meet a few future teammates, then receive a written offer with transparent salary and benefits.</p>",
+      },
+      {
+        title: "Onboarding",
+        description:
+          "<p>A structured first month: equipment, access, a buddy, and a 30-60-90 plan so you can ramp up fast.</p>",
       },
     ],
   );
@@ -579,7 +746,7 @@ export async function seedContent(strapi: Strapi) {
   );
 
   log(
-    `collections: industries=${industries.length} services=${services.length} regions=${regions.length} platforms=${platforms.length} achievements=${achievements.length} clients=${clients.length} faqs=${faqs.length} processes=${processes.length} team=${teamMembers.length} testimonials=${testimonials.length} insights=${insights.length} techStack=${techStack.length}`,
+    `collections: industries=${industries.length} services=${services.length} regions=${regions.length} platforms=${platforms.length} achievements=${achievements.length} clients=${clients.length} faqs=${faqs.length} processes=${processes.length} team=${teamMembers.length} clientTestimonials=${clientTestimonials.length} teamTestimonials=${teamTestimonials.length} insights=${insights.length} techStack=${techStack.length}`,
   );
 
   // ------------------------------------------------------------------
@@ -617,9 +784,10 @@ export async function seedContent(strapi: Strapi) {
       buttons: [btn("Get in touch")],
       theme: theme("white"),
     },
-    // 2. achievements
+    // 2. achievements (carousel)
     {
-      __component: "sections.achievements",
+      __component: "sections.carousel",
+      collectionType: "achievements",
       headline: h("Recognition"),
       theme: theme("cream"),
       achievements: achievements.map((e) => e.id),
@@ -666,6 +834,7 @@ export async function seedContent(strapi: Strapi) {
     {
       __component: "sections.case-studies",
       pick: "latest",
+      limit: 5,
       headline: h("Case studies"),
       button: btn("All cases", "/case-studies"),
       theme: theme("cream"),
@@ -752,29 +921,43 @@ export async function seedContent(strapi: Strapi) {
       description: "<p>Tell us about your project.</p>",
       label: "Get in touch",
     },
-    // 11. hero-rich
+    // 11. hero (default)
     {
-      __component: "sections.hero-rich",
+      __component: "sections.hero",
+      variant: "default",
+      headingSize: "large",
       title: "Built on a simple idea",
       description: "<p>Great software comes from small, empowered teams.</p>",
       label: "About",
-      variant: "titleAbove",
       button: btn("Our story", "/about"),
-      carousel: [
-        item("People first", "<p>We invest in the team.</p>"),
-        item("Quality as habit", "<p>Tests every day.</p>"),
-      ],
     },
-    // 12. hero-svg
-    { __component: "sections.hero-svg", title: "Crafted for the web" },
-    // 13. hero-two-columns
+    // 12. hero (simple)
     {
-      __component: "sections.hero-two-columns",
+      __component: "sections.hero",
+      variant: "simple",
+      title: "Crafted for the web",
+      theme: theme("black"),
+    },
+    // 13. hero (with carousel)
+    {
+      __component: "sections.hero",
+      variant: "withCarousel",
       title: "Software that moves your business forward",
       description: "<p>We design, build and scale digital products.</p>",
-      label: "Polcode",
-      indicatorText: "Scroll to explore",
-      button: btn("Get in touch"),
+      carousel: [
+        {
+          __component: "shared.hero-promo",
+          label: "Start a project",
+          title: "Let's build together",
+          button: btn("Get in touch", "/contact-us"),
+        },
+        {
+          __component: "shared.hero-promo",
+          label: "See our work",
+          title: "Explore case studies",
+          button: btn("All cases", "/case-studies"),
+        },
+      ],
     },
     // 14. industries
     {
@@ -784,14 +967,15 @@ export async function seedContent(strapi: Strapi) {
       button: btn("All industries", "/case-studies"),
       industries: industries.map((e) => e.id),
     },
-    // 15. insights (pick: latest)
+    // 15. insights (carousel)
     {
-      __component: "sections.insights",
-      pick: "latest",
+      __component: "sections.carousel",
+      collectionType: "insights",
       headline: h("Insights"),
       button: btn("All insights", "/insights"),
       theme: theme("cream"),
-      insights: insights.map((e) => e.id),
+      insightsPick: "latest",
+      insightsLimit: 5,
     },
     // 16. intersection-floating-boxes
     {
@@ -915,18 +1099,20 @@ export async function seedContent(strapi: Strapi) {
       button: btn("See everything", "/what-we-do"),
       blocks: techStack.map((e) => e.id),
     },
-    // 26. testimonials-clients
+    // 26. testimonials-clients (carousel)
     {
-      __component: "sections.testimonials-clients",
+      __component: "sections.carousel",
+      collectionType: "clientTestimonials",
+      showLogos: true,
       headline: h("What our clients say"),
-      cards: testimonials.map((e) => e.id),
+      clientTestimonials: clientTestimonials.map((e) => e.id),
     },
-    // 27. testimonials-team
+    // 27. testimonials-team (carousel)
     {
-      __component: "sections.testimonials-team",
+      __component: "sections.carousel",
+      collectionType: "teamTestimonials",
       headline: h("Team testimonials"),
-      cardsLayout: "carousel",
-      cards: testimonials.map((e) => e.id),
+      teamTestimonials: teamTestimonials.map((e) => e.id),
     },
   ];
 

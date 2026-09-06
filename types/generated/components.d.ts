@@ -93,22 +93,6 @@ export interface RichContentStat extends Struct.ComponentSchema {
   };
 }
 
-export interface SectionsAchievements extends Struct.ComponentSchema {
-  collectionName: 'components_sections_achievements';
-  info: {
-    description: 'Achievements section: headline + a picker of achievement entries';
-    displayName: 'Achievements';
-  };
-  attributes: {
-    achievements: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::achievement.achievement'
-    >;
-    headline: Schema.Attribute.Component<'shared.headline', false>;
-    theme: Schema.Attribute.Component<'shared.theme', false>;
-  };
-}
-
 export interface SectionsCardsLargeNumerated extends Struct.ComponentSchema {
   collectionName: 'components_sections_cards_large_numerateds';
   info: {
@@ -124,10 +108,68 @@ export interface SectionsCardsLargeNumerated extends Struct.ComponentSchema {
   };
 }
 
+export interface SectionsCarousel extends Struct.ComponentSchema {
+  collectionName: 'components_sections_carousels';
+  info: {
+    description: 'Collection carousel \u2014 achievements, testimonials, insights or hiring process';
+    displayName: 'Carousel';
+  };
+  attributes: {
+    achievements: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::achievement.achievement'
+    >;
+    button: Schema.Attribute.Component<'shared.button', false>;
+    clientTestimonials: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::client-testimonial.client-testimonial'
+    >;
+    collectionType: Schema.Attribute.Enumeration<
+      [
+        'achievements',
+        'teamTestimonials',
+        'clientTestimonials',
+        'insights',
+        'hiringProcess',
+      ]
+    > &
+      Schema.Attribute.DefaultTo<'insights'>;
+    headline: Schema.Attribute.Component<'shared.headline', false>;
+    hiringProcessSteps: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::hiring-process.hiring-process'
+    >;
+    insights: Schema.Attribute.Relation<'oneToMany', 'api::insight.insight'>;
+    insightsLimit: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<5>;
+    insightsPick: Schema.Attribute.Enumeration<
+      ['latest', 'featured', 'manual']
+    > &
+      Schema.Attribute.DefaultTo<'latest'>;
+    showLogos: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    showNavigation: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
+    showPagination: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
+    smallCards: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    teamTestimonials: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::team-testimonial.team-testimonial'
+    >;
+    theme: Schema.Attribute.Component<'shared.theme', false>;
+  };
+}
+
 export interface SectionsCaseStudies extends Struct.ComponentSchema {
   collectionName: 'components_sections_case_studies';
   info: {
-    description: 'Case studies section, latest or manual';
+    description: 'Case studies section: featured, latest, next or manual';
     displayName: 'Case Studies';
   };
   attributes: {
@@ -137,7 +179,17 @@ export interface SectionsCaseStudies extends Struct.ComponentSchema {
       'api::case-study.case-study'
     >;
     headline: Schema.Attribute.Component<'shared.headline', false>;
-    pick: Schema.Attribute.Enumeration<['latest', 'manual', 'next']> &
+    limit: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<5>;
+    pick: Schema.Attribute.Enumeration<
+      ['latest', 'manual', 'next', 'featured']
+    > &
       Schema.Attribute.DefaultTo<'latest'>;
     theme: Schema.Attribute.Component<'shared.theme', false>;
   };
@@ -280,15 +332,15 @@ export interface SectionsForm extends Struct.ComponentSchema {
   };
 }
 
-export interface SectionsHeroRich extends Struct.ComponentSchema {
-  collectionName: 'components_sections_hero_riches';
+export interface SectionsHero extends Struct.ComponentSchema {
+  collectionName: 'components_sections_heroes';
   info: {
-    description: 'Rich hero with title variant and carousel';
-    displayName: 'Hero Rich';
+    description: 'Hero section \u2014 simple, default (two columns), with carousel or with showreel';
+    displayName: 'Hero';
   };
   attributes: {
     button: Schema.Attribute.Component<'shared.button', false>;
-    carousel: Schema.Attribute.Component<'shared.content-item', true>;
+    carousel: Schema.Attribute.Component<'shared.hero-promo', true>;
     description: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
         'plugin::ckeditor5.CKEditor',
@@ -296,40 +348,20 @@ export interface SectionsHeroRich extends Struct.ComponentSchema {
           preset: 'defaultHtml';
         }
       >;
-    label: Schema.Attribute.String;
-    theme: Schema.Attribute.Component<'shared.theme', false>;
-    title: Schema.Attribute.Text;
-    variant: Schema.Attribute.Enumeration<['titleAbove', 'titleBelow']> &
-      Schema.Attribute.DefaultTo<'titleAbove'>;
-  };
-}
-
-export interface SectionsHeroSvg extends Struct.ComponentSchema {
-  collectionName: 'components_sections_hero_svgs';
-  info: {
-    description: 'Hero with SVG/image';
-    displayName: 'Hero SVG';
-  };
-  attributes: {
+    headingSize: Schema.Attribute.Enumeration<['small', 'large']> &
+      Schema.Attribute.DefaultTo<'large'>;
     image: Schema.Attribute.Media<'images'>;
-    theme: Schema.Attribute.Component<'shared.theme', false>;
-    title: Schema.Attribute.String;
-  };
-}
-
-export interface SectionsHeroTwoColumns extends Struct.ComponentSchema {
-  collectionName: 'components_sections_hero_two_columns';
-  info: {
-    description: 'Two-column hero';
-    displayName: 'Hero Two Columns';
-  };
-  attributes: {
-    button: Schema.Attribute.Component<'shared.button', false>;
-    description: Schema.Attribute.Text;
     indicatorText: Schema.Attribute.String;
     label: Schema.Attribute.String;
+    media: Schema.Attribute.Media<'images' | 'videos'>;
+    showreel: Schema.Attribute.Component<'shared.showreel', false>;
+    subtitle: Schema.Attribute.String;
     theme: Schema.Attribute.Component<'shared.theme', false>;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.Text;
+    variant: Schema.Attribute.Enumeration<
+      ['simple', 'default', 'withCarousel', 'withShowreel']
+    > &
+      Schema.Attribute.DefaultTo<'default'>;
   };
 }
 
@@ -347,22 +379,6 @@ export interface SectionsIndustries extends Struct.ComponentSchema {
       'oneToMany',
       'api::industry.industry'
     >;
-    theme: Schema.Attribute.Component<'shared.theme', false>;
-  };
-}
-
-export interface SectionsInsights extends Struct.ComponentSchema {
-  collectionName: 'components_sections_insights';
-  info: {
-    description: 'Insights section, latest or manual';
-    displayName: 'Insights';
-  };
-  attributes: {
-    button: Schema.Attribute.Component<'shared.button', false>;
-    headline: Schema.Attribute.Component<'shared.headline', false>;
-    insights: Schema.Attribute.Relation<'oneToMany', 'api::insight.insight'>;
-    pick: Schema.Attribute.Enumeration<['latest', 'manual']> &
-      Schema.Attribute.DefaultTo<'latest'>;
     theme: Schema.Attribute.Component<'shared.theme', false>;
   };
 }
@@ -561,40 +577,6 @@ export interface SectionsTechStack extends Struct.ComponentSchema {
   };
 }
 
-export interface SectionsTestimonialsClients extends Struct.ComponentSchema {
-  collectionName: 'components_sections_testimonials_clients';
-  info: {
-    description: 'Client testimonials';
-    displayName: 'Testimonials Clients';
-  };
-  attributes: {
-    cards: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::testimonial.testimonial'
-    >;
-    headline: Schema.Attribute.Component<'shared.headline', false>;
-    theme: Schema.Attribute.Component<'shared.theme', false>;
-  };
-}
-
-export interface SectionsTestimonialsTeam extends Struct.ComponentSchema {
-  collectionName: 'components_sections_testimonials_teams';
-  info: {
-    description: 'Team testimonials, carousel or grid';
-    displayName: 'Testimonials Team';
-  };
-  attributes: {
-    cards: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::testimonial.testimonial'
-    >;
-    cardsLayout: Schema.Attribute.Enumeration<['carousel', 'grid']> &
-      Schema.Attribute.DefaultTo<'carousel'>;
-    headline: Schema.Attribute.Component<'shared.headline', false>;
-    theme: Schema.Attribute.Component<'shared.theme', false>;
-  };
-}
-
 export interface SharedButton extends Struct.ComponentSchema {
   collectionName: 'components_shared_buttons';
   info: {
@@ -615,6 +597,17 @@ export interface SharedButton extends Struct.ComponentSchema {
     scrollTo: Schema.Attribute.String;
     title: Schema.Attribute.String;
     url: Schema.Attribute.String;
+    variant: Schema.Attribute.Enumeration<
+      [
+        'light',
+        'dark',
+        'ghostLight',
+        'ghostDark',
+        'solidLight',
+        'solidDark',
+        'link',
+      ]
+    >;
   };
 }
 
@@ -715,6 +708,19 @@ export interface SharedHeadline extends Struct.ComponentSchema {
   };
   attributes: {
     addCount: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface SharedHeroPromo extends Struct.ComponentSchema {
+  collectionName: 'components_shared_hero_promos';
+  info: {
+    description: 'Small promo slide inside the hero carousel';
+    displayName: 'Hero Promo';
+  };
+  attributes: {
+    button: Schema.Attribute.Component<'shared.button', false>;
+    label: Schema.Attribute.String;
     title: Schema.Attribute.String;
   };
 }
@@ -822,8 +828,8 @@ declare module '@strapi/strapi' {
       'global.partner': GlobalPartner;
       'rich-content.block': RichContentBlock;
       'rich-content.stat': RichContentStat;
-      'sections.achievements': SectionsAchievements;
       'sections.cards-large-numerated': SectionsCardsLargeNumerated;
+      'sections.carousel': SectionsCarousel;
       'sections.case-studies': SectionsCaseStudies;
       'sections.content-color-boxes': SectionsContentColorBoxes;
       'sections.content-image-left': SectionsContentImageLeft;
@@ -832,11 +838,8 @@ declare module '@strapi/strapi' {
       'sections.cta': SectionsCta;
       'sections.faq': SectionsFaq;
       'sections.form': SectionsForm;
-      'sections.hero-rich': SectionsHeroRich;
-      'sections.hero-svg': SectionsHeroSvg;
-      'sections.hero-two-columns': SectionsHeroTwoColumns;
+      'sections.hero': SectionsHero;
       'sections.industries': SectionsIndustries;
-      'sections.insights': SectionsInsights;
       'sections.intersection-floating-boxes': SectionsIntersectionFloatingBoxes;
       'sections.intersection-media': SectionsIntersectionMedia;
       'sections.intro-showreel': SectionsIntroShowreel;
@@ -849,8 +852,6 @@ declare module '@strapi/strapi' {
       'sections.team': SectionsTeam;
       'sections.team-grid': SectionsTeamGrid;
       'sections.tech-stack': SectionsTechStack;
-      'sections.testimonials-clients': SectionsTestimonialsClients;
-      'sections.testimonials-team': SectionsTestimonialsTeam;
       'shared.button': SharedButton;
       'shared.card-milestone': SharedCardMilestone;
       'shared.card-numerated': SharedCardNumerated;
@@ -858,6 +859,7 @@ declare module '@strapi/strapi' {
       'shared.content-item': SharedContentItem;
       'shared.floating-card': SharedFloatingCard;
       'shared.headline': SharedHeadline;
+      'shared.hero-promo': SharedHeroPromo;
       'shared.sections-nav-controller': SharedSectionsNavController;
       'shared.seo': SharedSeo;
       'shared.service-group': SharedServiceGroup;

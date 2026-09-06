@@ -1,0 +1,181 @@
+{
+  "collectionName": "components_sections_carousels",
+  "info": {
+    "displayName": "Carousel",
+    "description": "Collection carousel — achievements, testimonials, insights or hiring process"
+  },
+  "options": {},
+  "attributes": {
+    "collectionType": {
+      "type": "enumeration",
+      "default": "insights",
+      "enum": [
+        "achievements",
+        "teamTestimonials",
+        "clientTestimonials",
+        "insights",
+        "hiringProcess"
+      ]
+    },
+    "headline": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.headline"
+    },
+    "theme": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.theme"
+    },
+    "button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.button"
+    },
+    "showNavigation": {
+      "type": "boolean",
+      "default": false
+    },
+    "showPagination": {
+      "type": "boolean",
+      "default": false
+    },
+    "smallCards": {
+      "type": "boolean",
+      "default": false,
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "collectionType"
+            },
+            "achievements"
+          ]
+        }
+      }
+    },
+    "achievements": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::achievement.achievement",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "collectionType"
+            },
+            "achievements"
+          ]
+        }
+      }
+    },
+    "insightsPick": {
+      "type": "enumeration",
+      "default": "latest",
+      "enum": [
+        "latest",
+        "featured",
+        "manual"
+      ],
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "collectionType"
+            },
+            "insights"
+          ]
+        }
+      }
+    },
+    "insightsLimit": {
+      "type": "integer",
+      "default": 5,
+      "min": 1,
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "collectionType"
+            },
+            "insights"
+          ]
+        }
+      }
+    },
+    "insights": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::insight.insight",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "insightsPick"
+            },
+            "manual"
+          ]
+        }
+      }
+    },
+    "teamTestimonials": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::team-testimonial.team-testimonial",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "collectionType"
+            },
+            "teamTestimonials"
+          ]
+        }
+      }
+    },
+    "clientTestimonials": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::client-testimonial.client-testimonial",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "collectionType"
+            },
+            "clientTestimonials"
+          ]
+        }
+      }
+    },
+    "showLogos": {
+      "type": "boolean",
+      "default": true,
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "collectionType"
+            },
+            "clientTestimonials"
+          ]
+        }
+      }
+    },
+    "hiringProcessSteps": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::hiring-process.hiring-process",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "collectionType"
+            },
+            "hiringProcess"
+          ]
+        }
+      }
+    }
+  }
+}

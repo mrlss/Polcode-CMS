@@ -168,29 +168,40 @@ export async function seedDemoData(strapi: Strapi) {
     upsert(strapi, "api::client.client", { link }, { link });
   const c1 = await client("https://fintech-labs.io");
 
-  const testimonial = async (
+  const clientTestimonial = async (
     author: string,
     position: string,
     text: string,
-    cl: { id: number } | null,
+    cl: { id: number },
   ) =>
     upsert(
       strapi,
-      "api::testimonial.testimonial",
+      "api::client-testimonial.client-testimonial",
       { author },
-      { author, position, text, client: cl ? cl.id : null },
+      { author, position, text, client: cl.id },
     );
-  const t1 = await testimonial(
+  const t1 = await clientTestimonial(
     "Maria Kowalski",
     "CPO, FinTech Labs",
     "<p>Delivered on time and above expectations.</p>",
     c1,
   );
-  const t2 = await testimonial(
+
+  const teamTestimonial = async (
+    author: string,
+    position: string,
+    text: string,
+  ) =>
+    upsert(
+      strapi,
+      "api::team-testimonial.team-testimonial",
+      { author },
+      { author, position, text },
+    );
+  const t2 = await teamTestimonial(
     "Tom Müller",
     "CTO, HealthPlus",
     "<p>A true engineering partner, not a vendor.</p>",
-    null,
   );
 
   const faq = async (title: string, description: string) =>
@@ -338,6 +349,7 @@ export async function seedDemoData(strapi: Strapi) {
     {
       __component: "sections.case-studies",
       pick: "latest",
+      limit: 5,
       headline: h("Case studies"),
       button: btn("All cases", "/case-studies"),
       theme: theme("cream"),
@@ -459,6 +471,7 @@ export async function seedDemoData(strapi: Strapi) {
     {
       __component: "sections.insights",
       pick: "latest",
+      limit: 5,
       headline: h("Insights"),
       button: btn("All insights", "/insights"),
       theme: theme("cream"),
@@ -593,14 +606,14 @@ export async function seedDemoData(strapi: Strapi) {
     {
       __component: "sections.testimonials-clients",
       headline: h("What our clients say"),
-      cards: [t1.id, t2.id],
+      cards: [t1.id],
     },
     // 27. testimonials-team
     {
       __component: "sections.testimonials-team",
       headline: h("Team testimonials"),
       cardsLayout: "carousel",
-      cards: [t1.id, t2.id],
+      cards: [t2.id],
     },
   ];
 

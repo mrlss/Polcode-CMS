@@ -1,0 +1,252 @@
+{
+  "collectionName": "components_sections_heroes",
+  "info": {
+    "displayName": "Hero",
+    "description": "Hero section — simple, default (two columns), with carousel or with showreel"
+  },
+  "options": {},
+  "attributes": {
+    "variant": {
+      "type": "enumeration",
+      "enum": [
+        "simple",
+        "default",
+        "withCarousel",
+        "withShowreel"
+      ],
+      "default": "default"
+    },
+    "headingSize": {
+      "type": "enumeration",
+      "enum": [
+        "small",
+        "large"
+      ],
+      "default": "large",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "variant"
+            },
+            "default"
+          ]
+        }
+      }
+    },
+    "label": {
+      "type": "string",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "variant"
+            },
+            "default"
+          ]
+        }
+      }
+    },
+    "title": {
+      "type": "text"
+    },
+    "subtitle": {
+      "type": "string",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "variant"
+            },
+            "withShowreel"
+          ]
+        }
+      }
+    },
+    "description": {
+      "type": "customField",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      },
+      "conditions": {
+        "visible": {
+          "or": [
+            {
+              "==": [
+                {
+                  "var": "variant"
+                },
+                "default"
+              ]
+            },
+            {
+              "==": [
+                {
+                  "var": "variant"
+                },
+                "withCarousel"
+              ]
+            },
+            {
+              "==": [
+                {
+                  "var": "variant"
+                },
+                "withShowreel"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.button",
+      "conditions": {
+        "visible": {
+          "or": [
+            {
+              "==": [
+                {
+                  "var": "variant"
+                },
+                "default"
+              ]
+            },
+            {
+              "==": [
+                {
+                  "var": "variant"
+                },
+                "withShowreel"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "media": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "videos"
+      ],
+      "conditions": {
+        "visible": {
+          "or": [
+            {
+              "==": [
+                {
+                  "var": "variant"
+                },
+                "default"
+              ]
+            },
+            {
+              "==": [
+                {
+                  "var": "variant"
+                },
+                "withCarousel"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ],
+      "conditions": {
+        "visible": {
+          "or": [
+            {
+              "==": [
+                {
+                  "var": "variant"
+                },
+                "simple"
+              ]
+            },
+            {
+              "==": [
+                {
+                  "var": "variant"
+                },
+                "withShowreel"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "indicatorText": {
+      "type": "string",
+      "conditions": {
+        "visible": {
+          "or": [
+            {
+              "==": [
+                {
+                  "var": "variant"
+                },
+                "default"
+              ]
+            },
+            {
+              "==": [
+                {
+                  "var": "variant"
+                },
+                "withShowreel"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "carousel": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.hero-promo",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "variant"
+            },
+            "withCarousel"
+          ]
+        }
+      }
+    },
+    "showreel": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.showreel",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "variant"
+            },
+            "withShowreel"
+          ]
+        }
+      }
+    },
+    "theme": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.theme"
+    }
+  }
+}

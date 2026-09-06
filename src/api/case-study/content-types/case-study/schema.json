@@ -106,7 +106,7 @@
       "components": [
         "sections.rich-content-body",
         "sections.process",
-        "sections.achievements",
+        "sections.carousel",
         "sections.tech-stack",
         "sections.cta",
         "sections.case-studies"
