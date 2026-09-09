@@ -842,7 +842,6 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'sections.case-studies',
         'sections.content-color-boxes',
         'sections.content-image-left',
-        'sections.content-image-numerated',
         'sections.content-numerated',
         'sections.faq',
         'sections.form',

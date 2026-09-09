@@ -383,20 +383,12 @@ export async function seedDemoData(strapi: Strapi) {
         },
       ],
     },
-    // 6. content-image-left
+    // 6. content-image-left — “How we deliver” (NumeratedBlocks variant)
     {
       __component: "sections.content-image-left",
-      headline: h("About our approach"),
-      label: "About",
-      title: "People first",
-      content: "<p>Small, empowered teams that own the outcome.</p>",
-      button: btn("Our story", "/about"),
-    },
-    // 7. content-image-numerated
-    {
-      __component: "sections.content-image-numerated",
       headline: h("How we deliver"),
-      subtitle: "<p>Approach</p>",
+      variant: "NumeratedBlocks",
+      subtitle: "Approach",
       button: btn("Work with us"),
       blocks: [
         item(

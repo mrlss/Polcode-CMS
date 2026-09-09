@@ -219,10 +219,11 @@ export interface SectionsContentColorBoxes extends Struct.ComponentSchema {
 export interface SectionsContentImageLeft extends Struct.ComponentSchema {
   collectionName: 'components_sections_content_image_lefts';
   info: {
-    description: 'Image left + content right';
+    description: 'Image left + content right (numbered blocks or rich text)';
     displayName: 'Content Image Left';
   };
   attributes: {
+    blocks: Schema.Attribute.Component<'shared.content-item', true>;
     button: Schema.Attribute.Component<'shared.button', false>;
     content: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
@@ -231,27 +232,17 @@ export interface SectionsContentImageLeft extends Struct.ComponentSchema {
           preset: 'defaultHtml';
         }
       >;
-    headline: Schema.Attribute.Component<'shared.headline', false>;
-    label: Schema.Attribute.String;
-    media: Schema.Attribute.Media<'images' | 'videos'>;
-    theme: Schema.Attribute.Component<'shared.theme', false>;
-    title: Schema.Attribute.String;
-  };
-}
-
-export interface SectionsContentImageNumerated extends Struct.ComponentSchema {
-  collectionName: 'components_sections_content_image_numerateds';
-  info: {
-    description: 'Numerated content with image';
-    displayName: 'Content Image Numerated';
-  };
-  attributes: {
-    blocks: Schema.Attribute.Component<'shared.content-item', true>;
-    button: Schema.Attribute.Component<'shared.button', false>;
+    contentTitle: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'At PolCode, authenticity means taking responsibility for our impact on the world. We don\u2019t just build digital products; we ensure they contribute to a sustainable future. Our ESG strategy is built on the same trust we give our clients:'>;
     headline: Schema.Attribute.Component<'shared.headline', false>;
     media: Schema.Attribute.Media<'images' | 'videos'>;
+    portraitImage: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     subtitle: Schema.Attribute.String;
     theme: Schema.Attribute.Component<'shared.theme', false>;
+    variant: Schema.Attribute.Enumeration<
+      ['NumeratedBlocks', 'WysiwygContent']
+    > &
+      Schema.Attribute.DefaultTo<'WysiwygContent'>;
   };
 }
 
@@ -834,7 +825,6 @@ declare module '@strapi/strapi' {
       'sections.case-studies': SectionsCaseStudies;
       'sections.content-color-boxes': SectionsContentColorBoxes;
       'sections.content-image-left': SectionsContentImageLeft;
-      'sections.content-image-numerated': SectionsContentImageNumerated;
       'sections.content-numerated': SectionsContentNumerated;
       'sections.cta': SectionsCta;
       'sections.faq': SectionsFaq;

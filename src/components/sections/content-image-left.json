@@ -2,17 +2,22 @@
   "collectionName": "components_sections_content_image_lefts",
   "info": {
     "displayName": "Content Image Left",
-    "description": "Image left + content right"
+    "description": "Image left + content right (numbered blocks or rich text)"
   },
   "options": {},
   "attributes": {
     "headline": {
       "type": "component",
-      "repeatable": false,
-      "component": "shared.headline"
+      "component": "shared.headline",
+      "repeatable": false
     },
-    "label": {
+    "subtitle": {
       "type": "string"
+    },
+    "button": {
+      "type": "component",
+      "component": "shared.button",
+      "repeatable": false
     },
     "media": {
       "type": "media",
@@ -23,25 +28,68 @@
         "videos"
       ]
     },
-    "title": {
-      "type": "string"
+    "blocks": {
+      "type": "component",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "variant"
+            },
+            "NumeratedBlocks"
+          ]
+        }
+      },
+      "component": "shared.content-item",
+      "repeatable": true
+    },
+    "theme": {
+      "type": "component",
+      "component": "shared.theme",
+      "repeatable": false
+    },
+    "variant": {
+      "type": "enumeration",
+      "default": "WysiwygContent",
+      "enum": [
+        "NumeratedBlocks",
+        "WysiwygContent"
+      ]
     },
     "content": {
       "type": "customField",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "variant"
+            },
+            "WysiwygContent"
+          ]
+        }
+      },
       "customField": "plugin::ckeditor5.CKEditor",
       "options": {
         "preset": "defaultHtml"
       }
     },
-    "button": {
-      "type": "component",
-      "repeatable": false,
-      "component": "shared.button"
+    "contentTitle": {
+      "type": "text",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "variant"
+            },
+            "WysiwygContent"
+          ]
+        }
+      },
+      "default": "At PolCode, authenticity means taking responsibility for our impact on the world. We don’t just build digital products; we ensure they contribute to a sustainable future. Our ESG strategy is built on the same trust we give our clients:"
     },
-    "theme": {
-      "type": "component",
-      "repeatable": false,
-      "component": "shared.theme"
+    "portraitImage": {
+      "type": "boolean",
+      "default": false
     }
   }
 }
