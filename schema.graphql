@@ -641,6 +641,7 @@ type ComponentSectionsContentNumerated {
   id: ID!
   items(filters: ComponentSharedContentItemFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSharedContentItem]
   layout: ENUM_COMPONENTSECTIONSCONTENTNUMERATED_LAYOUT
+  subtitle: String
   theme: ComponentSharedTheme
 }
 
@@ -653,6 +654,7 @@ input ComponentSectionsContentNumeratedFiltersInput {
   layout: StringFilterInput
   not: ComponentSectionsContentNumeratedFiltersInput
   or: [ComponentSectionsContentNumeratedFiltersInput]
+  subtitle: StringFilterInput
   theme: ComponentSharedThemeFiltersInput
 }
 
@@ -663,6 +665,7 @@ input ComponentSectionsContentNumeratedInput {
   id: ID
   items: [ComponentSharedContentItemInput]
   layout: ENUM_COMPONENTSECTIONSCONTENTNUMERATED_LAYOUT
+  subtitle: String
   theme: ComponentSharedThemeInput
 }
 

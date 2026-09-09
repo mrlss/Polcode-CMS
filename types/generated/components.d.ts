@@ -186,7 +186,7 @@ export interface SectionsCaseStudies extends Struct.ComponentSchema {
         },
         number
       > &
-      Schema.Attribute.DefaultTo<5>;
+      Schema.Attribute.DefaultTo<2>;
     pick: Schema.Attribute.Enumeration<
       ['latest', 'manual', 'next', 'featured']
     > &
@@ -269,6 +269,7 @@ export interface SectionsContentNumerated extends Struct.ComponentSchema {
     items: Schema.Attribute.Component<'shared.content-item', true>;
     layout: Schema.Attribute.Enumeration<['buttonBelow', 'buttonOnSide']> &
       Schema.Attribute.DefaultTo<'buttonBelow'>;
+    subtitle: Schema.Attribute.String;
     theme: Schema.Attribute.Component<'shared.theme', false>;
   };
 }

@@ -81,6 +81,11 @@ async function ensureCollection(
  * (or null when the file is missing). `process.cwd()` is the strapi project
  * root because the seeder runs from `dist/src/` where `__dirname` is
  * unreliable.
+ *
+ * Reuses an existing upload with the same original filename (Strapi's upload
+ * service never dedupes by name, so calling `upload` unconditionally created a
+ * duplicate media row on every `SEED_DEMO=true` boot). The newest existing row
+ * is preferred — that is the canonical copy the live content already points at.
  */
 async function uploadAsset(
   strapi: Strapi,
@@ -92,6 +97,11 @@ async function uploadAsset(
     console.log(`[seed-content] seed asset missing, skipping: ${filePath}`);
     return null;
   }
+  const existing = await strapi.db
+    .query("plugin::upload.file")
+    .findOne({ where: { name: file }, orderBy: [{ id: "desc" }] });
+  if (existing) return existing.id;
+
   const ext = path.extname(file).slice(1);
   const mimetype = ext === "svg" ? "image/svg+xml" : `image/${ext}`;
   const uploadService = strapi.plugin("upload").service("upload");
@@ -1143,46 +1153,32 @@ export async function seedContent(strapi: Strapi) {
  * (contact block, partners, copyright, legal links). Partner logos are
  * uploaded from `seed-assets/` so they become real Strapi media.
  *
- * Idempotent: deletes the single type (draft + published) then recreates it
- * published, so re-running `SEED_DEMO=true` always reflects the seed values.
+ * Idempotent: deletes the single type then recreates it published, so
+ * re-running `SEED_DEMO=true` always reflects the seed values. Deletion goes
+ * through the documents service so the nested footer/partner component rows
+ * (and their media links) are cascade-deleted too — a raw `db.query.deleteMany`
+ * left orphaned component rows behind on every run.
  */
 export async function seedGlobals(strapi: Strapi) {
   const log = (msg: string) => console.log(`[seed-globals] ${msg}`);
   const uid = "api::global.global";
 
-  // Delete all rows (draft + published) then recreate — same idempotency
-  // strategy as the demo homepage.
-  const q = strapi.db.query(uid);
-  await q.deleteMany({});
+  // Delete the document(s) via the documents service so components cascade.
+  const docs = await strapi.documents(uid).findMany({});
+  for (const doc of docs) {
+    await strapi.documents(uid).delete({ documentId: doc.documentId });
+  }
 
-  // Upload partner logos from `<cwd>/seed-assets/` → real media ids.
-  // `process.cwd()` (the strapi project root under `npm run develop`) is used
-  // because the seeder runs from `dist/src/` where `__dirname` is unreliable.
-  const assetsDir = path.join(process.cwd(), "seed-assets");
+  // Partner logos from `<cwd>/seed-assets/` → real media ids (`uploadAsset`
+  // reuses the existing upload by name, so no duplicate rows across boots).
   const assets: { file: string; alt: string }[] = [
     { file: "partners01.png", alt: "Twilio" },
     { file: "partners02.png", alt: "Adobe Solution Partner" },
     { file: "partners03.png", alt: "AWS Cloud Contact Center" },
   ];
-  const uploadService = strapi.plugin("upload").service("upload");
   const logoIds: (number | null)[] = [];
   for (const asset of assets) {
-    const filePath = path.join(assetsDir, asset.file);
-    if (!fs.existsSync(filePath)) {
-      log(`seed asset missing, skipping: ${filePath}`);
-      logoIds.push(null);
-      continue;
-    }
-    const uploaded = await uploadService.upload({
-      data: { fileInfo: { alternativeText: asset.alt } },
-      files: {
-        filepath: filePath,
-        originalFilename: asset.file,
-        mimetype: "image/png",
-        size: fs.statSync(filePath).size,
-      },
-    });
-    logoIds.push(uploaded?.[0]?.id ?? null);
+    logoIds.push(await uploadAsset(strapi, asset.file, asset.alt));
   }
 
   await strapi.entityService.create(

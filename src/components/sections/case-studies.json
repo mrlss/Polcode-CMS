@@ -18,7 +18,17 @@
     },
     "limit": {
       "type": "integer",
-      "default": 5,
+      "conditions": {
+        "visible": {
+          "!=": [
+            {
+              "var": "pick"
+            },
+            "manual"
+          ]
+        }
+      },
+      "default": 2,
       "min": 1
     },
     "headline": {

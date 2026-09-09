@@ -8,39 +8,52 @@
   "attributes": {
     "headline": {
       "type": "component",
-      "repeatable": false,
-      "component": "shared.headline"
+      "component": "shared.headline",
+      "repeatable": false
+    },
+    "subtitle": {
+      "type": "string",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "layout"
+            },
+            "buttonOnSide"
+          ]
+        }
+      }
     },
     "button": {
       "type": "component",
-      "repeatable": false,
-      "component": "shared.button"
+      "component": "shared.button",
+      "repeatable": false
     },
     "layout": {
       "type": "enumeration",
+      "default": "buttonBelow",
       "enum": [
         "buttonBelow",
         "buttonOnSide"
-      ],
-      "default": "buttonBelow"
+      ]
     },
     "behavior": {
       "type": "enumeration",
+      "default": "static",
       "enum": [
         "static",
         "expandable"
-      ],
-      "default": "static"
+      ]
     },
     "items": {
       "type": "component",
-      "repeatable": true,
-      "component": "shared.content-item"
+      "component": "shared.content-item",
+      "repeatable": true
     },
     "theme": {
       "type": "component",
-      "repeatable": false,
-      "component": "shared.theme"
+      "component": "shared.theme",
+      "repeatable": false
     }
   }
 }
