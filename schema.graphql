@@ -354,6 +354,7 @@ type ComponentRichContentBlock {
   anchor: String
   audio: UploadFile
   author: String
+  code: String
   content: String
   id: ID!
   image: UploadFile
@@ -371,6 +372,7 @@ input ComponentRichContentBlockFiltersInput {
   anchor: StringFilterInput
   and: [ComponentRichContentBlockFiltersInput]
   author: StringFilterInput
+  code: StringFilterInput
   content: StringFilterInput
   not: ComponentRichContentBlockFiltersInput
   or: [ComponentRichContentBlockFiltersInput]
@@ -386,6 +388,7 @@ input ComponentRichContentBlockInput {
   anchor: String
   audio: ID
   author: String
+  code: String
   content: String
   id: ID
   image: ID
@@ -1656,6 +1659,7 @@ enum ENUM_COMPONENTRICHCONTENTBLOCK_TYPE {
   audio
   blockquote
   carousel
+  code
   stats
   wysiwyg
 }

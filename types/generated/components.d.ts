@@ -60,6 +60,13 @@ export interface RichContentBlock extends Struct.ComponentSchema {
     anchor: Schema.Attribute.String & Schema.Attribute.Unique;
     audio: Schema.Attribute.Media<'audios' | 'videos'>;
     author: Schema.Attribute.String;
+    code: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
     content: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
         'plugin::ckeditor5.CKEditor',
@@ -74,7 +81,7 @@ export interface RichContentBlock extends Struct.ComponentSchema {
     stats: Schema.Attribute.Component<'rich-content.stat', true>;
     title: Schema.Attribute.String;
     type: Schema.Attribute.Enumeration<
-      ['wysiwyg', 'carousel', 'stats', 'audio', 'blockquote']
+      ['wysiwyg', 'carousel', 'stats', 'audio', 'blockquote', 'code']
     > &
       Schema.Attribute.DefaultTo<'wysiwyg'>;
   };
