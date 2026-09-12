@@ -693,7 +693,9 @@ export interface SharedFloatingCard extends Struct.ComponentSchema {
         }
       >;
     media: Schema.Attribute.Media<'images' | 'videos'>;
+    suffix: Schema.Attribute.String;
     title: Schema.Attribute.String;
+    value: Schema.Attribute.Float;
   };
 }
 

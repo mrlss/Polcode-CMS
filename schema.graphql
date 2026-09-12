@@ -1295,7 +1295,9 @@ type ComponentSharedFloatingCard {
   description: String
   id: ID!
   media: UploadFile
+  suffix: String
   title: String
+  value: Float
 }
 
 input ComponentSharedFloatingCardFiltersInput {
@@ -1303,14 +1305,18 @@ input ComponentSharedFloatingCardFiltersInput {
   description: StringFilterInput
   not: ComponentSharedFloatingCardFiltersInput
   or: [ComponentSharedFloatingCardFiltersInput]
+  suffix: StringFilterInput
   title: StringFilterInput
+  value: FloatFilterInput
 }
 
 input ComponentSharedFloatingCardInput {
   description: String
   id: ID
   media: ID
+  suffix: String
   title: String
+  value: Float
 }
 
 type ComponentSharedHeadline {

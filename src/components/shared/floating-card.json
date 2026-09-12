@@ -6,6 +6,14 @@
   },
   "options": {},
   "attributes": {
+    "value": {
+      "type": "float",
+      "description": "Figure the box counts up to on reveal, e.g. 1.7 (leave empty for a text-only box)"
+    },
+    "suffix": {
+      "type": "string",
+      "description": "Written straight after the figure: k+, +, % …"
+    },
     "title": {
       "type": "string"
     },
