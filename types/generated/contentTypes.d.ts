@@ -1008,7 +1008,6 @@ export interface ApiServiceService extends Struct.CollectionTypeSchema {
           preset: 'defaultHtml';
         }
       >;
-    link: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -1022,6 +1021,7 @@ export interface ApiServiceService extends Struct.CollectionTypeSchema {
       'manyToMany',
       'api::tech-stack.tech-stack'
     >;
+    thumbnailImage: Schema.Attribute.Media<'images' | 'videos'>;
     title: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;

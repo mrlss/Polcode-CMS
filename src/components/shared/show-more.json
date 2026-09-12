@@ -1,0 +1,59 @@
+{
+  "collectionName": "components_shared_show_mores",
+  "info": {
+    "displayName": "Show more / less",
+    "icon": "chevronDown",
+    "description": "List pagination for row/card lists: keep `Items to show` items visible and reveal the rest with an editable Show more/less toggle — or switch it off to list everything (and expose the section's button instead)"
+  },
+  "options": {},
+  "attributes": {
+    "useShowMore": {
+      "type": "boolean",
+      "default": true,
+      "description": "On: keep `Items to show` items visible, reveal the rest with the toggle. Off: list every item and use the section's button instead."
+    },
+    "itemsToShow": {
+      "type": "integer",
+      "default": 5,
+      "min": 1,
+      "conditions": {
+        "visible": {
+          "!=": [
+            {
+              "var": "useShowMore"
+            },
+            false
+          ]
+        }
+      }
+    },
+    "showMoreLabel": {
+      "type": "string",
+      "default": "Show more",
+      "conditions": {
+        "visible": {
+          "!=": [
+            {
+              "var": "useShowMore"
+            },
+            false
+          ]
+        }
+      }
+    },
+    "showLessLabel": {
+      "type": "string",
+      "default": "Show less",
+      "conditions": {
+        "visible": {
+          "!=": [
+            {
+              "var": "useShowMore"
+            },
+            false
+          ]
+        }
+      }
+    }
+  }
+}

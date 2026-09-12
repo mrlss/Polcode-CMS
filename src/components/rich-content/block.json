@@ -15,8 +15,7 @@
         "carousel",
         "stats",
         "audio",
-        "blockquote",
-        "code"
+        "blockquote"
       ]
     },
     "title": {
@@ -35,23 +34,6 @@
               "var": "type"
             },
             "wysiwyg"
-          ]
-        }
-      },
-      "customField": "plugin::ckeditor5.CKEditor",
-      "options": {
-        "preset": "defaultHtml"
-      }
-    },
-    "code": {
-      "type": "customField",
-      "conditions": {
-        "visible": {
-          "==": [
-            {
-              "var": "type"
-            },
-            "code"
           ]
         }
       },

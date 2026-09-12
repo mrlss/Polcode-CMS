@@ -2,7 +2,7 @@
   "collectionName": "components_sections_tech_stacks",
   "info": {
     "displayName": "Tech Stack",
-    "description": "Tech stack section with load-more button"
+    "description": "Tech stack section: full-width hover rows, either paginated with a Show more/less toggle or listed in full with a CTA button"
   },
   "options": {},
   "attributes": {
@@ -15,10 +15,27 @@
       "repeatable": false,
       "component": "shared.headline"
     },
+    "showMore": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.show-more",
+      "description": "Show a set number of technologies behind a Show more/less toggle (labels + count editable), or list every picked technology"
+    },
     "button": {
       "type": "component",
       "repeatable": false,
-      "component": "shared.button"
+      "component": "shared.button",
+      "description": "Only available when Show more/less is switched off — the button and the toggle are mutually exclusive",
+      "conditions": {
+        "visible": {
+          "!=": [
+            {
+              "var": "showMore.useShowMore"
+            },
+            true
+          ]
+        }
+      }
     },
     "blocks": {
       "type": "relation",

@@ -37,9 +37,6 @@
         "images"
       ]
     },
-    "link": {
-      "type": "string"
-    },
     "caseStudies": {
       "type": "relation",
       "relation": "manyToMany",
@@ -51,6 +48,14 @@
       "relation": "manyToMany",
       "target": "api::tech-stack.tech-stack",
       "inversedBy": "services"
+    },
+    "thumbnailImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "videos"
+      ]
     }
   }
 }

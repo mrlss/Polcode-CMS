@@ -354,7 +354,6 @@ type ComponentRichContentBlock {
   anchor: String
   audio: UploadFile
   author: String
-  code: String
   content: String
   id: ID!
   image: UploadFile
@@ -372,7 +371,6 @@ input ComponentRichContentBlockFiltersInput {
   anchor: StringFilterInput
   and: [ComponentRichContentBlockFiltersInput]
   author: StringFilterInput
-  code: StringFilterInput
   content: StringFilterInput
   not: ComponentRichContentBlockFiltersInput
   or: [ComponentRichContentBlockFiltersInput]
@@ -388,7 +386,6 @@ input ComponentRichContentBlockInput {
   anchor: String
   audio: ID
   author: String
-  code: String
   content: String
   id: ID
   image: ID
@@ -943,7 +940,7 @@ type ComponentSectionsPortfolio {
   manualCasesControl: Boolean
   otherCases(filters: CaseStudyFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [CaseStudy]!
   otherCases_connection(filters: CaseStudyFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): CaseStudyRelationResponseCollection
-  showMoreLess: Boolean
+  showMore: ComponentSharedShowMore
   sort: ENUM_COMPONENTSECTIONSPORTFOLIO_SORT
   theme: ComponentSharedTheme
 }
@@ -956,7 +953,7 @@ input ComponentSectionsPortfolioFiltersInput {
   not: ComponentSectionsPortfolioFiltersInput
   or: [ComponentSectionsPortfolioFiltersInput]
   otherCases: CaseStudyFiltersInput
-  showMoreLess: BooleanFilterInput
+  showMore: ComponentSharedShowMoreFiltersInput
   sort: StringFilterInput
   theme: ComponentSharedThemeFiltersInput
 }
@@ -967,7 +964,7 @@ input ComponentSectionsPortfolioInput {
   id: ID
   manualCasesControl: Boolean
   otherCases: [ID]
-  showMoreLess: Boolean
+  showMore: ComponentSharedShowMoreInput
   sort: ENUM_COMPONENTSECTIONSPORTFOLIO_SORT
   theme: ComponentSharedThemeInput
 }
@@ -1049,26 +1046,36 @@ input ComponentSectionsRichContentBodyInput {
 }
 
 type ComponentSectionsServicesGroup {
+  button: ComponentSharedButton
   groups(filters: ComponentSharedServiceGroupFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSharedServiceGroup]
   headline: ComponentSharedHeadline
   id: ID!
+  services(filters: ServiceFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Service]!
+  services_connection(filters: ServiceFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): ServiceRelationResponseCollection
   theme: ComponentSharedTheme
+  variant: ENUM_COMPONENTSECTIONSSERVICESGROUP_VARIANT
 }
 
 input ComponentSectionsServicesGroupFiltersInput {
   and: [ComponentSectionsServicesGroupFiltersInput]
+  button: ComponentSharedButtonFiltersInput
   groups: ComponentSharedServiceGroupFiltersInput
   headline: ComponentSharedHeadlineFiltersInput
   not: ComponentSectionsServicesGroupFiltersInput
   or: [ComponentSectionsServicesGroupFiltersInput]
+  services: ServiceFiltersInput
   theme: ComponentSharedThemeFiltersInput
+  variant: StringFilterInput
 }
 
 input ComponentSectionsServicesGroupInput {
+  button: ComponentSharedButtonInput
   groups: [ComponentSharedServiceGroupInput]
   headline: ComponentSharedHeadlineInput
   id: ID
+  services: [ID]
   theme: ComponentSharedThemeInput
+  variant: ENUM_COMPONENTSECTIONSSERVICESGROUP_VARIANT
 }
 
 type ComponentSectionsTeam {
@@ -1129,6 +1136,7 @@ type ComponentSectionsTechStack {
   button: ComponentSharedButton
   headline: ComponentSharedHeadline
   id: ID!
+  showMore: ComponentSharedShowMore
   theme: ComponentSharedTheme
 }
 
@@ -1140,6 +1148,7 @@ input ComponentSectionsTechStackFiltersInput {
   headline: ComponentSharedHeadlineFiltersInput
   not: ComponentSectionsTechStackFiltersInput
   or: [ComponentSectionsTechStackFiltersInput]
+  showMore: ComponentSharedShowMoreFiltersInput
   theme: ComponentSharedThemeFiltersInput
 }
 
@@ -1149,6 +1158,7 @@ input ComponentSectionsTechStackInput {
   button: ComponentSharedButtonInput
   headline: ComponentSharedHeadlineInput
   id: ID
+  showMore: ComponentSharedShowMoreInput
   theme: ComponentSharedThemeInput
 }
 
@@ -1410,6 +1420,32 @@ input ComponentSharedServiceGroupInput {
   title: String
 }
 
+type ComponentSharedShowMore {
+  id: ID!
+  itemsToShow: Int
+  showLessLabel: String
+  showMoreLabel: String
+  useShowMore: Boolean
+}
+
+input ComponentSharedShowMoreFiltersInput {
+  and: [ComponentSharedShowMoreFiltersInput]
+  itemsToShow: IntFilterInput
+  not: ComponentSharedShowMoreFiltersInput
+  or: [ComponentSharedShowMoreFiltersInput]
+  showLessLabel: StringFilterInput
+  showMoreLabel: StringFilterInput
+  useShowMore: BooleanFilterInput
+}
+
+input ComponentSharedShowMoreInput {
+  id: ID
+  itemsToShow: Int
+  showLessLabel: String
+  showMoreLabel: String
+  useShowMore: Boolean
+}
+
 type ComponentSharedShowreel {
   id: ID!
   poster: UploadFile
@@ -1659,7 +1695,6 @@ enum ENUM_COMPONENTRICHCONTENTBLOCK_TYPE {
   audio
   blockquote
   carousel
-  code
   stats
   wysiwyg
 }
@@ -1725,6 +1760,11 @@ enum ENUM_COMPONENTSECTIONSHERO_VARIANT {
 enum ENUM_COMPONENTSECTIONSPORTFOLIO_SORT {
   asc
   desc
+}
+
+enum ENUM_COMPONENTSECTIONSSERVICESGROUP_VARIANT {
+  servicesGroup
+  servicesList
 }
 
 enum ENUM_COMPONENTSHAREDBUTTON_LINKTYPE {
@@ -1838,7 +1878,7 @@ input FloatFilterInput {
   startsWith: Float
 }
 
-union GenericMorph = Achievement | CaseStudy | Client | ClientTestimonial | ComponentGlobalContentTypeUrl | ComponentGlobalFooter | ComponentGlobalPartner | ComponentRichContentBlock | ComponentRichContentStat | ComponentSectionsCardsLargeNumerated | ComponentSectionsCarousel | ComponentSectionsCaseStudies | ComponentSectionsContentColorBoxes | ComponentSectionsContentImageLeft | ComponentSectionsContentNumerated | ComponentSectionsCta | ComponentSectionsFaq | ComponentSectionsForm | ComponentSectionsHero | ComponentSectionsIndustries | ComponentSectionsIntersectionFloatingBoxes | ComponentSectionsIntersectionMedia | ComponentSectionsIntroShowreel | ComponentSectionsPerson | ComponentSectionsPortfolio | ComponentSectionsProcess | ComponentSectionsProgressCards | ComponentSectionsRichContentBody | ComponentSectionsServicesGroup | ComponentSectionsTeam | ComponentSectionsTeamGrid | ComponentSectionsTechStack | ComponentSharedButton | ComponentSharedCardMilestone | ComponentSharedCardNumerated | ComponentSharedColorBox | ComponentSharedContentItem | ComponentSharedFloatingCard | ComponentSharedHeadline | ComponentSharedHeroPromo | ComponentSharedSectionsNavController | ComponentSharedSeo | ComponentSharedServiceGroup | ComponentSharedShowreel | ComponentSharedSocials | ComponentSharedTheme | ComponentTestTest | ContentManagerOrganizerContentManagerConfiguration | Faq | Global | HiringProcess | I18NLocale | Industry | Insight | Page | Platform | Process | Region | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | Service | Team | TeamTestimonial | TechStack | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser
+union GenericMorph = Achievement | CaseStudy | Client | ClientTestimonial | ComponentGlobalContentTypeUrl | ComponentGlobalFooter | ComponentGlobalPartner | ComponentRichContentBlock | ComponentRichContentStat | ComponentSectionsCardsLargeNumerated | ComponentSectionsCarousel | ComponentSectionsCaseStudies | ComponentSectionsContentColorBoxes | ComponentSectionsContentImageLeft | ComponentSectionsContentNumerated | ComponentSectionsCta | ComponentSectionsFaq | ComponentSectionsForm | ComponentSectionsHero | ComponentSectionsIndustries | ComponentSectionsIntersectionFloatingBoxes | ComponentSectionsIntersectionMedia | ComponentSectionsIntroShowreel | ComponentSectionsPerson | ComponentSectionsPortfolio | ComponentSectionsProcess | ComponentSectionsProgressCards | ComponentSectionsRichContentBody | ComponentSectionsServicesGroup | ComponentSectionsTeam | ComponentSectionsTeamGrid | ComponentSectionsTechStack | ComponentSharedButton | ComponentSharedCardMilestone | ComponentSharedCardNumerated | ComponentSharedColorBox | ComponentSharedContentItem | ComponentSharedFloatingCard | ComponentSharedHeadline | ComponentSharedHeroPromo | ComponentSharedSectionsNavController | ComponentSharedSeo | ComponentSharedServiceGroup | ComponentSharedShowMore | ComponentSharedShowreel | ComponentSharedSocials | ComponentSharedTheme | ComponentTestTest | ContentManagerOrganizerContentManagerConfiguration | Faq | Global | HiringProcess | I18NLocale | Industry | Insight | Page | Platform | Process | Region | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | Service | Team | TeamTestimonial | TechStack | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser
 
 type Global {
   contentTypeUrls(filters: ComponentGlobalContentTypeUrlFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentGlobalContentTypeUrl]
@@ -2802,12 +2842,12 @@ type Service {
   createdAt: DateTime
   description: String
   documentId: ID!
-  link: String
   media: UploadFile
   publishedAt: DateTime
   slug: String!
   techStack(filters: TechStackFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [TechStack]!
   techStack_connection(filters: TechStackFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): TechStackRelationResponseCollection
+  thumbnailImage: UploadFile
   title: String!
   updatedAt: DateTime
 }
@@ -2832,7 +2872,6 @@ input ServiceFiltersInput {
   createdAt: DateTimeFilterInput
   description: StringFilterInput
   documentId: IDFilterInput
-  link: StringFilterInput
   not: ServiceFiltersInput
   or: [ServiceFiltersInput]
   publishedAt: DateTimeFilterInput
@@ -2845,12 +2884,12 @@ input ServiceFiltersInput {
 input ServiceInput {
   caseStudies: [ID]
   description: String
-  link: String
   locale: String
   media: ID
   publishedAt: DateTime
   slug: String
   techStack: [ID]
+  thumbnailImage: ID
   title: String
 }
 

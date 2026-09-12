@@ -2,24 +2,72 @@
   "collectionName": "components_sections_services_groups",
   "info": {
     "displayName": "Services Group",
-    "description": "Grouped services with related use cases"
+    "description": "Grouped services (variant: groups) or a flat list of picked services"
   },
   "options": {},
   "attributes": {
+    "variant": {
+      "type": "enumeration",
+      "default": "servicesGroup",
+      "enum": [
+        "servicesGroup",
+        "servicesList"
+      ]
+    },
     "headline": {
       "type": "component",
       "repeatable": false,
       "component": "shared.headline"
     },
-    "groups": {
-      "type": "component",
-      "repeatable": true,
-      "component": "shared.service-group"
-    },
     "theme": {
       "type": "component",
       "repeatable": false,
       "component": "shared.theme"
+    },
+    "button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.button",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "variant"
+            },
+            "servicesList"
+          ]
+        }
+      }
+    },
+    "services": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::service.service",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "variant"
+            },
+            "servicesList"
+          ]
+        }
+      }
+    },
+    "groups": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.service-group",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "variant"
+            },
+            "servicesGroup"
+          ]
+        }
+      }
     }
   }
 }

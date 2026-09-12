@@ -322,31 +322,32 @@ export async function seedContent(strapi: Strapi) {
     {
       title: "How does billing work?",
       description:
-        "<p>Monthly, based on the agreed scope. You only pay for what was delivered.</p>",
+        "<p>We bill monthly against the agreed scope. Ongoing teams work on a simple time-and-materials basis, while tightly defined phases can be fixed-price. Every invoice comes with a short report of what was delivered, so you always know what you are paying for.</p>",
     },
     {
       title: "Do you sign NDAs?",
       description:
-        "<p>Absolutely. We sign your NDA before any discovery call.</p>",
+        "<p>Yes. Send yours over before the first discovery call and we will return it signed, usually within one business day. We are also happy to follow your security and data-processing requirements.</p>",
     },
     {
       title: "How big are your teams?",
-      description: "<p>Small, senior squads of 4-8 people per project.</p>",
+      description:
+        "<p>Most projects run with a small senior squad of 4-8 people: a dedicated project manager, two to four engineers, a designer and a QA specialist. The team grows or shrinks with your roadmap, without changing how you communicate with us.</p>",
     },
     {
       title: "Which time zones do you cover?",
       description:
-        "<p>Europe and the Americas, with overlap for daily syncs.</p>",
+        "<p>We work from Europe and cover the Americas, keeping at least four hours of overlap with your working day for standups, reviews and workshops.</p>",
     },
     {
       title: "Which technologies do you use?",
       description:
-        "<p>React, Next.js, Node.js, TypeScript and PostgreSQL first.</p>",
+        "<p>We are strongest in React, Next.js, Node.js, TypeScript and PostgreSQL, and we ship native iOS and Android apps. The stack is always chosen for maintainability rather than novelty — if your team already works with something else, we adapt to it.</p>",
     },
     {
       title: "How does onboarding work?",
       description:
-        "<p>A structured two-week onboarding with a dedicated PM.</p>",
+        "<p>A structured two-week onboarding: a kick-off workshop to align on goals and scope, access and infrastructure setup, then a first shippable increment by the end of week two. A dedicated project manager becomes your single point of contact from day one.</p>",
     },
   ]);
 

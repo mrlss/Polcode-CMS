@@ -60,13 +60,6 @@ export interface RichContentBlock extends Struct.ComponentSchema {
     anchor: Schema.Attribute.String & Schema.Attribute.Unique;
     audio: Schema.Attribute.Media<'audios' | 'videos'>;
     author: Schema.Attribute.String;
-    code: Schema.Attribute.RichText &
-      Schema.Attribute.CustomField<
-        'plugin::ckeditor5.CKEditor',
-        {
-          preset: 'defaultHtml';
-        }
-      >;
     content: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
         'plugin::ckeditor5.CKEditor',
@@ -81,7 +74,7 @@ export interface RichContentBlock extends Struct.ComponentSchema {
     stats: Schema.Attribute.Component<'rich-content.stat', true>;
     title: Schema.Attribute.String;
     type: Schema.Attribute.Enumeration<
-      ['wysiwyg', 'carousel', 'stats', 'audio', 'blockquote', 'code']
+      ['wysiwyg', 'carousel', 'stats', 'audio', 'blockquote']
     > &
       Schema.Attribute.DefaultTo<'wysiwyg'>;
   };
@@ -469,7 +462,7 @@ export interface SectionsPortfolio extends Struct.ComponentSchema {
       'oneToMany',
       'api::case-study.case-study'
     >;
-    showMoreLess: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    showMore: Schema.Attribute.Component<'shared.show-more', false>;
     sort: Schema.Attribute.Enumeration<['asc', 'desc']> &
       Schema.Attribute.DefaultTo<'asc'>;
     theme: Schema.Attribute.Component<'shared.theme', false>;
@@ -521,13 +514,17 @@ export interface SectionsRichContentBody extends Struct.ComponentSchema {
 export interface SectionsServicesGroup extends Struct.ComponentSchema {
   collectionName: 'components_sections_services_groups';
   info: {
-    description: 'Grouped services with related use cases';
+    description: 'Grouped services (variant: groups) or a flat list of picked services';
     displayName: 'Services Group';
   };
   attributes: {
+    button: Schema.Attribute.Component<'shared.button', false>;
     groups: Schema.Attribute.Component<'shared.service-group', true>;
     headline: Schema.Attribute.Component<'shared.headline', false>;
+    services: Schema.Attribute.Relation<'oneToMany', 'api::service.service'>;
     theme: Schema.Attribute.Component<'shared.theme', false>;
+    variant: Schema.Attribute.Enumeration<['servicesGroup', 'servicesList']> &
+      Schema.Attribute.DefaultTo<'servicesGroup'>;
   };
 }
 
@@ -561,7 +558,7 @@ export interface SectionsTeamGrid extends Struct.ComponentSchema {
 export interface SectionsTechStack extends Struct.ComponentSchema {
   collectionName: 'components_sections_tech_stacks';
   info: {
-    description: 'Tech stack section with load-more button';
+    description: 'Tech stack section: full-width hover rows, either paginated with a Show more/less toggle or listed in full with a CTA button';
     displayName: 'Tech Stack';
   };
   attributes: {
@@ -572,6 +569,7 @@ export interface SectionsTechStack extends Struct.ComponentSchema {
     >;
     button: Schema.Attribute.Component<'shared.button', false>;
     headline: Schema.Attribute.Component<'shared.headline', false>;
+    showMore: Schema.Attribute.Component<'shared.show-more', false>;
     theme: Schema.Attribute.Component<'shared.theme', false>;
   };
 }
@@ -765,6 +763,30 @@ export interface SharedServiceGroup extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedShowMore extends Struct.ComponentSchema {
+  collectionName: 'components_shared_show_mores';
+  info: {
+    description: "List pagination for row/card lists: keep `Items to show` items visible and reveal the rest with an editable Show more/less toggle \u2014 or switch it off to list everything (and expose the section's button instead)";
+    displayName: 'Show more / less';
+    icon: 'chevronDown';
+  };
+  attributes: {
+    itemsToShow: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<5>;
+    showLessLabel: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Show less'>;
+    showMoreLabel: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Show more'>;
+    useShowMore: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+  };
+}
+
 export interface SharedShowreel extends Struct.ComponentSchema {
   collectionName: 'components_shared_showreels';
   info: {
@@ -861,6 +883,7 @@ declare module '@strapi/strapi' {
       'shared.sections-nav-controller': SharedSectionsNavController;
       'shared.seo': SharedSeo;
       'shared.service-group': SharedServiceGroup;
+      'shared.show-more': SharedShowMore;
       'shared.showreel': SharedShowreel;
       'shared.socials': SharedSocials;
       'shared.theme': SharedTheme;

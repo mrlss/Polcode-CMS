@@ -17,9 +17,11 @@
       "component": "shared.theme",
       "repeatable": false
     },
-    "showMoreLess": {
-      "type": "boolean",
-      "default": true
+    "showMore": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.show-more",
+      "description": "Show a set number of other cases behind a Show more/less toggle (labels + count editable), or list them all"
     },
     "manualCasesControl": {
       "type": "boolean",
