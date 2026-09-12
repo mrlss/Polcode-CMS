@@ -752,7 +752,7 @@ export interface SharedSeo extends Struct.ComponentSchema {
 export interface SharedServiceGroup extends Struct.ComponentSchema {
   collectionName: 'components_shared_service_groups';
   info: {
-    description: 'Group title + services + related use cases. Leave the override empty and the carousel shows the case studies picked on each service.';
+    description: 'Group title, the services to feature, and an optional override for the related-cases carousel.';
     displayName: 'Service Group';
   };
   attributes: {
