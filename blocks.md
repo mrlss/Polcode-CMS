@@ -270,10 +270,12 @@ Services Group
 -headline
 -group (one per section)
 -title
--services - picker from services collection
--relatedUseCases - OPTIONAL override; leave it empty and the carousel shows the
-case studies already picked on each service of the group (union across the
-services, de-duplicated, in service order)
+-services - picker from services collection (the carousel's source)
+-relatedCaseStudies - OPTIONAL override; leave it empty and the carousel shows
+the case studies already attached to each service of the group (union across the
+services, de-duplicated, in the order the services are listed). As soon as one
+case is selected here, that automatic selection is switched off and the carousel
+shows exactly these
 -the block renders: group title | services accordion | related-cases carousel
 (one card per view, no loop, counter + arrows)
 

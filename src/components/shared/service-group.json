@@ -2,7 +2,7 @@
   "collectionName": "components_shared_service_groups",
   "info": {
     "displayName": "Service Group",
-    "description": "Group title + services + related use cases. Leave the override empty and the carousel shows the case studies picked on each service."
+    "description": "Group title, the services to feature, and an optional override for the related-cases carousel."
   },
   "options": {},
   "attributes": {
@@ -12,12 +12,14 @@
     "services": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::service.service"
+      "target": "api::service.service",
+      "description": "The carousel's cases come from here: every case study attached to these services is collected for the group."
     },
     "relatedCaseStudies": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::case-study.case-study"
+      "target": "api::case-study.case-study",
+      "description": "Leave empty and the carousel shows every case study attached to the services above — de-duplicated, in the order those services are listed. Add cases here only when you want a different set: as soon as one is selected, that automatic selection is switched off and the carousel shows exactly these, in this order."
     }
   }
 }
