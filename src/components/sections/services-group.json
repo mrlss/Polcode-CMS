@@ -56,7 +56,7 @@
     },
     "groups": {
       "type": "component",
-      "repeatable": true,
+      "repeatable": false,
       "component": "shared.service-group",
       "conditions": {
         "visible": {

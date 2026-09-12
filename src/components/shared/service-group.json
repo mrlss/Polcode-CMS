@@ -2,12 +2,18 @@
   "collectionName": "components_shared_service_groups",
   "info": {
     "displayName": "Service Group",
-    "description": "Group title + services + related use cases"
+    "description": "Group title + services + related use cases. Leave the override empty and the carousel shows the case studies picked on each service."
   },
   "options": {},
   "attributes": {
     "title": {
       "type": "string"
+    },
+    "casesLimit": {
+      "type": "integer",
+      "default": 6,
+      "min": 1,
+      "description": "How many case studies the carousel shows at most (ignored when the override relation below is filled)"
     },
     "services": {
       "type": "relation",

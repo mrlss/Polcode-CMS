@@ -519,7 +519,7 @@ export interface SectionsServicesGroup extends Struct.ComponentSchema {
   };
   attributes: {
     button: Schema.Attribute.Component<'shared.button', false>;
-    groups: Schema.Attribute.Component<'shared.service-group', true>;
+    groups: Schema.Attribute.Component<'shared.service-group', false>;
     headline: Schema.Attribute.Component<'shared.headline', false>;
     services: Schema.Attribute.Relation<'oneToMany', 'api::service.service'>;
     theme: Schema.Attribute.Component<'shared.theme', false>;
@@ -752,10 +752,18 @@ export interface SharedSeo extends Struct.ComponentSchema {
 export interface SharedServiceGroup extends Struct.ComponentSchema {
   collectionName: 'components_shared_service_groups';
   info: {
-    description: 'Group title + services + related use cases';
+    description: 'Group title + services + related use cases. Leave the override empty and the carousel shows the case studies picked on each service.';
     displayName: 'Service Group';
   };
   attributes: {
+    casesLimit: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<6>;
     relatedCaseStudies: Schema.Attribute.Relation<
       'oneToMany',
       'api::case-study.case-study'

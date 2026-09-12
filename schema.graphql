@@ -1047,7 +1047,7 @@ input ComponentSectionsRichContentBodyInput {
 
 type ComponentSectionsServicesGroup {
   button: ComponentSharedButton
-  groups(filters: ComponentSharedServiceGroupFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSharedServiceGroup]
+  groups: ComponentSharedServiceGroup
   headline: ComponentSharedHeadline
   id: ID!
   services(filters: ServiceFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Service]!
@@ -1070,7 +1070,7 @@ input ComponentSectionsServicesGroupFiltersInput {
 
 input ComponentSectionsServicesGroupInput {
   button: ComponentSharedButtonInput
-  groups: [ComponentSharedServiceGroupInput]
+  groups: ComponentSharedServiceGroupInput
   headline: ComponentSharedHeadlineInput
   id: ID
   services: [ID]
@@ -1402,6 +1402,7 @@ input ComponentSharedSeoInput {
 }
 
 type ComponentSharedServiceGroup {
+  casesLimit: Int
   id: ID!
   relatedCaseStudies(filters: CaseStudyFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [CaseStudy]!
   relatedCaseStudies_connection(filters: CaseStudyFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): CaseStudyRelationResponseCollection
@@ -1412,6 +1413,7 @@ type ComponentSharedServiceGroup {
 
 input ComponentSharedServiceGroupFiltersInput {
   and: [ComponentSharedServiceGroupFiltersInput]
+  casesLimit: IntFilterInput
   not: ComponentSharedServiceGroupFiltersInput
   or: [ComponentSharedServiceGroupFiltersInput]
   relatedCaseStudies: CaseStudyFiltersInput
@@ -1420,6 +1422,7 @@ input ComponentSharedServiceGroupFiltersInput {
 }
 
 input ComponentSharedServiceGroupInput {
+  casesLimit: Int
   id: ID
   relatedCaseStudies: [ID]
   services: [ID]
