@@ -24,7 +24,7 @@ const STRAPI_URL = process.env.STRAPI_URL ?? "http://localhost:1337";
 const DRY_RUN = process.argv.includes("--dry-run");
 const SEED = Number(
   (process.argv.find((a) => a.startsWith("--seed=")) ?? "").split("=")[1] ??
-    20260912,
+  20260912,
 );
 
 /** How many case studies a service gets: [count, weight]. */
@@ -63,8 +63,7 @@ async function api(url, init = {}) {
   }
   if (!res.ok) {
     throw new Error(
-      `${init.method ?? "GET"} ${url} → ${res.status}: ${
-        typeof body === "string" ? body : JSON.stringify(body)
+      `${init.method ?? "GET"} ${url} → ${res.status}: ${typeof body === "string" ? body : JSON.stringify(body)
       }`,
     );
   }

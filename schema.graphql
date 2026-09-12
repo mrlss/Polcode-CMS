@@ -1402,7 +1402,6 @@ input ComponentSharedSeoInput {
 }
 
 type ComponentSharedServiceGroup {
-  casesLimit: Int
   id: ID!
   relatedCaseStudies(filters: CaseStudyFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [CaseStudy]!
   relatedCaseStudies_connection(filters: CaseStudyFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): CaseStudyRelationResponseCollection
@@ -1413,7 +1412,6 @@ type ComponentSharedServiceGroup {
 
 input ComponentSharedServiceGroupFiltersInput {
   and: [ComponentSharedServiceGroupFiltersInput]
-  casesLimit: IntFilterInput
   not: ComponentSharedServiceGroupFiltersInput
   or: [ComponentSharedServiceGroupFiltersInput]
   relatedCaseStudies: CaseStudyFiltersInput
@@ -1422,7 +1420,6 @@ input ComponentSharedServiceGroupFiltersInput {
 }
 
 input ComponentSharedServiceGroupInput {
-  casesLimit: Int
   id: ID
   relatedCaseStudies: [ID]
   services: [ID]

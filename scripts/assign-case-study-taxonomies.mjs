@@ -27,7 +27,7 @@ const STRAPI_URL = process.env.STRAPI_URL ?? "http://localhost:1337";
 const DRY_RUN = process.argv.includes("--dry-run");
 const SEED = Number(
   (process.argv.find((a) => a.startsWith("--seed=")) ?? "").split("=")[1] ??
-    20260912,
+  20260912,
 );
 
 /** Counts to draw, as [count, weight]. Tech stack and services only. */
@@ -70,8 +70,7 @@ async function api(url, init = {}) {
   }
   if (!res.ok) {
     throw new Error(
-      `${init.method ?? "GET"} ${url} → ${res.status}: ${
-        typeof body === "string" ? body : JSON.stringify(body)
+      `${init.method ?? "GET"} ${url} → ${res.status}: ${typeof body === "string" ? body : JSON.stringify(body)
       }`,
     );
   }
@@ -204,7 +203,7 @@ await ensureDrafts("regions", regions);
 
 console.log(
   `\n${drafts.length} case studies · ${techStacks.size} tech stacks · ` +
-    `${services.size} services · ${regions.size} regions (seed ${SEED})\n`,
+  `${services.size} services · ${regions.size} regions (seed ${SEED})\n`,
 );
 
 /** Random picks a version can hold (`versions` = the ones it has a row for). */

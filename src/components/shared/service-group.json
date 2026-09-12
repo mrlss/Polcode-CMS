@@ -9,12 +9,6 @@
     "title": {
       "type": "string"
     },
-    "casesLimit": {
-      "type": "integer",
-      "default": 6,
-      "min": 1,
-      "description": "How many case studies the carousel shows at most (ignored when the override relation below is filled)"
-    },
     "services": {
       "type": "relation",
       "relation": "oneToMany",

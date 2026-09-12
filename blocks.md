@@ -269,14 +269,13 @@ Process
 Services Group
 -headline
 -group (one per section)
- -title
- -services - picker from services collection
- -casesLimit - how many case studies the carousel shows at most (default 6)
- -relatedUseCases - OPTIONAL override; leave it empty and the carousel shows the
-  case studies already picked on each service of the group (union across the
-  services, de-duplicated, in service order, capped by casesLimit)
+-title
+-services - picker from services collection
+-relatedUseCases - OPTIONAL override; leave it empty and the carousel shows the
+case studies already picked on each service of the group (union across the
+services, de-duplicated, in service order)
 -the block renders: group title | services accordion | related-cases carousel
- (one card per view, no loop, counter + arrows)
+(one card per view, no loop, counter + arrows)
 
 Industries
 headline

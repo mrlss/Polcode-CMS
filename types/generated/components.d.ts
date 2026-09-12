@@ -756,14 +756,6 @@ export interface SharedServiceGroup extends Struct.ComponentSchema {
     displayName: 'Service Group';
   };
   attributes: {
-    casesLimit: Schema.Attribute.Integer &
-      Schema.Attribute.SetMinMax<
-        {
-          min: 1;
-        },
-        number
-      > &
-      Schema.Attribute.DefaultTo<6>;
     relatedCaseStudies: Schema.Attribute.Relation<
       'oneToMany',
       'api::case-study.case-study'
