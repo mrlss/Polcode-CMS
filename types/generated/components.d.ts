@@ -622,6 +622,8 @@ export interface SharedCardMilestone extends Struct.ComponentSchema {
           preset: 'defaultHtml';
         }
       >;
+    label: Schema.Attribute.String;
+    media: Schema.Attribute.Media<'images' | 'videos'>;
     title: Schema.Attribute.String;
   };
 }

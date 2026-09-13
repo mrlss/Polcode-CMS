@@ -1203,12 +1203,15 @@ input ComponentSharedButtonInput {
 type ComponentSharedCardMilestone {
   description: String
   id: ID!
+  label: String
+  media: UploadFile
   title: String
 }
 
 input ComponentSharedCardMilestoneFiltersInput {
   and: [ComponentSharedCardMilestoneFiltersInput]
   description: StringFilterInput
+  label: StringFilterInput
   not: ComponentSharedCardMilestoneFiltersInput
   or: [ComponentSharedCardMilestoneFiltersInput]
   title: StringFilterInput
@@ -1217,6 +1220,8 @@ input ComponentSharedCardMilestoneFiltersInput {
 input ComponentSharedCardMilestoneInput {
   description: String
   id: ID
+  label: String
+  media: ID
   title: String
 }
 
