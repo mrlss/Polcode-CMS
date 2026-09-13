@@ -1,0 +1,78 @@
+{
+  "collectionName": "components_sections_intro_showreels",
+  "info": {
+    "displayName": "Campaign Intro",
+    "description": "Intro block — default (text) or with media"
+  },
+  "options": {},
+  "attributes": {
+    "headline": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.headline"
+    },
+    "variant": {
+      "type": "enumeration",
+      "enum": [
+        "default",
+        "withMedia"
+      ],
+      "default": "default"
+    },
+    "label": {
+      "type": "string"
+    },
+    "title": {
+      "type": "text"
+    },
+    "description": {
+      "type": "customField",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      }
+    },
+    "button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.button"
+    },
+    "media": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "videos"
+      ],
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "variant"
+            },
+            "withMedia"
+          ]
+        }
+      }
+    },
+    "indicatorText": {
+      "type": "string",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "variant"
+            },
+            "default"
+          ]
+        }
+      }
+    },
+    "theme": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.theme"
+    }
+  }
+}

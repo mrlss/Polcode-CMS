@@ -290,13 +290,16 @@ button
 blocks: collection picker from tech stack collection
 load-more - how can we do it as a button variant or functionality??
 
-Intro Showreel
--title-text
--button
--media-image/video
--label-text
--description-wysiwyg
-showreel - create component with video and poster fields
+Campaign Intro
+headline
+variant: default | withMedia
+label-text
+title-text
+description-wysiwyg
+button
+media-image/video (withMedia only)
+indicatorText-text (default only)
+theme
 
 Intersection Floating Boxes
 headline

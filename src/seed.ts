@@ -492,13 +492,16 @@ export async function seedDemoData(strapi: Strapi) {
       title: "Full-screen moment",
       button: btn("Explore", "/what-we-do"),
     },
-    // 18. intro-showreel
+    // 18. campaign-intro
     {
-      __component: "sections.intro-showreel",
-      title: "A glimpse of what we build",
-      description: "<p>Three minutes of products, teams and outcomes.</p>",
-      label: "Showreel",
-      button: btn("Watch", "#showreel"),
+      __component: "sections.campaign-intro",
+      variant: "default",
+      label: "About service",
+      title: "Web Engineering for Scalable Digital Foundations",
+      description:
+        "<p>Building high-performance, secure, and future-proof web applications designed to support complex business logic and rapid growth.</p>",
+      button: btn("Discuss Your Project", "/contact-us"),
+      indicatorText: "Scroll down",
     },
     // 19. person
     {
