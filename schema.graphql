@@ -743,9 +743,6 @@ type ComponentSectionsHero {
   image: UploadFile
   indicatorText: String
   label: String
-  markIcon: String
-  markImage: UploadFile
-  markTitle: String
   media: UploadFile
   showreel: ComponentSharedShowreel
   subtitle: String
@@ -761,8 +758,6 @@ input ComponentSectionsHeroFiltersInput {
   description: StringFilterInput
   indicatorText: StringFilterInput
   label: StringFilterInput
-  markIcon: StringFilterInput
-  markTitle: StringFilterInput
   not: ComponentSectionsHeroFiltersInput
   or: [ComponentSectionsHeroFiltersInput]
   showreel: ComponentSharedShowreelFiltersInput
@@ -780,9 +775,6 @@ input ComponentSectionsHeroInput {
   image: ID
   indicatorText: String
   label: String
-  markIcon: String
-  markImage: ID
-  markTitle: String
   media: ID
   showreel: ComponentSharedShowreelInput
   subtitle: String

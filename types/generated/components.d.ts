@@ -343,9 +343,6 @@ export interface SectionsHero extends Struct.ComponentSchema {
     image: Schema.Attribute.Media<'images'>;
     indicatorText: Schema.Attribute.String;
     label: Schema.Attribute.String;
-    markIcon: Schema.Attribute.String;
-    markImage: Schema.Attribute.Media<'images'>;
-    markTitle: Schema.Attribute.String;
     media: Schema.Attribute.Media<'images' | 'videos'>;
     showreel: Schema.Attribute.Component<'shared.showreel', false>;
     subtitle: Schema.Attribute.String;
