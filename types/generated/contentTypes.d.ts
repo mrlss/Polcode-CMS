@@ -849,7 +849,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'sections.industries',
         'sections.intersection-floating-boxes',
         'sections.intersection-media',
-        'sections.intro-showreel',
+        'sections.campaign-intro',
         'sections.person',
         'sections.process',
         'sections.progress-cards',

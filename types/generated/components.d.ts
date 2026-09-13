@@ -93,6 +93,31 @@ export interface RichContentStat extends Struct.ComponentSchema {
   };
 }
 
+export interface SectionsCampaignIntro extends Struct.ComponentSchema {
+  collectionName: 'components_sections_intro_showreels';
+  info: {
+    description: 'Intro block \u2014 default (text) or with media';
+    displayName: 'Campaign Intro';
+  };
+  attributes: {
+    button: Schema.Attribute.Component<'shared.button', false>;
+    description: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
+    indicatorText: Schema.Attribute.String;
+    label: Schema.Attribute.String;
+    media: Schema.Attribute.Media<'images' | 'videos'>;
+    theme: Schema.Attribute.Component<'shared.theme', false>;
+    title: Schema.Attribute.Text;
+    variant: Schema.Attribute.Enumeration<['default', 'withMedia']> &
+      Schema.Attribute.DefaultTo<'default'>;
+  };
+}
+
 export interface SectionsCardsLargeNumerated extends Struct.ComponentSchema {
   collectionName: 'components_sections_cards_large_numerateds';
   info: {
@@ -397,29 +422,6 @@ export interface SectionsIntersectionMedia extends Struct.ComponentSchema {
   attributes: {
     button: Schema.Attribute.Component<'shared.button', false>;
     media: Schema.Attribute.Media<'images' | 'videos'>;
-    theme: Schema.Attribute.Component<'shared.theme', false>;
-    title: Schema.Attribute.String;
-  };
-}
-
-export interface SectionsIntroShowreel extends Struct.ComponentSchema {
-  collectionName: 'components_sections_intro_showreels';
-  info: {
-    description: 'Showreel intro';
-    displayName: 'Intro Showreel';
-  };
-  attributes: {
-    button: Schema.Attribute.Component<'shared.button', false>;
-    description: Schema.Attribute.RichText &
-      Schema.Attribute.CustomField<
-        'plugin::ckeditor5.CKEditor',
-        {
-          preset: 'defaultHtml';
-        }
-      >;
-    label: Schema.Attribute.String;
-    media: Schema.Attribute.Media<'images' | 'videos'>;
-    showreel: Schema.Attribute.Component<'shared.showreel', false>;
     theme: Schema.Attribute.Component<'shared.theme', false>;
     title: Schema.Attribute.String;
   };
@@ -850,6 +852,7 @@ declare module '@strapi/strapi' {
       'global.partner': GlobalPartner;
       'rich-content.block': RichContentBlock;
       'rich-content.stat': RichContentStat;
+      'sections.campaign-intro': SectionsCampaignIntro;
       'sections.cards-large-numerated': SectionsCardsLargeNumerated;
       'sections.carousel': SectionsCarousel;
       'sections.case-studies': SectionsCaseStudies;
@@ -863,7 +866,6 @@ declare module '@strapi/strapi' {
       'sections.industries': SectionsIndustries;
       'sections.intersection-floating-boxes': SectionsIntersectionFloatingBoxes;
       'sections.intersection-media': SectionsIntersectionMedia;
-      'sections.intro-showreel': SectionsIntroShowreel;
       'sections.person': SectionsPerson;
       'sections.portfolio': SectionsPortfolio;
       'sections.process': SectionsProcess;

@@ -417,6 +417,43 @@ input ComponentRichContentStatInput {
   value: String
 }
 
+type ComponentSectionsCampaignIntro {
+  button: ComponentSharedButton
+  description: String
+  id: ID!
+  indicatorText: String
+  label: String
+  media: UploadFile
+  theme: ComponentSharedTheme
+  title: String
+  variant: ENUM_COMPONENTSECTIONSCAMPAIGNINTRO_VARIANT
+}
+
+input ComponentSectionsCampaignIntroFiltersInput {
+  and: [ComponentSectionsCampaignIntroFiltersInput]
+  button: ComponentSharedButtonFiltersInput
+  description: StringFilterInput
+  indicatorText: StringFilterInput
+  label: StringFilterInput
+  not: ComponentSectionsCampaignIntroFiltersInput
+  or: [ComponentSectionsCampaignIntroFiltersInput]
+  theme: ComponentSharedThemeFiltersInput
+  title: StringFilterInput
+  variant: StringFilterInput
+}
+
+input ComponentSectionsCampaignIntroInput {
+  button: ComponentSharedButtonInput
+  description: String
+  id: ID
+  indicatorText: String
+  label: String
+  media: ID
+  theme: ComponentSharedThemeInput
+  title: String
+  variant: ENUM_COMPONENTSECTIONSCAMPAIGNINTRO_VARIANT
+}
+
 type ComponentSectionsCardsLargeNumerated {
   cards(filters: ComponentSharedCardNumeratedFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSharedCardNumerated]
   cardsLayout: ENUM_COMPONENTSECTIONSCARDSLARGENUMERATED_CARDSLAYOUT
@@ -859,40 +896,6 @@ input ComponentSectionsIntersectionMediaInput {
   button: ComponentSharedButtonInput
   id: ID
   media: ID
-  theme: ComponentSharedThemeInput
-  title: String
-}
-
-type ComponentSectionsIntroShowreel {
-  button: ComponentSharedButton
-  description: String
-  id: ID!
-  label: String
-  media: UploadFile
-  showreel: ComponentSharedShowreel
-  theme: ComponentSharedTheme
-  title: String
-}
-
-input ComponentSectionsIntroShowreelFiltersInput {
-  and: [ComponentSectionsIntroShowreelFiltersInput]
-  button: ComponentSharedButtonFiltersInput
-  description: StringFilterInput
-  label: StringFilterInput
-  not: ComponentSectionsIntroShowreelFiltersInput
-  or: [ComponentSectionsIntroShowreelFiltersInput]
-  showreel: ComponentSharedShowreelFiltersInput
-  theme: ComponentSharedThemeFiltersInput
-  title: StringFilterInput
-}
-
-input ComponentSectionsIntroShowreelInput {
-  button: ComponentSharedButtonInput
-  description: String
-  id: ID
-  label: String
-  media: ID
-  showreel: ComponentSharedShowreelInput
   theme: ComponentSharedThemeInput
   title: String
 }
@@ -1705,6 +1708,11 @@ enum ENUM_COMPONENTRICHCONTENTBLOCK_TYPE {
   wysiwyg
 }
 
+enum ENUM_COMPONENTSECTIONSCAMPAIGNINTRO_VARIANT {
+  default
+  withMedia
+}
+
 enum ENUM_COMPONENTSECTIONSCARDSLARGENUMERATED_CARDSLAYOUT {
   carousel
   grid
@@ -1879,7 +1887,7 @@ input FloatFilterInput {
   startsWith: Float
 }
 
-union GenericMorph = Achievement | CaseStudy | Client | ClientTestimonial | ComponentGlobalContentTypeUrl | ComponentGlobalFooter | ComponentGlobalPartner | ComponentRichContentBlock | ComponentRichContentStat | ComponentSectionsCardsLargeNumerated | ComponentSectionsCarousel | ComponentSectionsCaseStudies | ComponentSectionsContentColorBoxes | ComponentSectionsContentImageLeft | ComponentSectionsContentNumerated | ComponentSectionsCta | ComponentSectionsFaq | ComponentSectionsForm | ComponentSectionsHero | ComponentSectionsIndustries | ComponentSectionsIntersectionFloatingBoxes | ComponentSectionsIntersectionMedia | ComponentSectionsIntroShowreel | ComponentSectionsPerson | ComponentSectionsPortfolio | ComponentSectionsProcess | ComponentSectionsProgressCards | ComponentSectionsRichContentBody | ComponentSectionsServicesGroup | ComponentSectionsTeam | ComponentSectionsTeamGrid | ComponentSectionsTechStack | ComponentSharedButton | ComponentSharedCardMilestone | ComponentSharedCardNumerated | ComponentSharedColorBox | ComponentSharedContentItem | ComponentSharedFloatingCard | ComponentSharedHeadline | ComponentSharedHeroPromo | ComponentSharedSectionsNavController | ComponentSharedSeo | ComponentSharedServiceGroup | ComponentSharedShowMore | ComponentSharedShowreel | ComponentSharedSocials | ComponentSharedTheme | ComponentTestTest | ContentManagerOrganizerContentManagerConfiguration | Faq | Global | HiringProcess | I18NLocale | Industry | Insight | Page | Platform | Process | Region | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | Service | Team | TeamTestimonial | TechStack | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser
+union GenericMorph = Achievement | CaseStudy | Client | ClientTestimonial | ComponentGlobalContentTypeUrl | ComponentGlobalFooter | ComponentGlobalPartner | ComponentRichContentBlock | ComponentRichContentStat | ComponentSectionsCampaignIntro | ComponentSectionsCardsLargeNumerated | ComponentSectionsCarousel | ComponentSectionsCaseStudies | ComponentSectionsContentColorBoxes | ComponentSectionsContentImageLeft | ComponentSectionsContentNumerated | ComponentSectionsCta | ComponentSectionsFaq | ComponentSectionsForm | ComponentSectionsHero | ComponentSectionsIndustries | ComponentSectionsIntersectionFloatingBoxes | ComponentSectionsIntersectionMedia | ComponentSectionsPerson | ComponentSectionsPortfolio | ComponentSectionsProcess | ComponentSectionsProgressCards | ComponentSectionsRichContentBody | ComponentSectionsServicesGroup | ComponentSectionsTeam | ComponentSectionsTeamGrid | ComponentSectionsTechStack | ComponentSharedButton | ComponentSharedCardMilestone | ComponentSharedCardNumerated | ComponentSharedColorBox | ComponentSharedContentItem | ComponentSharedFloatingCard | ComponentSharedHeadline | ComponentSharedHeroPromo | ComponentSharedSectionsNavController | ComponentSharedSeo | ComponentSharedServiceGroup | ComponentSharedShowMore | ComponentSharedShowreel | ComponentSharedSocials | ComponentSharedTheme | ComponentTestTest | ContentManagerOrganizerContentManagerConfiguration | Faq | Global | HiringProcess | I18NLocale | Industry | Insight | Page | Platform | Process | Region | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | Service | Team | TeamTestimonial | TechStack | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser
 
 type Global {
   contentTypeUrls(filters: ComponentGlobalContentTypeUrlFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentGlobalContentTypeUrl]
@@ -2474,7 +2482,7 @@ type PageRelationResponseCollection {
   nodes: [Page!]!
 }
 
-union PageSectionsDynamicZone = ComponentSectionsCardsLargeNumerated | ComponentSectionsCarousel | ComponentSectionsCaseStudies | ComponentSectionsContentColorBoxes | ComponentSectionsContentImageLeft | ComponentSectionsContentNumerated | ComponentSectionsCta | ComponentSectionsFaq | ComponentSectionsForm | ComponentSectionsHero | ComponentSectionsIndustries | ComponentSectionsIntersectionFloatingBoxes | ComponentSectionsIntersectionMedia | ComponentSectionsIntroShowreel | ComponentSectionsPerson | ComponentSectionsPortfolio | ComponentSectionsProcess | ComponentSectionsProgressCards | ComponentSectionsRichContentBody | ComponentSectionsServicesGroup | ComponentSectionsTeam | ComponentSectionsTeamGrid | ComponentSectionsTechStack | Error
+union PageSectionsDynamicZone = ComponentSectionsCampaignIntro | ComponentSectionsCardsLargeNumerated | ComponentSectionsCarousel | ComponentSectionsCaseStudies | ComponentSectionsContentColorBoxes | ComponentSectionsContentImageLeft | ComponentSectionsContentNumerated | ComponentSectionsCta | ComponentSectionsFaq | ComponentSectionsForm | ComponentSectionsHero | ComponentSectionsIndustries | ComponentSectionsIntersectionFloatingBoxes | ComponentSectionsIntersectionMedia | ComponentSectionsPerson | ComponentSectionsPortfolio | ComponentSectionsProcess | ComponentSectionsProgressCards | ComponentSectionsRichContentBody | ComponentSectionsServicesGroup | ComponentSectionsTeam | ComponentSectionsTeamGrid | ComponentSectionsTechStack | Error
 
 scalar PageSectionsDynamicZoneInput
 

@@ -6,11 +6,6 @@
   },
   "options": {},
   "attributes": {
-    "headline": {
-      "type": "component",
-      "repeatable": false,
-      "component": "shared.headline"
-    },
     "variant": {
       "type": "enumeration",
       "enum": [
