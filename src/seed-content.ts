@@ -924,21 +924,24 @@ export async function seedContent(strapi: Strapi) {
       description: "<p>Tell us about your project.</p>",
       label: "Get in touch",
     },
-    // 11. hero (default)
+    // 11. hero (default, large heading)
     {
       __component: "sections.hero",
       variant: "default",
-      headingSize: "large",
       title: "Built on a simple idea",
       description: "<p>Great software comes from small, empowered teams.</p>",
       label: "About",
       button: btn("Our story", "/about"),
     },
-    // 12. hero (simple)
+    // 12. hero (two columns)
     {
       __component: "sections.hero",
-      variant: "simple",
+      variant: "twoColumns",
+      label: "Our approach",
       title: "Crafted for the web",
+      description: "<p>Design and engineering under one roof.</p>",
+      button: btn("See how we work", "/about-us"),
+      indicatorText: "Discover what we do",
       theme: theme("black"),
     },
     // 13. hero (with carousel)

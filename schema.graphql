@@ -739,11 +739,13 @@ type ComponentSectionsHero {
   button: ComponentSharedButton
   carousel(filters: ComponentSharedHeroPromoFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSharedHeroPromo]
   description: String
-  headingSize: ENUM_COMPONENTSECTIONSHERO_HEADINGSIZE
   id: ID!
   image: UploadFile
   indicatorText: String
   label: String
+  markIcon: String
+  markImage: UploadFile
+  markTitle: String
   media: UploadFile
   showreel: ComponentSharedShowreel
   subtitle: String
@@ -757,9 +759,10 @@ input ComponentSectionsHeroFiltersInput {
   button: ComponentSharedButtonFiltersInput
   carousel: ComponentSharedHeroPromoFiltersInput
   description: StringFilterInput
-  headingSize: StringFilterInput
   indicatorText: StringFilterInput
   label: StringFilterInput
+  markIcon: StringFilterInput
+  markTitle: StringFilterInput
   not: ComponentSectionsHeroFiltersInput
   or: [ComponentSectionsHeroFiltersInput]
   showreel: ComponentSharedShowreelFiltersInput
@@ -773,11 +776,13 @@ input ComponentSectionsHeroInput {
   button: ComponentSharedButtonInput
   carousel: [ComponentSharedHeroPromoInput]
   description: String
-  headingSize: ENUM_COMPONENTSECTIONSHERO_HEADINGSIZE
   id: ID
   image: ID
   indicatorText: String
   label: String
+  markIcon: String
+  markImage: ID
+  markTitle: String
   media: ID
   showreel: ComponentSharedShowreelInput
   subtitle: String
@@ -1754,14 +1759,9 @@ enum ENUM_COMPONENTSECTIONSFORM_VARIANT {
   cv
 }
 
-enum ENUM_COMPONENTSECTIONSHERO_HEADINGSIZE {
-  large
-  small
-}
-
 enum ENUM_COMPONENTSECTIONSHERO_VARIANT {
   default
-  simple
+  twoColumns
   withCarousel
   withShowreel
 }

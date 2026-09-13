@@ -327,7 +327,7 @@ export interface SectionsForm extends Struct.ComponentSchema {
 export interface SectionsHero extends Struct.ComponentSchema {
   collectionName: 'components_sections_heroes';
   info: {
-    description: 'Hero section \u2014 simple, default (two columns), with carousel or with showreel';
+    description: 'Hero section \u2014 default (large heading), two columns, with carousel or with showreel';
     displayName: 'Hero';
   };
   attributes: {
@@ -340,18 +340,19 @@ export interface SectionsHero extends Struct.ComponentSchema {
           preset: 'defaultHtml';
         }
       >;
-    headingSize: Schema.Attribute.Enumeration<['small', 'large']> &
-      Schema.Attribute.DefaultTo<'large'>;
     image: Schema.Attribute.Media<'images'>;
     indicatorText: Schema.Attribute.String;
     label: Schema.Attribute.String;
+    markIcon: Schema.Attribute.String;
+    markImage: Schema.Attribute.Media<'images'>;
+    markTitle: Schema.Attribute.String;
     media: Schema.Attribute.Media<'images' | 'videos'>;
     showreel: Schema.Attribute.Component<'shared.showreel', false>;
     subtitle: Schema.Attribute.String;
     theme: Schema.Attribute.Component<'shared.theme', false>;
     title: Schema.Attribute.Text;
     variant: Schema.Attribute.Enumeration<
-      ['simple', 'default', 'withCarousel', 'withShowreel']
+      ['default', 'withCarousel', 'withShowreel', 'twoColumns']
     > &
       Schema.Attribute.DefaultTo<'default'>;
   };

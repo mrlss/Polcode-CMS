@@ -2,47 +2,41 @@
   "collectionName": "components_sections_heroes",
   "info": {
     "displayName": "Hero",
-    "description": "Hero section — simple, default (two columns), with carousel or with showreel"
+    "description": "Hero section — default (large heading), two columns, with carousel or with showreel"
   },
   "options": {},
   "attributes": {
     "variant": {
       "type": "enumeration",
       "enum": [
-        "simple",
         "default",
         "withCarousel",
-        "withShowreel"
+        "withShowreel",
+        "twoColumns"
       ],
       "default": "default"
-    },
-    "headingSize": {
-      "type": "enumeration",
-      "enum": [
-        "small",
-        "large"
-      ],
-      "default": "large",
-      "conditions": {
-        "visible": {
-          "==": [
-            {
-              "var": "variant"
-            },
-            "default"
-          ]
-        }
-      }
     },
     "label": {
       "type": "string",
       "conditions": {
         "visible": {
-          "==": [
+          "or": [
             {
-              "var": "variant"
+              "==": [
+                {
+                  "var": "variant"
+                },
+                "default"
+              ]
             },
-            "default"
+            {
+              "==": [
+                {
+                  "var": "variant"
+                },
+                "twoColumns"
+              ]
+            }
           ]
         }
       }
@@ -95,6 +89,14 @@
                 },
                 "withShowreel"
               ]
+            },
+            {
+              "==": [
+                {
+                  "var": "variant"
+                },
+                "twoColumns"
+              ]
             }
           ]
         }
@@ -121,6 +123,14 @@
                   "var": "variant"
                 },
                 "withShowreel"
+              ]
+            },
+            {
+              "==": [
+                {
+                  "var": "variant"
+                },
+                "twoColumns"
               ]
             }
           ]
@@ -167,23 +177,11 @@
       ],
       "conditions": {
         "visible": {
-          "or": [
+          "==": [
             {
-              "==": [
-                {
-                  "var": "variant"
-                },
-                "simple"
-              ]
+              "var": "variant"
             },
-            {
-              "==": [
-                {
-                  "var": "variant"
-                },
-                "withShowreel"
-              ]
-            }
+            "withShowreel"
           ]
         }
       }
@@ -206,7 +204,7 @@
                 {
                   "var": "variant"
                 },
-                "withShowreel"
+                "twoColumns"
               ]
             }
           ]
