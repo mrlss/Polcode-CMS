@@ -213,6 +213,20 @@
         }
       }
     },
+    "markTitle": {
+      "type": "string"
+    },
+    "markIcon": {
+      "type": "string"
+    },
+    "markImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
     "carousel": {
       "type": "component",
       "repeatable": true,
