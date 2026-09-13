@@ -792,11 +792,12 @@ export interface SharedShowMore extends Struct.ComponentSchema {
 export interface SharedShowreel extends Struct.ComponentSchema {
   collectionName: 'components_shared_showreels';
   info: {
-    description: 'Video with poster image';
+    description: 'Video with a cover image and an optional native-controls toggle';
     displayName: 'Showreel';
   };
   attributes: {
-    poster: Schema.Attribute.Media<'images'>;
+    cover: Schema.Attribute.Media<'images'>;
+    showControls: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     video: Schema.Attribute.Media<'videos'>;
   };
 }

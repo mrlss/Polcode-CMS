@@ -2,7 +2,7 @@
   "collectionName": "components_shared_showreels",
   "info": {
     "displayName": "Showreel",
-    "description": "Video with poster image"
+    "description": "Video with a cover image and an optional native-controls toggle"
   },
   "options": {},
   "attributes": {
@@ -14,13 +14,19 @@
         "videos"
       ]
     },
-    "poster": {
+    "cover": {
       "type": "media",
       "multiple": false,
       "required": false,
       "allowedTypes": [
         "images"
-      ]
+      ],
+      "description": "Thumbnail shown until the video is played."
+    },
+    "showControls": {
+      "type": "boolean",
+      "default": false,
+      "description": "Expose the video's own controls while it plays."
     }
   }
 }

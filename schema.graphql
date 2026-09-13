@@ -1453,8 +1453,9 @@ input ComponentSharedShowMoreInput {
 }
 
 type ComponentSharedShowreel {
+  cover: UploadFile
   id: ID!
-  poster: UploadFile
+  showControls: Boolean
   video: UploadFile
 }
 
@@ -1462,11 +1463,13 @@ input ComponentSharedShowreelFiltersInput {
   and: [ComponentSharedShowreelFiltersInput]
   not: ComponentSharedShowreelFiltersInput
   or: [ComponentSharedShowreelFiltersInput]
+  showControls: BooleanFilterInput
 }
 
 input ComponentSharedShowreelInput {
+  cover: ID
   id: ID
-  poster: ID
+  showControls: Boolean
   video: ID
 }
 
