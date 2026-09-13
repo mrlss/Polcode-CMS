@@ -861,6 +861,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'sections.rich-content-body',
       ]
     >;
+    sectionsNavItems: Schema.Attribute.Component<'shared.nav-item', true>;
     seo: Schema.Attribute.Component<'shared.seo', false>;
     showScrollTop: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     showSectionsNav: Schema.Attribute.Boolean &

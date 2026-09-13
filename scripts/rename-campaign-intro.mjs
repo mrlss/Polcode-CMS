@@ -75,7 +75,7 @@ const { n: componentRows } = db
   .get();
 log(
   `${componentRows} component row(s) in components_sections_intro_showreels (untouched) — ` +
-    "rows without a `variant` fall back to `default`."
+  "rows without a `variant` fall back to `default`."
 );
 
 db.close();

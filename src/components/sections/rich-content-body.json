@@ -7,6 +7,10 @@
   },
   "options": {},
   "attributes": {
+    "anchor": {
+      "type": "string",
+      "description": "DOM id / URL hash for this section (e.g. \"industries\" → #industries). Lets nav links target this section on the page."
+    },
     "headline": {
       "type": "component",
       "repeatable": false,

@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_shared_nav_items",
+  "info": {
+    "displayName": "Nav Item",
+    "icon": "list",
+    "description": "One entry of the on-page menu: the label to show and the anchor of the section it scrolls to."
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "anchor": {
+      "type": "string",
+      "required": true,
+      "description": "DOM id of the target section without the '#', e.g. \"industries\" → the section whose Anchor is \"industries\"."
+    }
+  }
+}

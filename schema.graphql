@@ -418,6 +418,7 @@ input ComponentRichContentStatInput {
 }
 
 type ComponentSectionsCampaignIntro {
+  anchor: String
   button: ComponentSharedButton
   description: String
   id: ID!
@@ -430,6 +431,7 @@ type ComponentSectionsCampaignIntro {
 }
 
 input ComponentSectionsCampaignIntroFiltersInput {
+  anchor: StringFilterInput
   and: [ComponentSectionsCampaignIntroFiltersInput]
   button: ComponentSharedButtonFiltersInput
   description: StringFilterInput
@@ -443,6 +445,7 @@ input ComponentSectionsCampaignIntroFiltersInput {
 }
 
 input ComponentSectionsCampaignIntroInput {
+  anchor: String
   button: ComponentSharedButtonInput
   description: String
   id: ID
@@ -455,6 +458,7 @@ input ComponentSectionsCampaignIntroInput {
 }
 
 type ComponentSectionsCardsLargeNumerated {
+  anchor: String
   cards(filters: ComponentSharedCardNumeratedFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSharedCardNumerated]
   cardsLayout: ENUM_COMPONENTSECTIONSCARDSLARGENUMERATED_CARDSLAYOUT
   headline: ComponentSharedHeadline
@@ -463,6 +467,7 @@ type ComponentSectionsCardsLargeNumerated {
 }
 
 input ComponentSectionsCardsLargeNumeratedFiltersInput {
+  anchor: StringFilterInput
   and: [ComponentSectionsCardsLargeNumeratedFiltersInput]
   cards: ComponentSharedCardNumeratedFiltersInput
   cardsLayout: StringFilterInput
@@ -473,6 +478,7 @@ input ComponentSectionsCardsLargeNumeratedFiltersInput {
 }
 
 input ComponentSectionsCardsLargeNumeratedInput {
+  anchor: String
   cards: [ComponentSharedCardNumeratedInput]
   cardsLayout: ENUM_COMPONENTSECTIONSCARDSLARGENUMERATED_CARDSLAYOUT
   headline: ComponentSharedHeadlineInput
@@ -483,6 +489,7 @@ input ComponentSectionsCardsLargeNumeratedInput {
 type ComponentSectionsCarousel {
   achievements(filters: AchievementFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Achievement]!
   achievements_connection(filters: AchievementFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): AchievementRelationResponseCollection
+  anchor: String
   button: ComponentSharedButton
   clientTestimonials(filters: ClientTestimonialFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ClientTestimonial]!
   clientTestimonials_connection(filters: ClientTestimonialFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): ClientTestimonialRelationResponseCollection
@@ -506,6 +513,7 @@ type ComponentSectionsCarousel {
 
 input ComponentSectionsCarouselFiltersInput {
   achievements: AchievementFiltersInput
+  anchor: StringFilterInput
   and: [ComponentSectionsCarouselFiltersInput]
   button: ComponentSharedButtonFiltersInput
   clientTestimonials: ClientTestimonialFiltersInput
@@ -527,6 +535,7 @@ input ComponentSectionsCarouselFiltersInput {
 
 input ComponentSectionsCarouselInput {
   achievements: [ID]
+  anchor: String
   button: ComponentSharedButtonInput
   clientTestimonials: [ID]
   collectionType: ENUM_COMPONENTSECTIONSCAROUSEL_COLLECTIONTYPE
@@ -545,6 +554,7 @@ input ComponentSectionsCarouselInput {
 }
 
 type ComponentSectionsCaseStudies {
+  anchor: String
   button: ComponentSharedButton
   caseStudies(filters: CaseStudyFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [CaseStudy]!
   caseStudies_connection(filters: CaseStudyFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): CaseStudyRelationResponseCollection
@@ -556,6 +566,7 @@ type ComponentSectionsCaseStudies {
 }
 
 input ComponentSectionsCaseStudiesFiltersInput {
+  anchor: StringFilterInput
   and: [ComponentSectionsCaseStudiesFiltersInput]
   button: ComponentSharedButtonFiltersInput
   caseStudies: CaseStudyFiltersInput
@@ -568,6 +579,7 @@ input ComponentSectionsCaseStudiesFiltersInput {
 }
 
 input ComponentSectionsCaseStudiesInput {
+  anchor: String
   button: ComponentSharedButtonInput
   caseStudies: [ID]
   headline: ComponentSharedHeadlineInput
@@ -578,6 +590,7 @@ input ComponentSectionsCaseStudiesInput {
 }
 
 type ComponentSectionsContentColorBoxes {
+  anchor: String
   boxes(filters: ComponentSharedColorBoxFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSharedColorBox]
   description: String
   headline: ComponentSharedHeadline
@@ -587,6 +600,7 @@ type ComponentSectionsContentColorBoxes {
 }
 
 input ComponentSectionsContentColorBoxesFiltersInput {
+  anchor: StringFilterInput
   and: [ComponentSectionsContentColorBoxesFiltersInput]
   boxes: ComponentSharedColorBoxFiltersInput
   description: StringFilterInput
@@ -598,6 +612,7 @@ input ComponentSectionsContentColorBoxesFiltersInput {
 }
 
 input ComponentSectionsContentColorBoxesInput {
+  anchor: String
   boxes: [ComponentSharedColorBoxInput]
   description: String
   headline: ComponentSharedHeadlineInput
@@ -607,6 +622,7 @@ input ComponentSectionsContentColorBoxesInput {
 }
 
 type ComponentSectionsContentImageLeft {
+  anchor: String
   blocks(filters: ComponentSharedContentItemFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSharedContentItem]
   button: ComponentSharedButton
   content: String
@@ -621,6 +637,7 @@ type ComponentSectionsContentImageLeft {
 }
 
 input ComponentSectionsContentImageLeftFiltersInput {
+  anchor: StringFilterInput
   and: [ComponentSectionsContentImageLeftFiltersInput]
   blocks: ComponentSharedContentItemFiltersInput
   button: ComponentSharedButtonFiltersInput
@@ -636,6 +653,7 @@ input ComponentSectionsContentImageLeftFiltersInput {
 }
 
 input ComponentSectionsContentImageLeftInput {
+  anchor: String
   blocks: [ComponentSharedContentItemInput]
   button: ComponentSharedButtonInput
   content: String
@@ -650,6 +668,7 @@ input ComponentSectionsContentImageLeftInput {
 }
 
 type ComponentSectionsContentNumerated {
+  anchor: String
   behavior: ENUM_COMPONENTSECTIONSCONTENTNUMERATED_BEHAVIOR
   button: ComponentSharedButton
   headline: ComponentSharedHeadline
@@ -661,6 +680,7 @@ type ComponentSectionsContentNumerated {
 }
 
 input ComponentSectionsContentNumeratedFiltersInput {
+  anchor: StringFilterInput
   and: [ComponentSectionsContentNumeratedFiltersInput]
   behavior: StringFilterInput
   button: ComponentSharedButtonFiltersInput
@@ -674,6 +694,7 @@ input ComponentSectionsContentNumeratedFiltersInput {
 }
 
 input ComponentSectionsContentNumeratedInput {
+  anchor: String
   behavior: ENUM_COMPONENTSECTIONSCONTENTNUMERATED_BEHAVIOR
   button: ComponentSharedButtonInput
   headline: ComponentSharedHeadlineInput
@@ -685,6 +706,7 @@ input ComponentSectionsContentNumeratedInput {
 }
 
 type ComponentSectionsCta {
+  anchor: String
   backgroundImage: UploadFile
   buttons(filters: ComponentSharedButtonFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSharedButton]
   description: String
@@ -696,6 +718,7 @@ type ComponentSectionsCta {
 }
 
 input ComponentSectionsCtaFiltersInput {
+  anchor: StringFilterInput
   and: [ComponentSectionsCtaFiltersInput]
   buttons: ComponentSharedButtonFiltersInput
   description: StringFilterInput
@@ -707,6 +730,7 @@ input ComponentSectionsCtaFiltersInput {
 }
 
 input ComponentSectionsCtaInput {
+  anchor: String
   backgroundImage: ID
   buttons: [ComponentSharedButtonInput]
   description: String
@@ -718,6 +742,7 @@ input ComponentSectionsCtaInput {
 }
 
 type ComponentSectionsFaq {
+  anchor: String
   faqs(filters: FaqFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Faq]!
   faqs_connection(filters: FaqFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): FaqRelationResponseCollection
   headline: ComponentSharedHeadline
@@ -726,6 +751,7 @@ type ComponentSectionsFaq {
 }
 
 input ComponentSectionsFaqFiltersInput {
+  anchor: StringFilterInput
   and: [ComponentSectionsFaqFiltersInput]
   faqs: FaqFiltersInput
   headline: ComponentSharedHeadlineFiltersInput
@@ -735,6 +761,7 @@ input ComponentSectionsFaqFiltersInput {
 }
 
 input ComponentSectionsFaqInput {
+  anchor: String
   faqs: [ID]
   headline: ComponentSharedHeadlineInput
   id: ID
@@ -742,6 +769,7 @@ input ComponentSectionsFaqInput {
 }
 
 type ComponentSectionsForm {
+  anchor: String
   description: String
   id: ID!
   label: String
@@ -752,6 +780,7 @@ type ComponentSectionsForm {
 }
 
 input ComponentSectionsFormFiltersInput {
+  anchor: StringFilterInput
   and: [ComponentSectionsFormFiltersInput]
   description: StringFilterInput
   label: StringFilterInput
@@ -763,6 +792,7 @@ input ComponentSectionsFormFiltersInput {
 }
 
 input ComponentSectionsFormInput {
+  anchor: String
   description: String
   id: ID
   label: String
@@ -773,6 +803,7 @@ input ComponentSectionsFormInput {
 }
 
 type ComponentSectionsHero {
+  anchor: String
   button: ComponentSharedButton
   carousel(filters: ComponentSharedHeroPromoFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSharedHeroPromo]
   description: String
@@ -789,6 +820,7 @@ type ComponentSectionsHero {
 }
 
 input ComponentSectionsHeroFiltersInput {
+  anchor: StringFilterInput
   and: [ComponentSectionsHeroFiltersInput]
   button: ComponentSharedButtonFiltersInput
   carousel: ComponentSharedHeroPromoFiltersInput
@@ -805,6 +837,7 @@ input ComponentSectionsHeroFiltersInput {
 }
 
 input ComponentSectionsHeroInput {
+  anchor: String
   button: ComponentSharedButtonInput
   carousel: [ComponentSharedHeroPromoInput]
   description: String
@@ -851,6 +884,7 @@ input ComponentSectionsIndustriesInput {
 }
 
 type ComponentSectionsIntersectionFloatingBoxes {
+  anchor: String
   blocks(filters: ComponentSharedFloatingCardFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSharedFloatingCard]
   headline: ComponentSharedHeadline
   id: ID!
@@ -859,6 +893,7 @@ type ComponentSectionsIntersectionFloatingBoxes {
 }
 
 input ComponentSectionsIntersectionFloatingBoxesFiltersInput {
+  anchor: StringFilterInput
   and: [ComponentSectionsIntersectionFloatingBoxesFiltersInput]
   blocks: ComponentSharedFloatingCardFiltersInput
   headline: ComponentSharedHeadlineFiltersInput
@@ -868,6 +903,7 @@ input ComponentSectionsIntersectionFloatingBoxesFiltersInput {
 }
 
 input ComponentSectionsIntersectionFloatingBoxesInput {
+  anchor: String
   blocks: [ComponentSharedFloatingCardInput]
   headline: ComponentSharedHeadlineInput
   id: ID
@@ -876,6 +912,7 @@ input ComponentSectionsIntersectionFloatingBoxesInput {
 }
 
 type ComponentSectionsIntersectionMedia {
+  anchor: String
   button: ComponentSharedButton
   id: ID!
   media: UploadFile
@@ -884,6 +921,7 @@ type ComponentSectionsIntersectionMedia {
 }
 
 input ComponentSectionsIntersectionMediaFiltersInput {
+  anchor: StringFilterInput
   and: [ComponentSectionsIntersectionMediaFiltersInput]
   button: ComponentSharedButtonFiltersInput
   not: ComponentSectionsIntersectionMediaFiltersInput
@@ -893,6 +931,7 @@ input ComponentSectionsIntersectionMediaFiltersInput {
 }
 
 input ComponentSectionsIntersectionMediaInput {
+  anchor: String
   button: ComponentSharedButtonInput
   id: ID
   media: ID
@@ -902,6 +941,7 @@ input ComponentSectionsIntersectionMediaInput {
 
 type ComponentSectionsPerson {
   address: String
+  anchor: String
   button: ComponentSharedButton
   email: String
   id: ID!
@@ -912,6 +952,7 @@ type ComponentSectionsPerson {
 
 input ComponentSectionsPersonFiltersInput {
   address: StringFilterInput
+  anchor: StringFilterInput
   and: [ComponentSectionsPersonFiltersInput]
   button: ComponentSharedButtonFiltersInput
   email: StringFilterInput
@@ -924,6 +965,7 @@ input ComponentSectionsPersonFiltersInput {
 
 input ComponentSectionsPersonInput {
   address: String
+  anchor: String
   button: ComponentSharedButtonInput
   email: String
   id: ID
@@ -933,6 +975,7 @@ input ComponentSectionsPersonInput {
 }
 
 type ComponentSectionsPortfolio {
+  anchor: String
   featuredCases(filters: CaseStudyFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [CaseStudy]!
   featuredCases_connection(filters: CaseStudyFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): CaseStudyRelationResponseCollection
   headline: ComponentSharedHeadline
@@ -946,6 +989,7 @@ type ComponentSectionsPortfolio {
 }
 
 input ComponentSectionsPortfolioFiltersInput {
+  anchor: StringFilterInput
   and: [ComponentSectionsPortfolioFiltersInput]
   featuredCases: CaseStudyFiltersInput
   headline: ComponentSharedHeadlineFiltersInput
@@ -959,6 +1003,7 @@ input ComponentSectionsPortfolioFiltersInput {
 }
 
 input ComponentSectionsPortfolioInput {
+  anchor: String
   featuredCases: [ID]
   headline: ComponentSharedHeadlineInput
   id: ID
@@ -970,6 +1015,7 @@ input ComponentSectionsPortfolioInput {
 }
 
 type ComponentSectionsProcess {
+  anchor: String
   blocks(filters: ProcessFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Process]!
   blocks_connection(filters: ProcessFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): ProcessRelationResponseCollection
   button: ComponentSharedButton
@@ -979,6 +1025,7 @@ type ComponentSectionsProcess {
 }
 
 input ComponentSectionsProcessFiltersInput {
+  anchor: StringFilterInput
   and: [ComponentSectionsProcessFiltersInput]
   blocks: ProcessFiltersInput
   button: ComponentSharedButtonFiltersInput
@@ -989,6 +1036,7 @@ input ComponentSectionsProcessFiltersInput {
 }
 
 input ComponentSectionsProcessInput {
+  anchor: String
   blocks: [ID]
   button: ComponentSharedButtonInput
   headline: ComponentSharedHeadlineInput
@@ -997,6 +1045,7 @@ input ComponentSectionsProcessInput {
 }
 
 type ComponentSectionsProgressCards {
+  anchor: String
   cards(filters: ComponentSharedCardMilestoneFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSharedCardMilestone]
   headline: ComponentSharedHeadline
   id: ID!
@@ -1004,6 +1053,7 @@ type ComponentSectionsProgressCards {
 }
 
 input ComponentSectionsProgressCardsFiltersInput {
+  anchor: StringFilterInput
   and: [ComponentSectionsProgressCardsFiltersInput]
   cards: ComponentSharedCardMilestoneFiltersInput
   headline: ComponentSharedHeadlineFiltersInput
@@ -1013,6 +1063,7 @@ input ComponentSectionsProgressCardsFiltersInput {
 }
 
 input ComponentSectionsProgressCardsInput {
+  anchor: String
   cards: [ComponentSharedCardMilestoneInput]
   headline: ComponentSharedHeadlineInput
   id: ID
@@ -1020,6 +1071,7 @@ input ComponentSectionsProgressCardsInput {
 }
 
 type ComponentSectionsRichContentBody {
+  anchor: String
   blocks(filters: ComponentRichContentBlockFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentRichContentBlock]
   headline: ComponentSharedHeadline
   id: ID!
@@ -1028,6 +1080,7 @@ type ComponentSectionsRichContentBody {
 }
 
 input ComponentSectionsRichContentBodyFiltersInput {
+  anchor: StringFilterInput
   and: [ComponentSectionsRichContentBodyFiltersInput]
   blocks: ComponentRichContentBlockFiltersInput
   headline: ComponentSharedHeadlineFiltersInput
@@ -1038,6 +1091,7 @@ input ComponentSectionsRichContentBodyFiltersInput {
 }
 
 input ComponentSectionsRichContentBodyInput {
+  anchor: String
   blocks: [ComponentRichContentBlockInput]
   headline: ComponentSharedHeadlineInput
   id: ID
@@ -1046,6 +1100,7 @@ input ComponentSectionsRichContentBodyInput {
 }
 
 type ComponentSectionsServicesGroup {
+  anchor: String
   button: ComponentSharedButton
   groups: ComponentSharedServiceGroup
   headline: ComponentSharedHeadline
@@ -1057,6 +1112,7 @@ type ComponentSectionsServicesGroup {
 }
 
 input ComponentSectionsServicesGroupFiltersInput {
+  anchor: StringFilterInput
   and: [ComponentSectionsServicesGroupFiltersInput]
   button: ComponentSharedButtonFiltersInput
   groups: ComponentSharedServiceGroupFiltersInput
@@ -1069,6 +1125,7 @@ input ComponentSectionsServicesGroupFiltersInput {
 }
 
 input ComponentSectionsServicesGroupInput {
+  anchor: String
   button: ComponentSharedButtonInput
   groups: ComponentSharedServiceGroupInput
   headline: ComponentSharedHeadlineInput
@@ -1079,6 +1136,7 @@ input ComponentSectionsServicesGroupInput {
 }
 
 type ComponentSectionsTeam {
+  anchor: String
   id: ID!
   members(filters: TeamFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Team]!
   members_connection(filters: TeamFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): TeamRelationResponseCollection
@@ -1087,6 +1145,7 @@ type ComponentSectionsTeam {
 }
 
 input ComponentSectionsTeamFiltersInput {
+  anchor: StringFilterInput
   and: [ComponentSectionsTeamFiltersInput]
   members: TeamFiltersInput
   not: ComponentSectionsTeamFiltersInput
@@ -1096,6 +1155,7 @@ input ComponentSectionsTeamFiltersInput {
 }
 
 type ComponentSectionsTeamGrid {
+  anchor: String
   content: ComponentSharedContentItem
   headline: ComponentSharedHeadline
   id: ID!
@@ -1105,6 +1165,7 @@ type ComponentSectionsTeamGrid {
 }
 
 input ComponentSectionsTeamGridFiltersInput {
+  anchor: StringFilterInput
   and: [ComponentSectionsTeamGridFiltersInput]
   content: ComponentSharedContentItemFiltersInput
   headline: ComponentSharedHeadlineFiltersInput
@@ -1115,6 +1176,7 @@ input ComponentSectionsTeamGridFiltersInput {
 }
 
 input ComponentSectionsTeamGridInput {
+  anchor: String
   content: ComponentSharedContentItemInput
   headline: ComponentSharedHeadlineInput
   id: ID
@@ -1123,6 +1185,7 @@ input ComponentSectionsTeamGridInput {
 }
 
 input ComponentSectionsTeamInput {
+  anchor: String
   id: ID
   members: [ID]
   theme: ComponentSharedThemeInput
@@ -1360,6 +1423,26 @@ input ComponentSharedHeroPromoInput {
   id: ID
   label: String
   title: String
+}
+
+type ComponentSharedNavItem {
+  anchor: String!
+  id: ID!
+  label: String!
+}
+
+input ComponentSharedNavItemFiltersInput {
+  anchor: StringFilterInput
+  and: [ComponentSharedNavItemFiltersInput]
+  label: StringFilterInput
+  not: ComponentSharedNavItemFiltersInput
+  or: [ComponentSharedNavItemFiltersInput]
+}
+
+input ComponentSharedNavItemInput {
+  anchor: String
+  id: ID
+  label: String
 }
 
 type ComponentSharedSectionsNavController {
@@ -1887,7 +1970,7 @@ input FloatFilterInput {
   startsWith: Float
 }
 
-union GenericMorph = Achievement | CaseStudy | Client | ClientTestimonial | ComponentGlobalContentTypeUrl | ComponentGlobalFooter | ComponentGlobalPartner | ComponentRichContentBlock | ComponentRichContentStat | ComponentSectionsCampaignIntro | ComponentSectionsCardsLargeNumerated | ComponentSectionsCarousel | ComponentSectionsCaseStudies | ComponentSectionsContentColorBoxes | ComponentSectionsContentImageLeft | ComponentSectionsContentNumerated | ComponentSectionsCta | ComponentSectionsFaq | ComponentSectionsForm | ComponentSectionsHero | ComponentSectionsIndustries | ComponentSectionsIntersectionFloatingBoxes | ComponentSectionsIntersectionMedia | ComponentSectionsPerson | ComponentSectionsPortfolio | ComponentSectionsProcess | ComponentSectionsProgressCards | ComponentSectionsRichContentBody | ComponentSectionsServicesGroup | ComponentSectionsTeam | ComponentSectionsTeamGrid | ComponentSectionsTechStack | ComponentSharedButton | ComponentSharedCardMilestone | ComponentSharedCardNumerated | ComponentSharedColorBox | ComponentSharedContentItem | ComponentSharedFloatingCard | ComponentSharedHeadline | ComponentSharedHeroPromo | ComponentSharedSectionsNavController | ComponentSharedSeo | ComponentSharedServiceGroup | ComponentSharedShowMore | ComponentSharedShowreel | ComponentSharedSocials | ComponentSharedTheme | ComponentTestTest | ContentManagerOrganizerContentManagerConfiguration | Faq | Global | HiringProcess | I18NLocale | Industry | Insight | Page | Platform | Process | Region | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | Service | Team | TeamTestimonial | TechStack | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser
+union GenericMorph = Achievement | CaseStudy | Client | ClientTestimonial | ComponentGlobalContentTypeUrl | ComponentGlobalFooter | ComponentGlobalPartner | ComponentRichContentBlock | ComponentRichContentStat | ComponentSectionsCampaignIntro | ComponentSectionsCardsLargeNumerated | ComponentSectionsCarousel | ComponentSectionsCaseStudies | ComponentSectionsContentColorBoxes | ComponentSectionsContentImageLeft | ComponentSectionsContentNumerated | ComponentSectionsCta | ComponentSectionsFaq | ComponentSectionsForm | ComponentSectionsHero | ComponentSectionsIndustries | ComponentSectionsIntersectionFloatingBoxes | ComponentSectionsIntersectionMedia | ComponentSectionsPerson | ComponentSectionsPortfolio | ComponentSectionsProcess | ComponentSectionsProgressCards | ComponentSectionsRichContentBody | ComponentSectionsServicesGroup | ComponentSectionsTeam | ComponentSectionsTeamGrid | ComponentSectionsTechStack | ComponentSharedButton | ComponentSharedCardMilestone | ComponentSharedCardNumerated | ComponentSharedColorBox | ComponentSharedContentItem | ComponentSharedFloatingCard | ComponentSharedHeadline | ComponentSharedHeroPromo | ComponentSharedNavItem | ComponentSharedSectionsNavController | ComponentSharedSeo | ComponentSharedServiceGroup | ComponentSharedShowMore | ComponentSharedShowreel | ComponentSharedSocials | ComponentSharedTheme | ComponentTestTest | ContentManagerOrganizerContentManagerConfiguration | Faq | Global | HiringProcess | I18NLocale | Industry | Insight | Page | Platform | Process | Region | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | Service | Team | TeamTestimonial | TechStack | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser
 
 type Global {
   contentTypeUrls(filters: ComponentGlobalContentTypeUrlFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentGlobalContentTypeUrl]
@@ -2430,6 +2513,7 @@ type Page {
   documentId: ID!
   publishedAt: DateTime
   sections: [PageSectionsDynamicZone]
+  sectionsNavItems(filters: ComponentSharedNavItemFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSharedNavItem]
   seo: ComponentSharedSeo
   showScrollTop: Boolean
   showSectionsNav: Boolean
@@ -2459,6 +2543,7 @@ input PageFiltersInput {
   not: PageFiltersInput
   or: [PageFiltersInput]
   publishedAt: DateTimeFilterInput
+  sectionsNavItems: ComponentSharedNavItemFiltersInput
   seo: ComponentSharedSeoFiltersInput
   showScrollTop: BooleanFilterInput
   showSectionsNav: BooleanFilterInput
@@ -2471,6 +2556,7 @@ input PageInput {
   locale: String
   publishedAt: DateTime
   sections: [PageSectionsDynamicZoneInput!]
+  sectionsNavItems: [ComponentSharedNavItemInput]
   seo: ComponentSharedSeoInput
   showScrollTop: Boolean
   showSectionsNav: Boolean

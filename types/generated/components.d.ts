@@ -100,6 +100,7 @@ export interface SectionsCampaignIntro extends Struct.ComponentSchema {
     displayName: 'Campaign Intro';
   };
   attributes: {
+    anchor: Schema.Attribute.String;
     button: Schema.Attribute.Component<'shared.button', false>;
     description: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
@@ -125,6 +126,7 @@ export interface SectionsCardsLargeNumerated extends Struct.ComponentSchema {
     displayName: 'Cards Large Numerated';
   };
   attributes: {
+    anchor: Schema.Attribute.String;
     cards: Schema.Attribute.Component<'shared.card-numerated', true>;
     cardsLayout: Schema.Attribute.Enumeration<['carousel', 'grid']> &
       Schema.Attribute.DefaultTo<'carousel'>;
@@ -144,6 +146,7 @@ export interface SectionsCarousel extends Struct.ComponentSchema {
       'oneToMany',
       'api::achievement.achievement'
     >;
+    anchor: Schema.Attribute.String;
     button: Schema.Attribute.Component<'shared.button', false>;
     clientTestimonials: Schema.Attribute.Relation<
       'oneToMany',
@@ -198,6 +201,7 @@ export interface SectionsCaseStudies extends Struct.ComponentSchema {
     displayName: 'Case Studies';
   };
   attributes: {
+    anchor: Schema.Attribute.String;
     button: Schema.Attribute.Component<'shared.button', false>;
     caseStudies: Schema.Attribute.Relation<
       'oneToMany',
@@ -227,6 +231,7 @@ export interface SectionsContentColorBoxes extends Struct.ComponentSchema {
     displayName: 'Content Color Boxes';
   };
   attributes: {
+    anchor: Schema.Attribute.String;
     boxes: Schema.Attribute.Component<'shared.color-box', true>;
     description: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
@@ -248,6 +253,7 @@ export interface SectionsContentImageLeft extends Struct.ComponentSchema {
     displayName: 'Content Image Left';
   };
   attributes: {
+    anchor: Schema.Attribute.String;
     blocks: Schema.Attribute.Component<'shared.content-item', true>;
     button: Schema.Attribute.Component<'shared.button', false>;
     content: Schema.Attribute.RichText &
@@ -278,6 +284,7 @@ export interface SectionsContentNumerated extends Struct.ComponentSchema {
     displayName: 'Content Numerated';
   };
   attributes: {
+    anchor: Schema.Attribute.String;
     behavior: Schema.Attribute.Enumeration<['static', 'expandable']> &
       Schema.Attribute.DefaultTo<'static'>;
     button: Schema.Attribute.Component<'shared.button', false>;
@@ -297,6 +304,7 @@ export interface SectionsCta extends Struct.ComponentSchema {
     displayName: 'CTA';
   };
   attributes: {
+    anchor: Schema.Attribute.String;
     backgroundImage: Schema.Attribute.Media<'images'>;
     buttons: Schema.Attribute.Component<'shared.button', true>;
     description: Schema.Attribute.RichText &
@@ -320,6 +328,7 @@ export interface SectionsFaq extends Struct.ComponentSchema {
     displayName: 'FAQ';
   };
   attributes: {
+    anchor: Schema.Attribute.String;
     faqs: Schema.Attribute.Relation<'oneToMany', 'api::faq.faq'>;
     headline: Schema.Attribute.Component<'shared.headline', false>;
     theme: Schema.Attribute.Component<'shared.theme', false>;
@@ -333,6 +342,7 @@ export interface SectionsForm extends Struct.ComponentSchema {
     displayName: 'Form';
   };
   attributes: {
+    anchor: Schema.Attribute.String;
     description: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
         'plugin::ckeditor5.CKEditor',
@@ -356,6 +366,7 @@ export interface SectionsHero extends Struct.ComponentSchema {
     displayName: 'Hero';
   };
   attributes: {
+    anchor: Schema.Attribute.String;
     button: Schema.Attribute.Component<'shared.button', false>;
     carousel: Schema.Attribute.Component<'shared.hero-promo', true>;
     description: Schema.Attribute.RichText &
@@ -406,6 +417,7 @@ export interface SectionsIntersectionFloatingBoxes
     displayName: 'Intersection Floating Boxes';
   };
   attributes: {
+    anchor: Schema.Attribute.String;
     blocks: Schema.Attribute.Component<'shared.floating-card', true>;
     headline: Schema.Attribute.Component<'shared.headline', false>;
     media: Schema.Attribute.Media<'images' | 'videos'>;
@@ -420,6 +432,7 @@ export interface SectionsIntersectionMedia extends Struct.ComponentSchema {
     displayName: 'Intersection Media';
   };
   attributes: {
+    anchor: Schema.Attribute.String;
     button: Schema.Attribute.Component<'shared.button', false>;
     media: Schema.Attribute.Media<'images' | 'videos'>;
     theme: Schema.Attribute.Component<'shared.theme', false>;
@@ -435,6 +448,7 @@ export interface SectionsPerson extends Struct.ComponentSchema {
   };
   attributes: {
     address: Schema.Attribute.Text;
+    anchor: Schema.Attribute.String;
     button: Schema.Attribute.Component<'shared.button', false>;
     email: Schema.Attribute.Email;
     person: Schema.Attribute.Relation<'oneToOne', 'api::team.team'>;
@@ -451,6 +465,7 @@ export interface SectionsPortfolio extends Struct.ComponentSchema {
     icon: 'briefcase';
   };
   attributes: {
+    anchor: Schema.Attribute.String;
     featuredCases: Schema.Attribute.Relation<
       'oneToMany',
       'api::case-study.case-study'
@@ -476,6 +491,7 @@ export interface SectionsProcess extends Struct.ComponentSchema {
     displayName: 'Process';
   };
   attributes: {
+    anchor: Schema.Attribute.String;
     blocks: Schema.Attribute.Relation<'oneToMany', 'api::process.process'>;
     button: Schema.Attribute.Component<'shared.button', false>;
     headline: Schema.Attribute.Component<'shared.headline', false>;
@@ -490,6 +506,7 @@ export interface SectionsProgressCards extends Struct.ComponentSchema {
     displayName: 'Progress Cards';
   };
   attributes: {
+    anchor: Schema.Attribute.String;
     cards: Schema.Attribute.Component<'shared.card-milestone', true>;
     headline: Schema.Attribute.Component<'shared.headline', false>;
     theme: Schema.Attribute.Component<'shared.theme', false>;
@@ -504,6 +521,7 @@ export interface SectionsRichContentBody extends Struct.ComponentSchema {
     icon: 'file';
   };
   attributes: {
+    anchor: Schema.Attribute.String;
     blocks: Schema.Attribute.Component<'rich-content.block', true>;
     headline: Schema.Attribute.Component<'shared.headline', false>;
     showNav: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
@@ -518,6 +536,7 @@ export interface SectionsServicesGroup extends Struct.ComponentSchema {
     displayName: 'Services Group';
   };
   attributes: {
+    anchor: Schema.Attribute.String;
     button: Schema.Attribute.Component<'shared.button', false>;
     groups: Schema.Attribute.Component<'shared.service-group', false>;
     headline: Schema.Attribute.Component<'shared.headline', false>;
@@ -535,6 +554,7 @@ export interface SectionsTeam extends Struct.ComponentSchema {
     displayName: 'Team';
   };
   attributes: {
+    anchor: Schema.Attribute.String;
     members: Schema.Attribute.Relation<'oneToMany', 'api::team.team'>;
     theme: Schema.Attribute.Component<'shared.theme', false>;
     title: Schema.Attribute.String;
@@ -548,6 +568,7 @@ export interface SectionsTeamGrid extends Struct.ComponentSchema {
     displayName: 'Team Grid';
   };
   attributes: {
+    anchor: Schema.Attribute.String;
     content: Schema.Attribute.Component<'shared.content-item', false>;
     headline: Schema.Attribute.Component<'shared.headline', false>;
     team: Schema.Attribute.Relation<'oneToMany', 'api::team.team'>;
@@ -724,6 +745,19 @@ export interface SharedHeroPromo extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedNavItem extends Struct.ComponentSchema {
+  collectionName: 'components_shared_nav_items';
+  info: {
+    description: 'One entry of the on-page menu: the label to show and the anchor of the section it scrolls to.';
+    displayName: 'Nav Item';
+    icon: 'list';
+  };
+  attributes: {
+    anchor: Schema.Attribute.String & Schema.Attribute.Required;
+    label: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface SharedSectionsNavController extends Struct.ComponentSchema {
   collectionName: 'components_shared_sections_nav_controllers';
   info: {
@@ -883,6 +917,7 @@ declare module '@strapi/strapi' {
       'shared.floating-card': SharedFloatingCard;
       'shared.headline': SharedHeadline;
       'shared.hero-promo': SharedHeroPromo;
+      'shared.nav-item': SharedNavItem;
       'shared.sections-nav-controller': SharedSectionsNavController;
       'shared.seo': SharedSeo;
       'shared.service-group': SharedServiceGroup;
