@@ -2513,7 +2513,6 @@ type Page {
   documentId: ID!
   publishedAt: DateTime
   sections: [PageSectionsDynamicZone]
-  sectionsNavItems(filters: ComponentSharedNavItemFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSharedNavItem]
   seo: ComponentSharedSeo
   showScrollTop: Boolean
   showSectionsNav: Boolean
@@ -2543,7 +2542,6 @@ input PageFiltersInput {
   not: PageFiltersInput
   or: [PageFiltersInput]
   publishedAt: DateTimeFilterInput
-  sectionsNavItems: ComponentSharedNavItemFiltersInput
   seo: ComponentSharedSeoFiltersInput
   showScrollTop: BooleanFilterInput
   showSectionsNav: BooleanFilterInput
@@ -2556,7 +2554,6 @@ input PageInput {
   locale: String
   publishedAt: DateTime
   sections: [PageSectionsDynamicZoneInput!]
-  sectionsNavItems: [ComponentSharedNavItemInput]
   seo: ComponentSharedSeoInput
   showScrollTop: Boolean
   showSectionsNav: Boolean

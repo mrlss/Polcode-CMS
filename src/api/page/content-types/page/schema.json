@@ -35,12 +35,6 @@
       "type": "boolean",
       "default": false
     },
-    "sectionsNavItems": {
-      "type": "component",
-      "repeatable": true,
-      "component": "shared.nav-item",
-      "description": "On-page menu (left column on desktop, select below md). Leave empty to list this page's sections that have an Anchor instead."
-    },
     "sections": {
       "type": "dynamiczone",
       "components": [
