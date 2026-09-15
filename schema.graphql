@@ -1077,6 +1077,7 @@ type ComponentSectionsRichContentBody {
   id: ID!
   showNav: Boolean
   theme: ComponentSharedTheme
+  variant: ENUM_COMPONENTSECTIONSRICHCONTENTBODY_VARIANT
 }
 
 input ComponentSectionsRichContentBodyFiltersInput {
@@ -1088,6 +1089,7 @@ input ComponentSectionsRichContentBodyFiltersInput {
   or: [ComponentSectionsRichContentBodyFiltersInput]
   showNav: BooleanFilterInput
   theme: ComponentSharedThemeFiltersInput
+  variant: StringFilterInput
 }
 
 input ComponentSectionsRichContentBodyInput {
@@ -1097,6 +1099,7 @@ input ComponentSectionsRichContentBodyInput {
   id: ID
   showNav: Boolean
   theme: ComponentSharedThemeInput
+  variant: ENUM_COMPONENTSECTIONSRICHCONTENTBODY_VARIANT
 }
 
 type ComponentSectionsServicesGroup {
@@ -1852,6 +1855,11 @@ enum ENUM_COMPONENTSECTIONSHERO_VARIANT {
 enum ENUM_COMPONENTSECTIONSPORTFOLIO_SORT {
   asc
   desc
+}
+
+enum ENUM_COMPONENTSECTIONSRICHCONTENTBODY_VARIANT {
+  article
+  post
 }
 
 enum ENUM_COMPONENTSECTIONSSERVICESGROUP_VARIANT {

@@ -526,6 +526,8 @@ export interface SectionsRichContentBody extends Struct.ComponentSchema {
     headline: Schema.Attribute.Component<'shared.headline', false>;
     showNav: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
     theme: Schema.Attribute.Component<'shared.theme', false>;
+    variant: Schema.Attribute.Enumeration<['post', 'article']> &
+      Schema.Attribute.DefaultTo<'post'>;
   };
 }
 

@@ -80,7 +80,9 @@ const blocks = SECTIONS.map(([title, body]) => ({
   type: "wysiwyg",
   title,
   addToNav: true,
-  content: `<h2>${title.replace(/'/g, "&rsquo;")}</h2>\n<p>${body}</p>`,
+  // Body copy only: the renderer prints `block.title` as the section heading, so
+  // an <h2> here would duplicate it.
+  content: `<p>${body}</p>`,
 }));
 
 const payload = {
@@ -94,6 +96,7 @@ const payload = {
         __component: "sections.rich-content-body",
         anchor: "privacy-policy",
         showNav: true,
+        variant: "article",
         headline: { title: "Privacy Policy" },
         theme: { background: "white", textColor: "dark" },
         blocks,

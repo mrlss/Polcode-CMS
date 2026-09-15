@@ -25,6 +25,15 @@
       "type": "boolean",
       "default": true
     },
+    "variant": {
+      "type": "enumeration",
+      "enum": [
+        "post",
+        "article"
+      ],
+      "default": "post",
+      "description": "post = case-study rhythm (large section gaps + hairline). article = legal/content pages (tighter rhythm, h4 headings, 16px copy)."
+    },
     "blocks": {
       "type": "component",
       "repeatable": true,
