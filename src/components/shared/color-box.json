@@ -2,7 +2,7 @@
   "collectionName": "components_shared_color_boxes",
   "info": {
     "displayName": "Color Box",
-    "description": "Expandable color box with content-item blocks"
+    "description": "One coloured box: title, eyebrow and its items (optionally expandable)"
   },
   "options": {},
   "attributes": {

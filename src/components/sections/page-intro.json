@@ -1,0 +1,37 @@
+{
+  "collectionName": "components_sections_page_intros",
+  "info": {
+    "displayName": "Page Intro",
+    "icon": "heading",
+    "description": "Hub opening: eyebrow label, H1, intro copy, full-width hairline and an optional scroll cue."
+  },
+  "options": {},
+  "attributes": {
+    "anchor": {
+      "type": "string",
+      "description": "DOM id / URL hash for this section (e.g. \"resources\" → #resources)."
+    },
+    "label": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "customField",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      }
+    },
+    "showScrollCue": {
+      "type": "boolean",
+      "default": true
+    },
+    "theme": {
+      "type": "component",
+      "component": "shared.theme",
+      "repeatable": false
+    }
+  }
+}

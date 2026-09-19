@@ -1,8 +1,8 @@
 {
   "collectionName": "components_sections_teams",
   "info": {
-    "displayName": "Team",
-    "description": "Team members section"
+    "displayName": "Team Rows",
+    "description": "Team members as hover rows"
   },
   "options": {},
   "attributes": {

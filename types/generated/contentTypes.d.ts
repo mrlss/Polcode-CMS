@@ -446,7 +446,7 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
 export interface ApiAchievementAchievement extends Struct.CollectionTypeSchema {
   collectionName: 'achievements';
   info: {
-    description: 'Awards / achievements entries';
+    description: 'Awards shown by the Carousel section (Collection: Achievements)';
     displayName: 'Achievements';
     pluralName: 'achievements';
     singularName: 'achievement';
@@ -470,6 +470,36 @@ export interface ApiAchievementAchievement extends Struct.CollectionTypeSchema {
     platform: Schema.Attribute.Relation<'manyToOne', 'api::platform.platform'>;
     publishedAt: Schema.Attribute.DateTime;
     title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiAuthorAuthor extends Struct.CollectionTypeSchema {
+  collectionName: 'authors';
+  info: {
+    description: 'By-lines credited on articles';
+    displayName: 'Authors';
+    pluralName: 'authors';
+    singularName: 'author';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    fullName: Schema.Attribute.String & Schema.Attribute.Required;
+    insights: Schema.Attribute.Relation<'oneToMany', 'api::insight.insight'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::author.author'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -516,6 +546,7 @@ export interface ApiCaseStudyCaseStudy extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     logo: Schema.Attribute.Media<'images'>;
+    parent: Schema.Attribute.Relation<'manyToOne', 'api::page.page'>;
     publishedAt: Schema.Attribute.DateTime;
     regions: Schema.Attribute.Relation<'manyToOne', 'api::region.region'>;
     sections: Schema.Attribute.DynamicZone<
@@ -593,7 +624,7 @@ export interface ApiClientTestimonialClientTestimonial
 export interface ApiClientClient extends Struct.CollectionTypeSchema {
   collectionName: 'clients';
   info: {
-    description: 'Clients with testimonials';
+    description: 'Clients and their logos; each testimonial belongs to one client';
     displayName: 'Clients';
     pluralName: 'clients';
     singularName: 'client';
@@ -628,7 +659,7 @@ export interface ApiClientClient extends Struct.CollectionTypeSchema {
 export interface ApiFaqFaq extends Struct.CollectionTypeSchema {
   collectionName: 'faqs';
   info: {
-    description: 'Frequently asked questions';
+    description: 'Questions and answers shown by the FAQ section';
     displayName: 'FAQ';
     pluralName: 'faqs';
     singularName: 'faq';
@@ -670,10 +701,6 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    contentTypeUrls: Schema.Attribute.Component<
-      'global.content-type-url',
-      true
-    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -695,8 +722,8 @@ export interface ApiHiringProcessHiringProcess
   extends Struct.CollectionTypeSchema {
   collectionName: 'hiring_processes';
   info: {
-    description: 'Hiring process steps';
-    displayName: 'Hiring Process';
+    description: 'Steps shown by the Carousel section (Collection: Hiring process)';
+    displayName: 'Hiring Process Steps';
     pluralName: 'hiring-processes';
     singularName: 'hiring-process';
   };
@@ -731,7 +758,7 @@ export interface ApiHiringProcessHiringProcess
 export interface ApiIndustryIndustry extends Struct.CollectionTypeSchema {
   collectionName: 'industries';
   info: {
-    description: 'Case Study filter';
+    description: 'Industry taxonomy: the Case Studies filter and the Industries section. No dedicated industry pages.';
     displayName: 'Industries';
     pluralName: 'industries';
     singularName: 'industry';
@@ -775,7 +802,7 @@ export interface ApiIndustryIndustry extends Struct.CollectionTypeSchema {
 export interface ApiInsightInsight extends Struct.CollectionTypeSchema {
   collectionName: 'insights';
   info: {
-    description: 'Insights / knowledge articles';
+    description: 'Resources \u2014 articles, eBooks and podcasts \u2014 listed on the Resources hub';
     displayName: 'Insights';
     pluralName: 'insights';
     singularName: 'insight';
@@ -784,6 +811,12 @@ export interface ApiInsightInsight extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    audience: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::primary-audience.primary-audience'
+    >;
+    author: Schema.Attribute.Relation<'manyToOne', 'api::author.author'>;
+    cover: Schema.Attribute.Media<'images'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -802,12 +835,24 @@ export interface ApiInsightInsight extends Struct.CollectionTypeSchema {
       'api::insight.insight'
     > &
       Schema.Attribute.Private;
+    parent: Schema.Attribute.Relation<'manyToOne', 'api::page.page'>;
     publishedAt: Schema.Attribute.DateTime;
+    readDuration: Schema.Attribute.String;
+    resourceType: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::resource-type.resource-type'
+    >;
     sections: Schema.Attribute.DynamicZone<
-      ['sections.rich-content-body', 'sections.cta', 'sections.carousel']
+      [
+        'sections.rich-content-body',
+        'sections.cta',
+        'sections.carousel',
+        'sections.newsletter',
+      ]
     >;
     seo: Schema.Attribute.Component<'shared.seo', false>;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    tags: Schema.Attribute.Relation<'manyToMany', 'api::tag.tag'>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -833,6 +878,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::page.page'> &
       Schema.Attribute.Private;
+    parent: Schema.Attribute.Relation<'manyToOne', 'api::page.page'>;
     publishedAt: Schema.Attribute.DateTime;
     sections: Schema.Attribute.DynamicZone<
       [
@@ -846,7 +892,11 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'sections.faq',
         'sections.form',
         'sections.hero',
+        'sections.hub-bar',
         'sections.industries',
+        'sections.insight-list',
+        'sections.newsletter',
+        'sections.page-intro',
         'sections.intersection-floating-boxes',
         'sections.intersection-media',
         'sections.campaign-intro',
@@ -863,8 +913,6 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
     >;
     seo: Schema.Attribute.Component<'shared.seo', false>;
     showScrollTop: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
-    showSectionsNav: Schema.Attribute.Boolean &
-      Schema.Attribute.DefaultTo<false>;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
@@ -909,11 +957,44 @@ export interface ApiPlatformPlatform extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiPrimaryAudiencePrimaryAudience
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'audiences';
+  info: {
+    description: "The client's primary audiences (For Decision Makers, For Developers, For Candidates, Customer Stories). Exactly one per resource; editors add or retire entries here.";
+    displayName: 'Primary Audience';
+    pluralName: 'primary-audiences';
+    singularName: 'primary-audience';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    insights: Schema.Attribute.Relation<'oneToMany', 'api::insight.insight'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::primary-audience.primary-audience'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiProcessProcess extends Struct.CollectionTypeSchema {
   collectionName: 'processes';
   info: {
-    description: 'Process steps';
-    displayName: 'Process';
+    description: 'Steps picked by the Process Steps section';
+    displayName: 'Process Steps';
     pluralName: 'processes';
     singularName: 'process';
   };
@@ -949,7 +1030,7 @@ export interface ApiProcessProcess extends Struct.CollectionTypeSchema {
 export interface ApiRegionRegion extends Struct.CollectionTypeSchema {
   collectionName: 'regions';
   info: {
-    description: 'Case Study filter';
+    description: 'Region taxonomy used by the Case Studies filter';
     displayName: 'Regions';
     pluralName: 'regions';
     singularName: 'region';
@@ -982,10 +1063,44 @@ export interface ApiRegionRegion extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiResourceTypeResourceType
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'resource_types';
+  info: {
+    description: 'Format of a resource (article / eBook / podcast). Client-managed: add, rename or reorder entries here \u2014 no content-model change needed.';
+    displayName: 'Resource Type';
+    pluralName: 'resource-types';
+    singularName: 'resource-type';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    cardLayout: Schema.Attribute.Enumeration<['article', 'ebook', 'podcast']> &
+      Schema.Attribute.DefaultTo<'article'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    insights: Schema.Attribute.Relation<'oneToMany', 'api::insight.insight'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::resource-type.resource-type'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiServiceService extends Struct.CollectionTypeSchema {
   collectionName: 'services';
   info: {
-    description: 'Case Study filter';
+    description: 'Service detail pages: hero copy, media and the case studies / tech stack each service relates to';
     displayName: 'Services';
     pluralName: 'services';
     singularName: 'service';
@@ -1015,7 +1130,19 @@ export interface ApiServiceService extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     media: Schema.Attribute.Media<'images'>;
+    parent: Schema.Attribute.Relation<'manyToOne', 'api::page.page'>;
     publishedAt: Schema.Attribute.DateTime;
+    sections: Schema.Attribute.DynamicZone<
+      [
+        'sections.rich-content-body',
+        'sections.process',
+        'sections.carousel',
+        'sections.tech-stack',
+        'sections.cta',
+        'sections.case-studies',
+      ]
+    >;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     techStack: Schema.Attribute.Relation<
       'manyToMany',
@@ -1025,6 +1152,34 @@ export interface ApiServiceService extends Struct.CollectionTypeSchema {
     title: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiTagTag extends Struct.CollectionTypeSchema {
+  collectionName: 'tags';
+  info: {
+    description: 'Controlled (but expandable) tag vocabulary for resources / blog posts.';
+    displayName: 'Tag';
+    pluralName: 'tags';
+    singularName: 'tag';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    insights: Schema.Attribute.Relation<'manyToMany', 'api::insight.insight'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::tag.tag'> &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1073,7 +1228,7 @@ export interface ApiTeamTestimonialTeamTestimonial
 export interface ApiTeamTeam extends Struct.CollectionTypeSchema {
   collectionName: 'teams';
   info: {
-    description: 'Team members';
+    description: 'Team members: photo, role, bio and social links, used by the Team Rows, Team Grid and Person sections';
     displayName: 'Team';
     pluralName: 'teams';
     singularName: 'team';
@@ -1111,7 +1266,7 @@ export interface ApiTeamTeam extends Struct.CollectionTypeSchema {
 export interface ApiTechStackTechStack extends Struct.CollectionTypeSchema {
   collectionName: 'tech_stacks';
   info: {
-    description: 'Technologies, filterable by slug';
+    description: 'Technologies: the Tech Stack section, the Technologies filter and the tech list on services';
     displayName: 'Tech Stack';
     pluralName: 'tech-stacks';
     singularName: 'tech-stack';
@@ -1859,6 +2014,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::achievement.achievement': ApiAchievementAchievement;
+      'api::author.author': ApiAuthorAuthor;
       'api::case-study.case-study': ApiCaseStudyCaseStudy;
       'api::client-testimonial.client-testimonial': ApiClientTestimonialClientTestimonial;
       'api::client.client': ApiClientClient;
@@ -1869,9 +2025,12 @@ declare module '@strapi/strapi' {
       'api::insight.insight': ApiInsightInsight;
       'api::page.page': ApiPagePage;
       'api::platform.platform': ApiPlatformPlatform;
+      'api::primary-audience.primary-audience': ApiPrimaryAudiencePrimaryAudience;
       'api::process.process': ApiProcessProcess;
       'api::region.region': ApiRegionRegion;
+      'api::resource-type.resource-type': ApiResourceTypeResourceType;
       'api::service.service': ApiServiceService;
+      'api::tag.tag': ApiTagTag;
       'api::team-testimonial.team-testimonial': ApiTeamTestimonialTeamTestimonial;
       'api::team.team': ApiTeamTeam;
       'api::tech-stack.tech-stack': ApiTechStackTechStack;

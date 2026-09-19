@@ -90,7 +90,6 @@ const payload = {
     title: "Privacy Policy",
     slug: "privacy-policy",
     showScrollTop: true,
-    showSectionsNav: false,
     sections: [
       {
         __component: "sections.rich-content-body",

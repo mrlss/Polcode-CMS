@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "audiences",
+  "info": {
+    "singularName": "primary-audience",
+    "pluralName": "primary-audiences",
+    "displayName": "Primary Audience",
+    "description": "The client's primary audiences (For Decision Makers, For Developers, For Candidates, Customer Stories). Exactly one per resource; editors add or retire entries here."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "description": "Optional editorial summary of what belongs to this audience (guideline text)."
+    },
+    "insights": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::insight.insight",
+      "mappedBy": "audience"
+    }
+  }
+}

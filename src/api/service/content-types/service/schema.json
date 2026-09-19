@@ -5,7 +5,7 @@
     "singularName": "service",
     "pluralName": "services",
     "displayName": "Services",
-    "description": "Case Study filter"
+    "description": "Service detail pages: hero copy, media and the case studies / tech stack each service relates to"
   },
   "options": {
     "draftAndPublish": true
@@ -21,6 +21,28 @@
       "type": "uid",
       "targetField": "title",
       "required": true
+    },
+    "parent": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::page.page",
+      "description": "Page this service is listed under (e.g. the Services hub). The public URL is the parent's path plus the slug."
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
+    },
+    "sections": {
+      "type": "dynamiczone",
+      "components": [
+        "sections.rich-content-body",
+        "sections.process",
+        "sections.carousel",
+        "sections.tech-stack",
+        "sections.cta",
+        "sections.case-studies"
+      ]
     },
     "description": {
       "type": "customField",

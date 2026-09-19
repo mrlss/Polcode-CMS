@@ -1,0 +1,91 @@
+{
+  "collectionName": "components_sections_insight_lists",
+  "info": {
+    "displayName": "Resource List",
+    "icon": "list",
+    "description": "Resources hub list: a single featured card, a swipeable row, or a filterable paged grid (All Articles, audience strips, eBooks, Podcasts). Fill in a hand-picked list or an audience to narrow it — leave both empty for the newest resources."
+  },
+  "options": {},
+  "attributes": {
+    "navItem": {
+      "type": "component",
+      "component": "shared.nav-item",
+      "repeatable": false,
+      "description": "This section's entry in the page's on-page menu: the chip label + the anchor it scrolls to (which also becomes the section's DOM id). Leave empty to keep the section out of the menu."
+    },
+    "title": {
+      "type": "string"
+    },
+    "layout": {
+      "type": "enumeration",
+      "enum": [
+        "featured",
+        "featuredCarousel",
+        "carousel",
+        "grid",
+        "gridFiltered"
+      ],
+      "default": "grid",
+      "description": "How the resources are presented. featured = one large card, featuredCarousel = one large card per slide, carousel = a swipeable row of cards, grid = a static grid, gridFiltered = grid with filters + paging."
+    },
+    "audience": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::primary-audience.primary-audience",
+      "description": "Show the newest resources for ONE primary audience (an audience strip). Leave empty for the newest of every audience."
+    },
+    "insights": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::insight.insight",
+      "description": "A hand-picked list, in your order. Takes precedence over the audience and the type."
+    },
+    "resourceType": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::resource-type.resource-type",
+      "description": "Show only one resource type (eBook, podcast…). Leave empty for every type. Ignored when a list is hand-picked."
+    },
+    "itemsToShow": {
+      "type": "integer",
+      "default": 3,
+      "min": 1,
+      "description": "How many resources this section renders: slides when it is a carousel, cards otherwise (default 3). Ignored by the filterable grid, which pages from Strapi.",
+      "conditions": {
+        "visible": {
+          "!=": [
+            {
+              "var": "layout"
+            },
+            "gridFiltered"
+          ]
+        }
+      }
+    },
+    "showMore": {
+      "type": "component",
+      "component": "shared.show-more",
+      "repeatable": false,
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "layout"
+            },
+            "gridFiltered"
+          ]
+        }
+      }
+    },
+    "button": {
+      "type": "component",
+      "component": "shared.button",
+      "repeatable": false
+    },
+    "theme": {
+      "type": "component",
+      "component": "shared.theme",
+      "repeatable": false
+    }
+  }
+}

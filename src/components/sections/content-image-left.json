@@ -1,8 +1,8 @@
 {
   "collectionName": "components_sections_content_image_lefts",
   "info": {
-    "displayName": "Content Image Left",
-    "description": "Image left + content right (numbered blocks or rich text)"
+    "displayName": "Image Left + Content",
+    "description": "Image on the left, content on the right — numbered items or rich text"
   },
   "options": {},
   "attributes": {

@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_hub_bar_filters",
+  "info": {
+    "displayName": "Filter",
+    "icon": "filter",
+    "description": "One filter the bar offers. Audience and Type come from their CMS lists (in their own order), Tag is built from the tags the resources actually use."
+  },
+  "options": {},
+  "attributes": {
+    "taxonomy": {
+      "type": "enumeration",
+      "enum": [
+        "audience",
+        "tag",
+        "resourceType"
+      ],
+      "default": "audience",
+      "required": true,
+      "description": "Audience = primary audience list, Tag = controlled tag list, Type = resource type (Article / eBook / Podcast). A Type filter is hidden when the list it filters already pins one."
+    },
+    "label": {
+      "type": "string",
+      "description": "Optional label for this filter's pill. Leave empty for the taxonomy's default (Audience / Tag / Type)."
+    },
+    "multiple": {
+      "type": "boolean",
+      "default": false,
+      "description": "Off = pick one value (radio list). On = pick several at once (checkbox list) — the results match any of the picked values."
+    }
+  }
+}

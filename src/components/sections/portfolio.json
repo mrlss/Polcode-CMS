@@ -27,6 +27,12 @@
       "component": "shared.show-more",
       "description": "Show a set number of other cases behind a Show more/less toggle (labels + count editable), or list them all"
     },
+    "filters": {
+      "type": "component",
+      "repeatable": true,
+      "component": "portfolio.filter",
+      "description": "Which taxonomy dropdowns the list offers, in order. Leave empty for all four (Industries, Services, Technologies, Region)."
+    },
     "manualCasesControl": {
       "type": "boolean",
       "default": false

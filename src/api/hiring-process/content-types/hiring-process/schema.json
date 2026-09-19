@@ -4,8 +4,8 @@
   "info": {
     "singularName": "hiring-process",
     "pluralName": "hiring-processes",
-    "displayName": "Hiring Process",
-    "description": "Hiring process steps"
+    "displayName": "Hiring Process Steps",
+    "description": "Steps shown by the Carousel section (Collection: Hiring process)"
   },
   "options": {
     "draftAndPublish": true

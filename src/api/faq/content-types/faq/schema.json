@@ -5,7 +5,7 @@
     "singularName": "faq",
     "pluralName": "faqs",
     "displayName": "FAQ",
-    "description": "Frequently asked questions"
+    "description": "Questions and answers shown by the FAQ section"
   },
   "options": {
     "draftAndPublish": true

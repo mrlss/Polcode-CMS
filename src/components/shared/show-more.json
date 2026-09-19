@@ -54,6 +54,18 @@
           ]
         }
       }
+    },
+    "loadChunk": {
+      "type": "integer",
+      "default": 6,
+      "min": 1,
+      "description": "How many items each click on Show more reveals (client-side). Ignored by sections that reveal everything at once."
+    },
+    "pageSize": {
+      "type": "integer",
+      "default": 12,
+      "min": 1,
+      "description": "How many items each server page holds when the list keeps loading from Strapi."
     }
   }
 }

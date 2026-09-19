@@ -1,8 +1,8 @@
 {
   "collectionName": "components_shared_card_numerateds",
   "info": {
-    "displayName": "Card Numerated",
-    "description": "Numbered card"
+    "displayName": "Numbered Card",
+    "description": "One numbered card: title, copy and optional media"
   },
   "options": {},
   "attributes": {

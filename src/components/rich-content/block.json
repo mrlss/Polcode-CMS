@@ -1,7 +1,7 @@
 {
   "collectionName": "components_rich_content_blocks",
   "info": {
-    "displayName": "Block",
+    "displayName": "Content Block",
     "icon": "grid",
     "description": "A single article block: WYSIWYG prose (paragraphs/headings/images/video/table/quote/code) or a special widget (carousel / stats / audio)."
   },

@@ -1,8 +1,8 @@
 {
   "collectionName": "components_sections_intersection_floating_boxes",
   "info": {
-    "displayName": "Intersection Floating Boxes",
-    "description": "Floating cards over media"
+    "displayName": "Floating Boxes over Media",
+    "description": "Full-width media with statistic cards floating over it"
   },
   "options": {},
   "attributes": {

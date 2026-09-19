@@ -55,6 +55,10 @@ export default {
                     "region",
                     "platform",
                     "tech-stack",
+                    "author",
+                    "tag",
+                    "primary-audience",
+                    "resource-type",
                   ],
                 },
                 {
@@ -75,6 +79,48 @@ export default {
         "Could not seed content-manager-organizer config:",
         error?.message,
       );
+    }
+
+    try {
+      const MAIN_FIELD_OVERRIDES: Record<string, string> = {
+        "api::author.author": "fullName",
+        "api::team.team": "firstName",
+        "api::client.client": "name",
+      };
+      const contentTypesService = strapi
+        .plugin("content-manager")
+        .service("content-types");
+
+      for (const schema of Object.values(strapi.contentTypes)) {
+        if (!schema.uid.startsWith("api::")) continue;
+        const attributes = schema.attributes as Record<string, unknown>;
+        const mainField =
+          MAIN_FIELD_OVERRIDES[schema.uid] ??
+          ("title" in attributes ? "title" : null);
+        if (!mainField || !(mainField in attributes)) continue;
+
+        const configuration =
+          await contentTypesService.findConfiguration(schema);
+        if (!configuration || configuration.settings?.mainField === mainField) {
+          continue;
+        }
+        await contentTypesService.updateConfiguration(schema, {
+          ...configuration,
+          settings: { ...configuration.settings, mainField },
+        });
+      }
+    } catch (error: any) {
+      console.warn("Could not set content-manager mainField:", error?.message);
+    }
+
+    // Editorial copy + edit-view layout for the Content Manager. Strapi stores
+    // these in the content-manager configuration, so a schema `description`
+    // alone would only show up in the Content-Type Builder.
+    try {
+      const { setAdminViewCopy } = await import("./admin-view");
+      await setAdminViewCopy(strapi);
+    } catch (error: any) {
+      console.warn("Could not apply admin view copy:", error?.message);
     }
 
     // Idempotent local demo data — opt-in via SEED_DEMO=true

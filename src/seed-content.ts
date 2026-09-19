@@ -655,6 +655,71 @@ export async function seedContent(strapi: Strapi) {
     ],
   );
 
+  const authors = await ensureCollection(
+    strapi,
+    "api::author.author",
+    (e) => e.fullName,
+    [
+      { fullName: "Anna Kowalska" },
+      { fullName: "Marek Nowak" },
+      { fullName: "Julia Zielińska" },
+    ],
+  );
+
+  const authorId = (fullName: string) =>
+    authors.find((a) => a.fullName === fullName)?.id;
+
+  const tagList = await ensureCollection(
+    strapi,
+    "api::tag.tag",
+    (e) => e.title,
+    [
+      { title: "Software Delivery", slug: "software-delivery" },
+      { title: "Engineering Culture", slug: "engineering-culture" },
+      { title: "Team Augmentation", slug: "team-augmentation" },
+      { title: "Legacy Modernization", slug: "legacy-modernization" },
+      { title: "Software Architecture", slug: "software-architecture" },
+      { title: "Performance & Scalability", slug: "performance-scalability" },
+      { title: "UX & Accessibility", slug: "ux-accessibility" },
+      { title: "APIs & Integrations", slug: "apis-integrations" },
+      { title: "Careers", slug: "careers" },
+    ],
+  );
+
+  const tagIds = (titles: string[]) =>
+    titles
+      .map((t) => tagList.find((c) => c.title === t)?.id)
+      .filter((id): id is number => typeof id === "number");
+
+  const audienceList = await ensureCollection(
+    strapi,
+    "api::primary-audience.primary-audience",
+    (e) => e.slug,
+    [
+      { title: "For Decision Makers", slug: "for-decision-makers" },
+      { title: "For Developers", slug: "for-developers" },
+      { title: "For Candidates", slug: "for-candidates" },
+      { title: "Customer Stories", slug: "customer-stories" },
+    ],
+  );
+
+  const audienceId = (slug: string) =>
+    audienceList.find((a) => a.slug === slug)?.id;
+
+  const resourceTypeList = await ensureCollection(
+    strapi,
+    "api::resource-type.resource-type",
+    (e) => e.slug,
+    [
+      { title: "Article", slug: "article", cardLayout: "article" },
+      { title: "eBook", slug: "ebook", cardLayout: "ebook" },
+      { title: "Podcast", slug: "podcast", cardLayout: "podcast" },
+    ],
+  );
+
+  const resourceTypeId = (slug: string) =>
+    resourceTypeList.find((t) => t.slug === slug)?.id;
+
   const insights = await ensureCollection(
     strapi,
     "api::insight.insight",
@@ -665,36 +730,66 @@ export async function seedContent(strapi: Strapi) {
         slug: "five-lessons-from-2026",
         description: "<p>Insight body.</p>",
         isFeatured: true,
+        readDuration: "6 min read",
+        author: authorId("Anna Kowalska"),
+        audience: audienceId("for-decision-makers"),
+        resourceType: resourceTypeId("article"),
+        tags: tagIds(["Software Delivery", "Engineering Culture"]),
       },
       {
         title: "Scaling teams without chaos",
         slug: "scaling-teams-without-chaos",
         description: "<p>Insight body.</p>",
         isFeatured: false,
+        readDuration: "4 min read",
+        author: authorId("Julia Zielińska"),
+        audience: audienceId("for-decision-makers"),
+        resourceType: resourceTypeId("article"),
+        tags: tagIds(["Team Augmentation", "Engineering Culture"]),
       },
       {
         title: "The real cost of technical debt",
         slug: "the-real-cost-of-technical-debt",
         description: "<p>Insight body.</p>",
         isFeatured: false,
+        readDuration: "8 min read",
+        author: authorId("Marek Nowak"),
+        audience: audienceId("for-decision-makers"),
+        resourceType: resourceTypeId("article"),
+        tags: tagIds(["Legacy Modernization", "Software Architecture"]),
       },
       {
         title: "Designing for performance",
         slug: "designing-for-performance",
         description: "<p>Insight body.</p>",
         isFeatured: false,
+        readDuration: "6 min read",
+        author: authorId("Anna Kowalska"),
+        audience: audienceId("for-developers"),
+        resourceType: resourceTypeId("article"),
+        tags: tagIds(["Performance & Scalability", "UX & Accessibility"]),
       },
       {
         title: "The future of headless CMS",
         slug: "the-future-of-headless-cms",
         description: "<p>Insight body.</p>",
         isFeatured: false,
+        readDuration: "5 min read",
+        author: authorId("Marek Nowak"),
+        audience: audienceId("for-decision-makers"),
+        resourceType: resourceTypeId("article"),
+        tags: tagIds(["Software Architecture", "APIs & Integrations"]),
       },
       {
         title: "Hiring senior engineers",
         slug: "hiring-senior-engineers",
         description: "<p>Insight body.</p>",
         isFeatured: false,
+        readDuration: "7 min read",
+        author: authorId("Julia Zielińska"),
+        audience: audienceId("for-candidates"),
+        resourceType: resourceTypeId("article"),
+        tags: tagIds(["Careers", "Engineering Culture"]),
       },
     ],
   );
@@ -1139,7 +1234,6 @@ export async function seedContent(strapi: Strapi) {
     title: "Home",
     slug: "index",
     showScrollTop: true,
-    showSectionsNav: true,
     publishedAt: now.toISOString(),
     sections,
   };

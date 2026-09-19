@@ -250,7 +250,13 @@ const PAGES: { title: string; slug: string }[] = [
   { title: "Resources", slug: "resources" },
   { title: "Contact Us", slug: "contact-us" },
   { title: "Career", slug: "career" },
-  ...SERVICES.map((s) => ({ title: s.title, slug: `services/${s.slug}` })),
+];
+
+/** Hub page each content type is listed under (see the `parent` relation). */
+const CONTENT_TYPE_PARENTS: { collection: UID.ContentType; slug: string }[] = [
+  { collection: "api::service.service", slug: "services" },
+  { collection: "api::case-study.case-study", slug: "case-studies" },
+  { collection: "api::insight.insight", slug: "resources" },
 ];
 
 // ---------------------------------------------------------------------------
@@ -385,6 +391,31 @@ export async function seedNavigation(strapi: Strapi) {
     INDUSTRIES,
   );
   log(`taxonomy: services=${services.length} industries=${industries.length}`);
+
+  // Every content type sits under its hub page, so URLs come from the parent
+  // chain instead of a hardcoded prefix.
+  for (const { collection, slug } of CONTENT_TYPE_PARENTS) {
+    const parent = (await qPage.findOne({ where: { slug } })) as {
+      id: number;
+    } | null;
+    if (!parent) continue;
+
+    const rows = (await strapi.db.query(collection).findMany({
+      populate: { parent: true },
+    })) as { id: number; parent?: { id: number } | null }[];
+    let linked = 0;
+
+    for (const row of rows) {
+      if (row.parent?.id) continue;
+      await strapi.db.query(collection).update({
+        where: { id: row.id },
+        data: { parent: parent.id },
+      });
+      linked += 1;
+    }
+
+    log(`parent '${slug}': ${linked} of ${rows.length} ${collection} linked`);
+  }
 
   // Navigations.
   for (const { name, items } of NAVIGATIONS) {

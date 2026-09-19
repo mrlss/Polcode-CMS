@@ -5,7 +5,7 @@
     "singularName": "insight",
     "pluralName": "insights",
     "displayName": "Insights",
-    "description": "Insights / knowledge articles"
+    "description": "Resources — articles, eBooks and podcasts — listed on the Resources hub"
   },
   "options": {
     "draftAndPublish": true
@@ -20,6 +20,12 @@
       "type": "uid",
       "targetField": "title",
       "required": true
+    },
+    "parent": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::page.page",
+      "description": "Page this resource is listed under (e.g. the Resources hub). The public URL is the parent's path plus the slug."
     },
     "seo": {
       "type": "component",
@@ -46,12 +52,61 @@
       "type": "boolean",
       "default": false
     },
+    "audience": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::primary-audience.primary-audience",
+      "inversedBy": "insights",
+      "description": "Exactly one primary audience per resource (client taxonomy guideline)."
+    },
+    "resourceType": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::resource-type.resource-type",
+      "inversedBy": "insights",
+      "description": "Format of this resource (article / eBook / podcast)."
+    },
+    "tags": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::tag.tag",
+      "inversedBy": "insights"
+    },
+    "cover": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ],
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "resourceType.cardLayout"
+            },
+            "ebook"
+          ]
+        }
+      }
+    },
+    "readDuration": {
+      "type": "string",
+      "description": "Free text shown in the detail meta line and the article aside: \"6 min read\" for articles, \"38 min\" for podcasts, \"42 pages\" for eBooks."
+    },
+    "author": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::author.author",
+      "inversedBy": "insights"
+    },
     "sections": {
       "type": "dynamiczone",
       "components": [
         "sections.rich-content-body",
         "sections.cta",
-        "sections.carousel"
+        "sections.carousel",
+        "sections.newsletter"
       ]
     }
   }

@@ -1,8 +1,8 @@
 {
   "collectionName": "components_sections_intro_showreels",
   "info": {
-    "displayName": "Campaign Intro",
-    "description": "Intro block — default (text) or with media"
+    "displayName": "Intro",
+    "description": "Opening block: eyebrow, title, copy (+ optional media and scroll cue)"
   },
   "options": {},
   "attributes": {

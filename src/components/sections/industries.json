@@ -2,7 +2,7 @@
   "collectionName": "components_sections_industries",
   "info": {
     "displayName": "Industries",
-    "description": "Industries section"
+    "description": "Industries grid, each one linking to its filtered case list"
   },
   "options": {},
   "attributes": {

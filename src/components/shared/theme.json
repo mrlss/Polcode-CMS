@@ -1,8 +1,8 @@
 {
   "collectionName": "components_shared_themes",
   "info": {
-    "displayName": "Theme",
-    "description": "Section background color + text contrast"
+    "displayName": "Section Theme",
+    "description": "Section background colour + text contrast"
   },
   "options": {},
   "attributes": {

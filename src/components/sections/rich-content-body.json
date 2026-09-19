@@ -29,10 +29,11 @@
       "type": "enumeration",
       "enum": [
         "post",
-        "article"
+        "article",
+        "blogPost"
       ],
       "default": "post",
-      "description": "post = case-study rhythm (large section gaps + hairline). article = legal/content pages (tighter rhythm, h4 headings, 16px copy)."
+      "description": "post = case-study rhythm (large section gaps + hairline). article = legal/content pages (tighter rhythm, h4 headings, 16px copy). blogPost = post rhythm with 16px copy and an aside (share/metadata) above the sections nav."
     },
     "blocks": {
       "type": "component",

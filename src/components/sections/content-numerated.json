@@ -1,8 +1,8 @@
 {
   "collectionName": "components_sections_content_numerateds",
   "info": {
-    "displayName": "Content Numerated",
-    "description": "Numerated content, static or expandable"
+    "displayName": "Numbered Content",
+    "description": "Numbered rows of content, always open or expandable"
   },
   "options": {},
   "attributes": {

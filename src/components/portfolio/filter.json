@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_portfolio_filters",
+  "info": {
+    "displayName": "Filter",
+    "icon": "filter",
+    "description": "One taxonomy dropdown the case list offers. Leave the section's filter list empty for all four (Industries, Services, Technologies, Region)."
+  },
+  "options": {},
+  "attributes": {
+    "taxonomy": {
+      "type": "enumeration",
+      "enum": ["industries", "services", "techStack", "regions"],
+      "default": "industries",
+      "required": true,
+      "description": "Industries = case-study industries, Services = case-study services, Technologies = tech stack, Region = regions."
+    },
+    "label": {
+      "type": "string",
+      "description": "Optional label for this dropdown. Leave empty for the taxonomy's default (Industries / Services / Technologies / Region)."
+    }
+  }
+}

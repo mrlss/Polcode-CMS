@@ -1,8 +1,8 @@
 {
   "collectionName": "components_shared_card_milestones",
   "info": {
-    "displayName": "Card Milestone",
-    "description": "Milestone card for progress"
+    "displayName": "Milestone Card",
+    "description": "One milestone card: title + copy"
   },
   "options": {},
   "attributes": {

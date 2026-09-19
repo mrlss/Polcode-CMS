@@ -1,8 +1,8 @@
 {
   "collectionName": "components_sections_cards_large_numerateds",
   "info": {
-    "displayName": "Cards Large Numerated",
-    "description": "Numerated cards, carousel or grid"
+    "displayName": "Numbered Cards",
+    "description": "Cards numbered 01, 02, … — as a carousel or a grid"
   },
   "options": {},
   "attributes": {

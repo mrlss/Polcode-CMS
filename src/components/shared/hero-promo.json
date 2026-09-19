@@ -1,8 +1,8 @@
 {
   "collectionName": "components_shared_hero_promos",
   "info": {
-    "displayName": "Hero Promo",
-    "description": "Small promo slide inside the hero carousel"
+    "displayName": "Hero Promo Slide",
+    "description": "One small promo slide inside the hero carousel"
   },
   "options": {},
   "attributes": {

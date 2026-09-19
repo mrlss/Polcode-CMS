@@ -5,7 +5,7 @@
     "singularName": "client",
     "pluralName": "clients",
     "displayName": "Clients",
-    "description": "Clients with testimonials"
+    "description": "Clients and their logos; each testimonial belongs to one client"
   },
   "options": {
     "draftAndPublish": true

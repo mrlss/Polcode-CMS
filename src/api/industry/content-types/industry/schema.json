@@ -5,7 +5,7 @@
     "singularName": "industry",
     "pluralName": "industries",
     "displayName": "Industries",
-    "description": "Case Study filter"
+    "description": "Industry taxonomy: the Case Studies filter and the Industries section. No dedicated industry pages."
   },
   "options": {
     "draftAndPublish": true

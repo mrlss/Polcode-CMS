@@ -20,7 +20,13 @@
       "type": "uid",
       "targetField": "title",
       "required": true,
-      "regex": "^[a-z0-9-_.~/]+$"
+      "regex": "^[a-z0-9-_.]+$"
+    },
+    "parent": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::page.page",
+      "description": "Optional parent page. The public URL is the parent's path plus this page's slug."
     },
     "seo": {
       "type": "component",
@@ -28,10 +34,6 @@
       "component": "shared.seo"
     },
     "showScrollTop": {
-      "type": "boolean",
-      "default": false
-    },
-    "showSectionsNav": {
       "type": "boolean",
       "default": false
     },
@@ -48,7 +50,11 @@
         "sections.faq",
         "sections.form",
         "sections.hero",
+        "sections.hub-bar",
         "sections.industries",
+        "sections.insight-list",
+        "sections.newsletter",
+        "sections.page-intro",
         "sections.intersection-floating-boxes",
         "sections.intersection-media",
         "sections.campaign-intro",

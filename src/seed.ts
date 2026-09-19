@@ -617,7 +617,6 @@ export async function seedDemoData(strapi: Strapi) {
       title: "Home",
       slug: "index",
       showScrollTop: true,
-      showSectionsNav: true,
       publishedAt: now.toISOString(),
       sections,
     },

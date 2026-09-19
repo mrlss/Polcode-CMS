@@ -56,6 +56,53 @@ type AchievementRelationResponseCollection {
   nodes: [Achievement!]!
 }
 
+type Author {
+  createdAt: DateTime
+  documentId: ID!
+  fullName: String!
+  insights(filters: InsightFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Insight]!
+  insights_connection(filters: InsightFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): InsightRelationResponseCollection
+  publishedAt: DateTime
+  updatedAt: DateTime
+}
+
+type AuthorEntity {
+  attributes: Author
+  id: ID
+}
+
+type AuthorEntityResponse {
+  data: Author
+}
+
+type AuthorEntityResponseCollection {
+  nodes: [Author!]!
+  pageInfo: Pagination!
+}
+
+input AuthorFiltersInput {
+  and: [AuthorFiltersInput]
+  createdAt: DateTimeFilterInput
+  documentId: IDFilterInput
+  fullName: StringFilterInput
+  insights: InsightFiltersInput
+  not: AuthorFiltersInput
+  or: [AuthorFiltersInput]
+  publishedAt: DateTimeFilterInput
+  updatedAt: DateTimeFilterInput
+}
+
+input AuthorInput {
+  fullName: String
+  insights: [ID]
+  locale: String
+  publishedAt: DateTime
+}
+
+type AuthorRelationResponseCollection {
+  nodes: [Author!]!
+}
+
 input BooleanFilterInput {
   and: [Boolean]
   between: [Boolean]
@@ -91,6 +138,7 @@ type CaseStudy {
   isFeatured: Boolean
   label: String
   logo: UploadFile
+  parent: Page
   publishedAt: DateTime
   regions: Region
   sections: [CaseStudySectionsDynamicZone]
@@ -131,6 +179,7 @@ input CaseStudyFiltersInput {
   label: StringFilterInput
   not: CaseStudyFiltersInput
   or: [CaseStudyFiltersInput]
+  parent: PageFiltersInput
   publishedAt: DateTimeFilterInput
   regions: RegionFiltersInput
   seo: ComponentSharedSeoFiltersInput
@@ -152,6 +201,7 @@ input CaseStudyInput {
   label: String
   locale: String
   logo: ID
+  parent: ID
   publishedAt: DateTime
   regions: ID
   sections: [CaseStudySectionsDynamicZoneInput!]
@@ -278,26 +328,6 @@ type ClientTestimonialRelationResponseCollection {
   nodes: [ClientTestimonial!]!
 }
 
-type ComponentGlobalContentTypeUrl {
-  id: ID!
-  kind: ENUM_COMPONENTGLOBALCONTENTTYPEURL_KIND
-  path: String
-}
-
-input ComponentGlobalContentTypeUrlFiltersInput {
-  and: [ComponentGlobalContentTypeUrlFiltersInput]
-  kind: StringFilterInput
-  not: ComponentGlobalContentTypeUrlFiltersInput
-  or: [ComponentGlobalContentTypeUrlFiltersInput]
-  path: StringFilterInput
-}
-
-input ComponentGlobalContentTypeUrlInput {
-  id: ID
-  kind: ENUM_COMPONENTGLOBALCONTENTTYPEURL_KIND
-  path: String
-}
-
 type ComponentGlobalFooter {
   contactContent: String
   contactTitle: String
@@ -347,6 +377,49 @@ input ComponentGlobalPartnerInput {
   label: String
   logo: ID
   url: String
+}
+
+type ComponentHubBarFilter {
+  id: ID!
+  label: String
+  multiple: Boolean
+  taxonomy: ENUM_COMPONENTHUBBARFILTER_TAXONOMY!
+}
+
+input ComponentHubBarFilterFiltersInput {
+  and: [ComponentHubBarFilterFiltersInput]
+  label: StringFilterInput
+  multiple: BooleanFilterInput
+  not: ComponentHubBarFilterFiltersInput
+  or: [ComponentHubBarFilterFiltersInput]
+  taxonomy: StringFilterInput
+}
+
+input ComponentHubBarFilterInput {
+  id: ID
+  label: String
+  multiple: Boolean
+  taxonomy: ENUM_COMPONENTHUBBARFILTER_TAXONOMY
+}
+
+type ComponentPortfolioFilter {
+  id: ID!
+  label: String
+  taxonomy: ENUM_COMPONENTPORTFOLIOFILTER_TAXONOMY!
+}
+
+input ComponentPortfolioFilterFiltersInput {
+  and: [ComponentPortfolioFilterFiltersInput]
+  label: StringFilterInput
+  not: ComponentPortfolioFilterFiltersInput
+  or: [ComponentPortfolioFilterFiltersInput]
+  taxonomy: StringFilterInput
+}
+
+input ComponentPortfolioFilterInput {
+  id: ID
+  label: String
+  taxonomy: ENUM_COMPONENTPORTFOLIOFILTER_TAXONOMY
 }
 
 type ComponentRichContentBlock {
@@ -853,6 +926,32 @@ input ComponentSectionsHeroInput {
   variant: ENUM_COMPONENTSECTIONSHERO_VARIANT
 }
 
+type ComponentSectionsHubBar {
+  filters(filters: ComponentHubBarFilterFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentHubBarFilter]
+  id: ID!
+  scrollToSections: Boolean
+  showChips: Boolean
+  theme: ComponentSharedTheme
+}
+
+input ComponentSectionsHubBarFiltersInput {
+  and: [ComponentSectionsHubBarFiltersInput]
+  filters: ComponentHubBarFilterFiltersInput
+  not: ComponentSectionsHubBarFiltersInput
+  or: [ComponentSectionsHubBarFiltersInput]
+  scrollToSections: BooleanFilterInput
+  showChips: BooleanFilterInput
+  theme: ComponentSharedThemeFiltersInput
+}
+
+input ComponentSectionsHubBarInput {
+  filters: [ComponentHubBarFilterInput]
+  id: ID
+  scrollToSections: Boolean
+  showChips: Boolean
+  theme: ComponentSharedThemeInput
+}
+
 type ComponentSectionsIndustries {
   anchor: String
   button: ComponentSharedButton
@@ -881,6 +980,51 @@ input ComponentSectionsIndustriesInput {
   id: ID
   industries: [ID]
   theme: ComponentSharedThemeInput
+}
+
+type ComponentSectionsInsightList {
+  audience: PrimaryAudience
+  button: ComponentSharedButton
+  id: ID!
+  insights(filters: InsightFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Insight]!
+  insights_connection(filters: InsightFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): InsightRelationResponseCollection
+  itemsToShow: Int
+  layout: ENUM_COMPONENTSECTIONSINSIGHTLIST_LAYOUT
+  navItem: ComponentSharedNavItem
+  resourceType: ResourceType
+  showMore: ComponentSharedShowMore
+  theme: ComponentSharedTheme
+  title: String
+}
+
+input ComponentSectionsInsightListFiltersInput {
+  and: [ComponentSectionsInsightListFiltersInput]
+  audience: PrimaryAudienceFiltersInput
+  button: ComponentSharedButtonFiltersInput
+  insights: InsightFiltersInput
+  itemsToShow: IntFilterInput
+  layout: StringFilterInput
+  navItem: ComponentSharedNavItemFiltersInput
+  not: ComponentSectionsInsightListFiltersInput
+  or: [ComponentSectionsInsightListFiltersInput]
+  resourceType: ResourceTypeFiltersInput
+  showMore: ComponentSharedShowMoreFiltersInput
+  theme: ComponentSharedThemeFiltersInput
+  title: StringFilterInput
+}
+
+input ComponentSectionsInsightListInput {
+  audience: ID
+  button: ComponentSharedButtonInput
+  id: ID
+  insights: [ID]
+  itemsToShow: Int
+  layout: ENUM_COMPONENTSECTIONSINSIGHTLIST_LAYOUT
+  navItem: ComponentSharedNavItemInput
+  resourceType: ID
+  showMore: ComponentSharedShowMoreInput
+  theme: ComponentSharedThemeInput
+  title: String
 }
 
 type ComponentSectionsIntersectionFloatingBoxes {
@@ -939,6 +1083,73 @@ input ComponentSectionsIntersectionMediaInput {
   title: String
 }
 
+type ComponentSectionsNewsletter {
+  anchor: String
+  button: ComponentSharedButton
+  description: String
+  id: ID!
+  label: String
+  placeholder: String
+  theme: ComponentSharedTheme
+  title: String
+}
+
+input ComponentSectionsNewsletterFiltersInput {
+  anchor: StringFilterInput
+  and: [ComponentSectionsNewsletterFiltersInput]
+  button: ComponentSharedButtonFiltersInput
+  description: StringFilterInput
+  label: StringFilterInput
+  not: ComponentSectionsNewsletterFiltersInput
+  or: [ComponentSectionsNewsletterFiltersInput]
+  placeholder: StringFilterInput
+  theme: ComponentSharedThemeFiltersInput
+  title: StringFilterInput
+}
+
+input ComponentSectionsNewsletterInput {
+  anchor: String
+  button: ComponentSharedButtonInput
+  description: String
+  id: ID
+  label: String
+  placeholder: String
+  theme: ComponentSharedThemeInput
+  title: String
+}
+
+type ComponentSectionsPageIntro {
+  anchor: String
+  description: String
+  id: ID!
+  label: String
+  showScrollCue: Boolean
+  theme: ComponentSharedTheme
+  title: String
+}
+
+input ComponentSectionsPageIntroFiltersInput {
+  anchor: StringFilterInput
+  and: [ComponentSectionsPageIntroFiltersInput]
+  description: StringFilterInput
+  label: StringFilterInput
+  not: ComponentSectionsPageIntroFiltersInput
+  or: [ComponentSectionsPageIntroFiltersInput]
+  showScrollCue: BooleanFilterInput
+  theme: ComponentSharedThemeFiltersInput
+  title: StringFilterInput
+}
+
+input ComponentSectionsPageIntroInput {
+  anchor: String
+  description: String
+  id: ID
+  label: String
+  showScrollCue: Boolean
+  theme: ComponentSharedThemeInput
+  title: String
+}
+
 type ComponentSectionsPerson {
   address: String
   anchor: String
@@ -978,6 +1189,7 @@ type ComponentSectionsPortfolio {
   anchor: String
   featuredCases(filters: CaseStudyFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [CaseStudy]!
   featuredCases_connection(filters: CaseStudyFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): CaseStudyRelationResponseCollection
+  filters(filters: ComponentPortfolioFilterFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentPortfolioFilter]
   headline: ComponentSharedHeadline
   id: ID!
   manualCasesControl: Boolean
@@ -992,6 +1204,7 @@ input ComponentSectionsPortfolioFiltersInput {
   anchor: StringFilterInput
   and: [ComponentSectionsPortfolioFiltersInput]
   featuredCases: CaseStudyFiltersInput
+  filters: ComponentPortfolioFilterFiltersInput
   headline: ComponentSharedHeadlineFiltersInput
   manualCasesControl: BooleanFilterInput
   not: ComponentSectionsPortfolioFiltersInput
@@ -1005,6 +1218,7 @@ input ComponentSectionsPortfolioFiltersInput {
 input ComponentSectionsPortfolioInput {
   anchor: String
   featuredCases: [ID]
+  filters: [ComponentPortfolioFilterInput]
   headline: ComponentSharedHeadlineInput
   id: ID
   manualCasesControl: Boolean
@@ -1235,6 +1449,7 @@ type ComponentSharedButton {
   linkType: ENUM_COMPONENTSHAREDBUTTON_LINKTYPE
   page: Page
   scrollTo: String
+  service: Service
   title: String
   url: String
   variant: ENUM_COMPONENTSHAREDBUTTON_VARIANT
@@ -1249,6 +1464,7 @@ input ComponentSharedButtonFiltersInput {
   or: [ComponentSharedButtonFiltersInput]
   page: PageFiltersInput
   scrollTo: StringFilterInput
+  service: ServiceFiltersInput
   title: StringFilterInput
   url: StringFilterInput
   variant: StringFilterInput
@@ -1261,6 +1477,7 @@ input ComponentSharedButtonInput {
   linkType: ENUM_COMPONENTSHAREDBUTTON_LINKTYPE
   page: ID
   scrollTo: String
+  service: ID
   title: String
   url: String
   variant: ENUM_COMPONENTSHAREDBUTTON_VARIANT
@@ -1448,23 +1665,6 @@ input ComponentSharedNavItemInput {
   label: String
 }
 
-type ComponentSharedSectionsNavController {
-  id: ID!
-  label: String
-}
-
-input ComponentSharedSectionsNavControllerFiltersInput {
-  and: [ComponentSharedSectionsNavControllerFiltersInput]
-  label: StringFilterInput
-  not: ComponentSharedSectionsNavControllerFiltersInput
-  or: [ComponentSharedSectionsNavControllerFiltersInput]
-}
-
-input ComponentSharedSectionsNavControllerInput {
-  id: ID
-  label: String
-}
-
 type ComponentSharedSeo {
   id: ID!
   metaDescription: String
@@ -1515,6 +1715,8 @@ input ComponentSharedServiceGroupInput {
 type ComponentSharedShowMore {
   id: ID!
   itemsToShow: Int
+  loadChunk: Int
+  pageSize: Int
   showLessLabel: String
   showMoreLabel: String
   useShowMore: Boolean
@@ -1523,8 +1725,10 @@ type ComponentSharedShowMore {
 input ComponentSharedShowMoreFiltersInput {
   and: [ComponentSharedShowMoreFiltersInput]
   itemsToShow: IntFilterInput
+  loadChunk: IntFilterInput
   not: ComponentSharedShowMoreFiltersInput
   or: [ComponentSharedShowMoreFiltersInput]
+  pageSize: IntFilterInput
   showLessLabel: StringFilterInput
   showMoreLabel: StringFilterInput
   useShowMore: BooleanFilterInput
@@ -1533,6 +1737,8 @@ input ComponentSharedShowMoreFiltersInput {
 input ComponentSharedShowMoreInput {
   id: ID
   itemsToShow: Int
+  loadChunk: Int
+  pageSize: Int
   showLessLabel: String
   showMoreLabel: String
   useShowMore: Boolean
@@ -1597,27 +1803,6 @@ input ComponentSharedThemeInput {
   background: ENUM_COMPONENTSHAREDTHEME_BACKGROUND
   id: ID
   textColor: ENUM_COMPONENTSHAREDTHEME_TEXTCOLOR
-}
-
-type ComponentTestTest {
-  case_studies(filters: CaseStudyFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [CaseStudy]!
-  case_studies_connection(filters: CaseStudyFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): CaseStudyRelationResponseCollection
-  id: ID!
-  test: Boolean
-}
-
-input ComponentTestTestFiltersInput {
-  and: [ComponentTestTestFiltersInput]
-  case_studies: CaseStudyFiltersInput
-  not: ComponentTestTestFiltersInput
-  or: [ComponentTestTestFiltersInput]
-  test: BooleanFilterInput
-}
-
-input ComponentTestTestInput {
-  case_studies: [ID]
-  id: ID
-  test: Boolean
 }
 
 type ContentManagerOrganizerContentManagerConfiguration {
@@ -1781,9 +1966,17 @@ enum ENUM_CASESTUDY_FOREGROUND {
   yellow
 }
 
-enum ENUM_COMPONENTGLOBALCONTENTTYPEURL_KIND {
-  caseStudy
-  insight
+enum ENUM_COMPONENTHUBBARFILTER_TAXONOMY {
+  audience
+  resourceType
+  tag
+}
+
+enum ENUM_COMPONENTPORTFOLIOFILTER_TAXONOMY {
+  industries
+  regions
+  services
+  techStack
 }
 
 enum ENUM_COMPONENTRICHCONTENTBLOCK_TYPE {
@@ -1852,6 +2045,14 @@ enum ENUM_COMPONENTSECTIONSHERO_VARIANT {
   withShowreel
 }
 
+enum ENUM_COMPONENTSECTIONSINSIGHTLIST_LAYOUT {
+  carousel
+  featured
+  featuredCarousel
+  grid
+  gridFiltered
+}
+
 enum ENUM_COMPONENTSECTIONSPORTFOLIO_SORT {
   asc
   desc
@@ -1859,6 +2060,7 @@ enum ENUM_COMPONENTSECTIONSPORTFOLIO_SORT {
 
 enum ENUM_COMPONENTSECTIONSRICHCONTENTBODY_VARIANT {
   article
+  blogPost
   post
 }
 
@@ -1871,6 +2073,7 @@ enum ENUM_COMPONENTSHAREDBUTTON_LINKTYPE {
   caseStudy
   insight
   page
+  service
   url
 }
 
@@ -1894,6 +2097,12 @@ enum ENUM_COMPONENTSHAREDTHEME_BACKGROUND {
 enum ENUM_COMPONENTSHAREDTHEME_TEXTCOLOR {
   dark
   light
+}
+
+enum ENUM_RESOURCETYPE_CARDLAYOUT {
+  article
+  ebook
+  podcast
 }
 
 type Error {
@@ -1978,10 +2187,9 @@ input FloatFilterInput {
   startsWith: Float
 }
 
-union GenericMorph = Achievement | CaseStudy | Client | ClientTestimonial | ComponentGlobalContentTypeUrl | ComponentGlobalFooter | ComponentGlobalPartner | ComponentRichContentBlock | ComponentRichContentStat | ComponentSectionsCampaignIntro | ComponentSectionsCardsLargeNumerated | ComponentSectionsCarousel | ComponentSectionsCaseStudies | ComponentSectionsContentColorBoxes | ComponentSectionsContentImageLeft | ComponentSectionsContentNumerated | ComponentSectionsCta | ComponentSectionsFaq | ComponentSectionsForm | ComponentSectionsHero | ComponentSectionsIndustries | ComponentSectionsIntersectionFloatingBoxes | ComponentSectionsIntersectionMedia | ComponentSectionsPerson | ComponentSectionsPortfolio | ComponentSectionsProcess | ComponentSectionsProgressCards | ComponentSectionsRichContentBody | ComponentSectionsServicesGroup | ComponentSectionsTeam | ComponentSectionsTeamGrid | ComponentSectionsTechStack | ComponentSharedButton | ComponentSharedCardMilestone | ComponentSharedCardNumerated | ComponentSharedColorBox | ComponentSharedContentItem | ComponentSharedFloatingCard | ComponentSharedHeadline | ComponentSharedHeroPromo | ComponentSharedNavItem | ComponentSharedSectionsNavController | ComponentSharedSeo | ComponentSharedServiceGroup | ComponentSharedShowMore | ComponentSharedShowreel | ComponentSharedSocials | ComponentSharedTheme | ComponentTestTest | ContentManagerOrganizerContentManagerConfiguration | Faq | Global | HiringProcess | I18NLocale | Industry | Insight | Page | Platform | Process | Region | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | Service | Team | TeamTestimonial | TechStack | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser
+union GenericMorph = Achievement | Author | CaseStudy | Client | ClientTestimonial | ComponentGlobalFooter | ComponentGlobalPartner | ComponentHubBarFilter | ComponentPortfolioFilter | ComponentRichContentBlock | ComponentRichContentStat | ComponentSectionsCampaignIntro | ComponentSectionsCardsLargeNumerated | ComponentSectionsCarousel | ComponentSectionsCaseStudies | ComponentSectionsContentColorBoxes | ComponentSectionsContentImageLeft | ComponentSectionsContentNumerated | ComponentSectionsCta | ComponentSectionsFaq | ComponentSectionsForm | ComponentSectionsHero | ComponentSectionsHubBar | ComponentSectionsIndustries | ComponentSectionsInsightList | ComponentSectionsIntersectionFloatingBoxes | ComponentSectionsIntersectionMedia | ComponentSectionsNewsletter | ComponentSectionsPageIntro | ComponentSectionsPerson | ComponentSectionsPortfolio | ComponentSectionsProcess | ComponentSectionsProgressCards | ComponentSectionsRichContentBody | ComponentSectionsServicesGroup | ComponentSectionsTeam | ComponentSectionsTeamGrid | ComponentSectionsTechStack | ComponentSharedButton | ComponentSharedCardMilestone | ComponentSharedCardNumerated | ComponentSharedColorBox | ComponentSharedContentItem | ComponentSharedFloatingCard | ComponentSharedHeadline | ComponentSharedHeroPromo | ComponentSharedNavItem | ComponentSharedSeo | ComponentSharedServiceGroup | ComponentSharedShowMore | ComponentSharedShowreel | ComponentSharedSocials | ComponentSharedTheme | ContentManagerOrganizerContentManagerConfiguration | Faq | Global | HiringProcess | I18NLocale | Industry | Insight | Page | Platform | PrimaryAudience | Process | Region | ResourceType | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | Service | Tag | Team | TeamTestimonial | TechStack | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser
 
 type Global {
-  contentTypeUrls(filters: ComponentGlobalContentTypeUrlFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentGlobalContentTypeUrl]
   createdAt: DateTime
   documentId: ID!
   footer: ComponentGlobalFooter
@@ -2005,7 +2213,6 @@ type GlobalEntityResponseCollection {
 
 input GlobalFiltersInput {
   and: [GlobalFiltersInput]
-  contentTypeUrls: ComponentGlobalContentTypeUrlFiltersInput
   createdAt: DateTimeFilterInput
   footer: ComponentGlobalFooterFiltersInput
   not: GlobalFiltersInput
@@ -2015,7 +2222,6 @@ input GlobalFiltersInput {
 }
 
 input GlobalInput {
-  contentTypeUrls: [ComponentGlobalContentTypeUrlInput]
   footer: ComponentGlobalFooterInput
   locale: String
   publishedAt: DateTime
@@ -2201,15 +2407,23 @@ type IndustryRelationResponseCollection {
 }
 
 type Insight {
+  audience: PrimaryAudience
+  author: Author
+  cover: UploadFile
   createdAt: DateTime
   description: String
   documentId: ID!
   featuredMedia: UploadFile
   isFeatured: Boolean
+  parent: Page
   publishedAt: DateTime
+  readDuration: String
+  resourceType: ResourceType
   sections: [InsightSectionsDynamicZone]
   seo: ComponentSharedSeo
   slug: String!
+  tags(filters: TagFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Tag]!
+  tags_connection(filters: TagFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): TagRelationResponseCollection
   title: String!
   updatedAt: DateTime
 }
@@ -2230,28 +2444,41 @@ type InsightEntityResponseCollection {
 
 input InsightFiltersInput {
   and: [InsightFiltersInput]
+  audience: PrimaryAudienceFiltersInput
+  author: AuthorFiltersInput
   createdAt: DateTimeFilterInput
   description: StringFilterInput
   documentId: IDFilterInput
   isFeatured: BooleanFilterInput
   not: InsightFiltersInput
   or: [InsightFiltersInput]
+  parent: PageFiltersInput
   publishedAt: DateTimeFilterInput
+  readDuration: StringFilterInput
+  resourceType: ResourceTypeFiltersInput
   seo: ComponentSharedSeoFiltersInput
   slug: StringFilterInput
+  tags: TagFiltersInput
   title: StringFilterInput
   updatedAt: DateTimeFilterInput
 }
 
 input InsightInput {
+  audience: ID
+  author: ID
+  cover: ID
   description: String
   featuredMedia: ID
   isFeatured: Boolean
   locale: String
+  parent: ID
   publishedAt: DateTime
+  readDuration: String
+  resourceType: ID
   sections: [InsightSectionsDynamicZoneInput!]
   seo: ComponentSharedSeoInput
   slug: String
+  tags: [ID]
   title: String
 }
 
@@ -2259,7 +2486,7 @@ type InsightRelationResponseCollection {
   nodes: [Insight!]!
 }
 
-union InsightSectionsDynamicZone = ComponentSectionsCarousel | ComponentSectionsCta | ComponentSectionsRichContentBody | Error
+union InsightSectionsDynamicZone = ComponentSectionsCarousel | ComponentSectionsCta | ComponentSectionsNewsletter | ComponentSectionsRichContentBody | Error
 
 scalar InsightSectionsDynamicZoneInput
 
@@ -2352,6 +2579,7 @@ type Mutation {
   """Change user password. Confirm with the current password."""
   changePassword(currentPassword: String!, password: String!, passwordConfirmation: String!): UsersPermissionsLoginPayload
   createAchievement(data: AchievementInput!, status: PublicationStatus = PUBLISHED): Achievement
+  createAuthor(data: AuthorInput!, status: PublicationStatus = PUBLISHED): Author
   createCaseStudy(data: CaseStudyInput!, status: PublicationStatus = PUBLISHED): CaseStudy
   createClient(data: ClientInput!, status: PublicationStatus = PUBLISHED): Client
   createClientTestimonial(data: ClientTestimonialInput!, status: PublicationStatus = PUBLISHED): ClientTestimonial
@@ -2362,11 +2590,14 @@ type Mutation {
   createInsight(data: InsightInput!, status: PublicationStatus = PUBLISHED): Insight
   createPage(data: PageInput!, status: PublicationStatus = PUBLISHED): Page
   createPlatform(data: PlatformInput!, status: PublicationStatus = PUBLISHED): Platform
+  createPrimaryAudience(data: PrimaryAudienceInput!, status: PublicationStatus = PUBLISHED): PrimaryAudience
   createProcess(data: ProcessInput!, status: PublicationStatus = PUBLISHED): Process
   createRegion(data: RegionInput!, status: PublicationStatus = PUBLISHED): Region
+  createResourceType(data: ResourceTypeInput!, status: PublicationStatus = PUBLISHED): ResourceType
   createReviewWorkflowsWorkflow(data: ReviewWorkflowsWorkflowInput!, status: PublicationStatus = PUBLISHED): ReviewWorkflowsWorkflow
   createReviewWorkflowsWorkflowStage(data: ReviewWorkflowsWorkflowStageInput!, status: PublicationStatus = PUBLISHED): ReviewWorkflowsWorkflowStage
   createService(data: ServiceInput!, status: PublicationStatus = PUBLISHED): Service
+  createTag(data: TagInput!, status: PublicationStatus = PUBLISHED): Tag
   createTeam(data: TeamInput!, status: PublicationStatus = PUBLISHED): Team
   createTeamTestimonial(data: TeamTestimonialInput!, status: PublicationStatus = PUBLISHED): TeamTestimonial
   createTechStack(data: TechStackInput!, status: PublicationStatus = PUBLISHED): TechStack
@@ -2377,6 +2608,7 @@ type Mutation {
   """Create a new user"""
   createUsersPermissionsUser(data: UsersPermissionsUserInput!): UsersPermissionsUserEntityResponse!
   deleteAchievement(documentId: ID!): DeleteMutationResponse
+  deleteAuthor(documentId: ID!): DeleteMutationResponse
   deleteCaseStudy(documentId: ID!): DeleteMutationResponse
   deleteClient(documentId: ID!): DeleteMutationResponse
   deleteClientTestimonial(documentId: ID!): DeleteMutationResponse
@@ -2388,11 +2620,14 @@ type Mutation {
   deleteInsight(documentId: ID!): DeleteMutationResponse
   deletePage(documentId: ID!): DeleteMutationResponse
   deletePlatform(documentId: ID!): DeleteMutationResponse
+  deletePrimaryAudience(documentId: ID!): DeleteMutationResponse
   deleteProcess(documentId: ID!): DeleteMutationResponse
   deleteRegion(documentId: ID!): DeleteMutationResponse
+  deleteResourceType(documentId: ID!): DeleteMutationResponse
   deleteReviewWorkflowsWorkflow(documentId: ID!): DeleteMutationResponse
   deleteReviewWorkflowsWorkflowStage(documentId: ID!): DeleteMutationResponse
   deleteService(documentId: ID!): DeleteMutationResponse
+  deleteTag(documentId: ID!): DeleteMutationResponse
   deleteTeam(documentId: ID!): DeleteMutationResponse
   deleteTeamTestimonial(documentId: ID!): DeleteMutationResponse
   deleteTechStack(documentId: ID!): DeleteMutationResponse
@@ -2419,6 +2654,7 @@ type Mutation {
   """
   resetPassword(code: String!, password: String!, passwordConfirmation: String!): UsersPermissionsLoginPayload
   updateAchievement(data: AchievementInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): Achievement
+  updateAuthor(data: AuthorInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): Author
   updateCaseStudy(data: CaseStudyInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): CaseStudy
   updateClient(data: ClientInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): Client
   updateClientTestimonial(data: ClientTestimonialInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): ClientTestimonial
@@ -2430,11 +2666,14 @@ type Mutation {
   updateInsight(data: InsightInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): Insight
   updatePage(data: PageInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): Page
   updatePlatform(data: PlatformInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): Platform
+  updatePrimaryAudience(data: PrimaryAudienceInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): PrimaryAudience
   updateProcess(data: ProcessInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): Process
   updateRegion(data: RegionInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): Region
+  updateResourceType(data: ResourceTypeInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): ResourceType
   updateReviewWorkflowsWorkflow(data: ReviewWorkflowsWorkflowInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): ReviewWorkflowsWorkflow
   updateReviewWorkflowsWorkflowStage(data: ReviewWorkflowsWorkflowStageInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): ReviewWorkflowsWorkflowStage
   updateService(data: ServiceInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): Service
+  updateTag(data: TagInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): Tag
   updateTeam(data: TeamInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): Team
   updateTeamTestimonial(data: TeamTestimonialInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): TeamTestimonial
   updateTechStack(data: TechStackInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): TechStack
@@ -2519,11 +2758,11 @@ enum NavigationRenderType {
 type Page {
   createdAt: DateTime
   documentId: ID!
+  parent: Page
   publishedAt: DateTime
   sections: [PageSectionsDynamicZone]
   seo: ComponentSharedSeo
   showScrollTop: Boolean
-  showSectionsNav: Boolean
   slug: String!
   title: String!
   updatedAt: DateTime
@@ -2549,10 +2788,10 @@ input PageFiltersInput {
   documentId: IDFilterInput
   not: PageFiltersInput
   or: [PageFiltersInput]
+  parent: PageFiltersInput
   publishedAt: DateTimeFilterInput
   seo: ComponentSharedSeoFiltersInput
   showScrollTop: BooleanFilterInput
-  showSectionsNav: BooleanFilterInput
   slug: StringFilterInput
   title: StringFilterInput
   updatedAt: DateTimeFilterInput
@@ -2560,11 +2799,11 @@ input PageFiltersInput {
 
 input PageInput {
   locale: String
+  parent: ID
   publishedAt: DateTime
   sections: [PageSectionsDynamicZoneInput!]
   seo: ComponentSharedSeoInput
   showScrollTop: Boolean
-  showSectionsNav: Boolean
   slug: String
   title: String
 }
@@ -2573,7 +2812,7 @@ type PageRelationResponseCollection {
   nodes: [Page!]!
 }
 
-union PageSectionsDynamicZone = ComponentSectionsCampaignIntro | ComponentSectionsCardsLargeNumerated | ComponentSectionsCarousel | ComponentSectionsCaseStudies | ComponentSectionsContentColorBoxes | ComponentSectionsContentImageLeft | ComponentSectionsContentNumerated | ComponentSectionsCta | ComponentSectionsFaq | ComponentSectionsForm | ComponentSectionsHero | ComponentSectionsIndustries | ComponentSectionsIntersectionFloatingBoxes | ComponentSectionsIntersectionMedia | ComponentSectionsPerson | ComponentSectionsPortfolio | ComponentSectionsProcess | ComponentSectionsProgressCards | ComponentSectionsRichContentBody | ComponentSectionsServicesGroup | ComponentSectionsTeam | ComponentSectionsTeamGrid | ComponentSectionsTechStack | Error
+union PageSectionsDynamicZone = ComponentSectionsCampaignIntro | ComponentSectionsCardsLargeNumerated | ComponentSectionsCarousel | ComponentSectionsCaseStudies | ComponentSectionsContentColorBoxes | ComponentSectionsContentImageLeft | ComponentSectionsContentNumerated | ComponentSectionsCta | ComponentSectionsFaq | ComponentSectionsForm | ComponentSectionsHero | ComponentSectionsHubBar | ComponentSectionsIndustries | ComponentSectionsInsightList | ComponentSectionsIntersectionFloatingBoxes | ComponentSectionsIntersectionMedia | ComponentSectionsNewsletter | ComponentSectionsPageIntro | ComponentSectionsPerson | ComponentSectionsPortfolio | ComponentSectionsProcess | ComponentSectionsProgressCards | ComponentSectionsRichContentBody | ComponentSectionsServicesGroup | ComponentSectionsTeam | ComponentSectionsTeamGrid | ComponentSectionsTechStack | Error
 
 scalar PageSectionsDynamicZoneInput
 
@@ -2638,6 +2877,59 @@ input PlatformInput {
 
 type PlatformRelationResponseCollection {
   nodes: [Platform!]!
+}
+
+type PrimaryAudience {
+  createdAt: DateTime
+  description: String
+  documentId: ID!
+  insights(filters: InsightFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Insight]!
+  insights_connection(filters: InsightFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): InsightRelationResponseCollection
+  publishedAt: DateTime
+  slug: String!
+  title: String!
+  updatedAt: DateTime
+}
+
+type PrimaryAudienceEntity {
+  attributes: PrimaryAudience
+  id: ID
+}
+
+type PrimaryAudienceEntityResponse {
+  data: PrimaryAudience
+}
+
+type PrimaryAudienceEntityResponseCollection {
+  nodes: [PrimaryAudience!]!
+  pageInfo: Pagination!
+}
+
+input PrimaryAudienceFiltersInput {
+  and: [PrimaryAudienceFiltersInput]
+  createdAt: DateTimeFilterInput
+  description: StringFilterInput
+  documentId: IDFilterInput
+  insights: InsightFiltersInput
+  not: PrimaryAudienceFiltersInput
+  or: [PrimaryAudienceFiltersInput]
+  publishedAt: DateTimeFilterInput
+  slug: StringFilterInput
+  title: StringFilterInput
+  updatedAt: DateTimeFilterInput
+}
+
+input PrimaryAudienceInput {
+  description: String
+  insights: [ID]
+  locale: String
+  publishedAt: DateTime
+  slug: String
+  title: String
+}
+
+type PrimaryAudienceRelationResponseCollection {
+  nodes: [PrimaryAudience!]!
 }
 
 type Process {
@@ -2708,6 +3000,9 @@ type Query {
   achievement(documentId: ID!, hasPublishedVersion: Boolean, publicationFilter: PublicationFilter, status: PublicationStatus = PUBLISHED): Achievement
   achievements(filters: AchievementFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): [Achievement]!
   achievements_connection(filters: AchievementFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): AchievementEntityResponseCollection
+  author(documentId: ID!, hasPublishedVersion: Boolean, publicationFilter: PublicationFilter, status: PublicationStatus = PUBLISHED): Author
+  authors(filters: AuthorFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): [Author]!
+  authors_connection(filters: AuthorFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): AuthorEntityResponseCollection
   caseStudies(filters: CaseStudyFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): [CaseStudy]!
   caseStudies_connection(filters: CaseStudyFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): CaseStudyEntityResponseCollection
   caseStudy(documentId: ID!, hasPublishedVersion: Boolean, publicationFilter: PublicationFilter, status: PublicationStatus = PUBLISHED): CaseStudy
@@ -2743,6 +3038,9 @@ type Query {
   platform(documentId: ID!, hasPublishedVersion: Boolean, publicationFilter: PublicationFilter, status: PublicationStatus = PUBLISHED): Platform
   platforms(filters: PlatformFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): [Platform]!
   platforms_connection(filters: PlatformFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): PlatformEntityResponseCollection
+  primaryAudience(documentId: ID!, hasPublishedVersion: Boolean, publicationFilter: PublicationFilter, status: PublicationStatus = PUBLISHED): PrimaryAudience
+  primaryAudiences(filters: PrimaryAudienceFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): [PrimaryAudience]!
+  primaryAudiences_connection(filters: PrimaryAudienceFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): PrimaryAudienceEntityResponseCollection
   process(documentId: ID!, hasPublishedVersion: Boolean, publicationFilter: PublicationFilter, status: PublicationStatus = PUBLISHED): Process
   processes(filters: ProcessFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): [Process]!
   processes_connection(filters: ProcessFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): ProcessEntityResponseCollection
@@ -2751,6 +3049,9 @@ type Query {
   regions_connection(filters: RegionFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): RegionEntityResponseCollection
   renderNavigation(locale: I18NLocaleCode, menuOnly: Boolean, navigationIdOrSlug: String!, path: String, type: NavigationRenderType): [NavigationItem]!
   renderNavigationChild(childUiKey: String!, documentId: String!, menuOnly: Boolean, type: NavigationRenderType): [NavigationItem]!
+  resourceType(documentId: ID!, hasPublishedVersion: Boolean, publicationFilter: PublicationFilter, status: PublicationStatus = PUBLISHED): ResourceType
+  resourceTypes(filters: ResourceTypeFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): [ResourceType]!
+  resourceTypes_connection(filters: ResourceTypeFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): ResourceTypeEntityResponseCollection
   reviewWorkflowsWorkflow(documentId: ID!, hasPublishedVersion: Boolean, publicationFilter: PublicationFilter, status: PublicationStatus = PUBLISHED): ReviewWorkflowsWorkflow
   reviewWorkflowsWorkflowStage(documentId: ID!, hasPublishedVersion: Boolean, publicationFilter: PublicationFilter, status: PublicationStatus = PUBLISHED): ReviewWorkflowsWorkflowStage
   reviewWorkflowsWorkflowStages(filters: ReviewWorkflowsWorkflowStageFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): [ReviewWorkflowsWorkflowStage]!
@@ -2760,6 +3061,9 @@ type Query {
   service(documentId: ID!, hasPublishedVersion: Boolean, publicationFilter: PublicationFilter, status: PublicationStatus = PUBLISHED): Service
   services(filters: ServiceFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): [Service]!
   services_connection(filters: ServiceFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): ServiceEntityResponseCollection
+  tag(documentId: ID!, hasPublishedVersion: Boolean, publicationFilter: PublicationFilter, status: PublicationStatus = PUBLISHED): Tag
+  tags(filters: TagFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): [Tag]!
+  tags_connection(filters: TagFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): TagEntityResponseCollection
   team(documentId: ID!, hasPublishedVersion: Boolean, publicationFilter: PublicationFilter, status: PublicationStatus = PUBLISHED): Team
   teamTestimonial(documentId: ID!, hasPublishedVersion: Boolean, publicationFilter: PublicationFilter, status: PublicationStatus = PUBLISHED): TeamTestimonial
   teamTestimonials(filters: TeamTestimonialFiltersInput, hasPublishedVersion: Boolean, pagination: PaginationArg = {}, publicationFilter: PublicationFilter, sort: [String] = [], status: PublicationStatus = PUBLISHED): [TeamTestimonial]!
@@ -2828,6 +3132,59 @@ input RegionInput {
 
 type RegionRelationResponseCollection {
   nodes: [Region!]!
+}
+
+type ResourceType {
+  cardLayout: ENUM_RESOURCETYPE_CARDLAYOUT
+  createdAt: DateTime
+  documentId: ID!
+  insights(filters: InsightFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Insight]!
+  insights_connection(filters: InsightFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): InsightRelationResponseCollection
+  publishedAt: DateTime
+  slug: String!
+  title: String!
+  updatedAt: DateTime
+}
+
+type ResourceTypeEntity {
+  attributes: ResourceType
+  id: ID
+}
+
+type ResourceTypeEntityResponse {
+  data: ResourceType
+}
+
+type ResourceTypeEntityResponseCollection {
+  nodes: [ResourceType!]!
+  pageInfo: Pagination!
+}
+
+input ResourceTypeFiltersInput {
+  and: [ResourceTypeFiltersInput]
+  cardLayout: StringFilterInput
+  createdAt: DateTimeFilterInput
+  documentId: IDFilterInput
+  insights: InsightFiltersInput
+  not: ResourceTypeFiltersInput
+  or: [ResourceTypeFiltersInput]
+  publishedAt: DateTimeFilterInput
+  slug: StringFilterInput
+  title: StringFilterInput
+  updatedAt: DateTimeFilterInput
+}
+
+input ResourceTypeInput {
+  cardLayout: ENUM_RESOURCETYPE_CARDLAYOUT
+  insights: [ID]
+  locale: String
+  publishedAt: DateTime
+  slug: String
+  title: String
+}
+
+type ResourceTypeRelationResponseCollection {
+  nodes: [ResourceType!]!
 }
 
 type ResponseCollectionMeta {
@@ -2943,7 +3300,10 @@ type Service {
   description: String
   documentId: ID!
   media: UploadFile
+  parent: Page
   publishedAt: DateTime
+  sections: [ServiceSectionsDynamicZone]
+  seo: ComponentSharedSeo
   slug: String!
   techStack(filters: TechStackFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [TechStack]!
   techStack_connection(filters: TechStackFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): TechStackRelationResponseCollection
@@ -2974,7 +3334,9 @@ input ServiceFiltersInput {
   documentId: IDFilterInput
   not: ServiceFiltersInput
   or: [ServiceFiltersInput]
+  parent: PageFiltersInput
   publishedAt: DateTimeFilterInput
+  seo: ComponentSharedSeoFiltersInput
   slug: StringFilterInput
   techStack: TechStackFiltersInput
   title: StringFilterInput
@@ -2986,7 +3348,10 @@ input ServiceInput {
   description: String
   locale: String
   media: ID
+  parent: ID
   publishedAt: DateTime
+  sections: [ServiceSectionsDynamicZoneInput!]
+  seo: ComponentSharedSeoInput
   slug: String
   techStack: [ID]
   thumbnailImage: ID
@@ -2996,6 +3361,10 @@ input ServiceInput {
 type ServiceRelationResponseCollection {
   nodes: [Service!]!
 }
+
+union ServiceSectionsDynamicZone = ComponentSectionsCarousel | ComponentSectionsCaseStudies | ComponentSectionsCta | ComponentSectionsProcess | ComponentSectionsRichContentBody | ComponentSectionsTechStack | Error
+
+scalar ServiceSectionsDynamicZoneInput
 
 input StringFilterInput {
   and: [String]
@@ -3020,6 +3389,56 @@ input StringFilterInput {
   null: Boolean
   or: [String]
   startsWith: String
+}
+
+type Tag {
+  createdAt: DateTime
+  documentId: ID!
+  insights(filters: InsightFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Insight]!
+  insights_connection(filters: InsightFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): InsightRelationResponseCollection
+  publishedAt: DateTime
+  slug: String!
+  title: String!
+  updatedAt: DateTime
+}
+
+type TagEntity {
+  attributes: Tag
+  id: ID
+}
+
+type TagEntityResponse {
+  data: Tag
+}
+
+type TagEntityResponseCollection {
+  nodes: [Tag!]!
+  pageInfo: Pagination!
+}
+
+input TagFiltersInput {
+  and: [TagFiltersInput]
+  createdAt: DateTimeFilterInput
+  documentId: IDFilterInput
+  insights: InsightFiltersInput
+  not: TagFiltersInput
+  or: [TagFiltersInput]
+  publishedAt: DateTimeFilterInput
+  slug: StringFilterInput
+  title: StringFilterInput
+  updatedAt: DateTimeFilterInput
+}
+
+input TagInput {
+  insights: [ID]
+  locale: String
+  publishedAt: DateTime
+  slug: String
+  title: String
+}
+
+type TagRelationResponseCollection {
+  nodes: [Tag!]!
 }
 
 type Team {

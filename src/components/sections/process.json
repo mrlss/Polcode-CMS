@@ -1,8 +1,8 @@
 {
   "collectionName": "components_sections_processes",
   "info": {
-    "displayName": "Process",
-    "description": "Process steps section"
+    "displayName": "Process Steps",
+    "description": "Numbered process steps picked from the Process collection"
   },
   "options": {},
   "attributes": {

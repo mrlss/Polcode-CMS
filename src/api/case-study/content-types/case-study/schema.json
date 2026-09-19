@@ -22,6 +22,12 @@
       "targetField": "title",
       "required": true
     },
+    "parent": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::page.page",
+      "description": "Page this case study is listed under (e.g. the Case Studies hub). The public URL is the parent's path plus the slug."
+    },
     "title": {
       "type": "string",
       "required": true

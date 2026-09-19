@@ -1,0 +1,42 @@
+{
+  "collectionName": "components_sections_hub_bars",
+  "info": {
+    "displayName": "Hub Bar",
+    "icon": "list",
+    "description": "Sticky bar for a hub page: one chip per section that carries a Nav item, plus the filters of the filterable list on the page. It has no fields of its own — place it directly under the section it should stick below. Without a filterable list it shows the chips only."
+  },
+  "options": {},
+  "attributes": {
+    "showChips": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show one chip per section that carries a Nav item. Turn off for a bar that only offers the filters."
+    },
+    "scrollToSections": {
+      "type": "boolean",
+      "default": true,
+      "description": "A chip click scrolls to its section. Switch off to keep the chips as a read-only indicator of where you are.",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "showChips"
+            },
+            true
+          ]
+        }
+      }
+    },
+    "filters": {
+      "type": "component",
+      "component": "hub-bar.filter",
+      "repeatable": true,
+      "description": "Which filters the bar offers, in order. Leave empty for Audience + Tag. Needs a filterable list (Layout: grid with filters) on the same page to have anything to filter."
+    },
+    "theme": {
+      "type": "component",
+      "component": "shared.theme",
+      "repeatable": false
+    }
+  }
+}

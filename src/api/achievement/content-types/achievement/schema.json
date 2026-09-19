@@ -5,7 +5,7 @@
     "singularName": "achievement",
     "pluralName": "achievements",
     "displayName": "Achievements",
-    "description": "Awards / achievements entries"
+    "description": "Awards shown by the Carousel section (Collection: Achievements)"
   },
   "options": {
     "draftAndPublish": true

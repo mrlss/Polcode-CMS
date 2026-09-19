@@ -1,19 +1,5 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
-export interface GlobalContentTypeUrl extends Struct.ComponentSchema {
-  collectionName: 'components_global_content_type_urls';
-  info: {
-    description: 'Maps a content-type detail page (case studies, insights) to its public URL prefix.';
-    displayName: 'Content Type URL';
-    icon: 'link';
-  };
-  attributes: {
-    kind: Schema.Attribute.Enumeration<['caseStudy', 'insight']> &
-      Schema.Attribute.DefaultTo<'caseStudy'>;
-    path: Schema.Attribute.String;
-  };
-}
-
 export interface GlobalFooter extends Struct.ComponentSchema {
   collectionName: 'components_global_footers';
   info: {
@@ -48,11 +34,46 @@ export interface GlobalPartner extends Struct.ComponentSchema {
   };
 }
 
+export interface HubBarFilter extends Struct.ComponentSchema {
+  collectionName: 'components_hub_bar_filters';
+  info: {
+    description: 'One filter the bar offers. Audience and Type come from their CMS lists (in their own order), Tag is built from the tags the resources actually use.';
+    displayName: 'Filter';
+    icon: 'filter';
+  };
+  attributes: {
+    label: Schema.Attribute.String;
+    multiple: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    taxonomy: Schema.Attribute.Enumeration<
+      ['audience', 'tag', 'resourceType']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'audience'>;
+  };
+}
+
+export interface PortfolioFilter extends Struct.ComponentSchema {
+  collectionName: 'components_portfolio_filters';
+  info: {
+    description: "One taxonomy dropdown the case list offers. Leave the section's filter list empty for all four (Industries, Services, Technologies, Region).";
+    displayName: 'Filter';
+    icon: 'filter';
+  };
+  attributes: {
+    label: Schema.Attribute.String;
+    taxonomy: Schema.Attribute.Enumeration<
+      ['industries', 'services', 'techStack', 'regions']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'industries'>;
+  };
+}
+
 export interface RichContentBlock extends Struct.ComponentSchema {
   collectionName: 'components_rich_content_blocks';
   info: {
     description: 'A single article block: WYSIWYG prose (paragraphs/headings/images/video/table/quote/code) or a special widget (carousel / stats / audio).';
-    displayName: 'Block';
+    displayName: 'Content Block';
     icon: 'grid';
   };
   attributes: {
@@ -96,8 +117,8 @@ export interface RichContentStat extends Struct.ComponentSchema {
 export interface SectionsCampaignIntro extends Struct.ComponentSchema {
   collectionName: 'components_sections_intro_showreels';
   info: {
-    description: 'Intro block \u2014 default (text) or with media';
-    displayName: 'Campaign Intro';
+    description: 'Opening block: eyebrow, title, copy (+ optional media and scroll cue)';
+    displayName: 'Intro';
   };
   attributes: {
     anchor: Schema.Attribute.String;
@@ -122,8 +143,8 @@ export interface SectionsCampaignIntro extends Struct.ComponentSchema {
 export interface SectionsCardsLargeNumerated extends Struct.ComponentSchema {
   collectionName: 'components_sections_cards_large_numerateds';
   info: {
-    description: 'Numerated cards, carousel or grid';
-    displayName: 'Cards Large Numerated';
+    description: 'Cards numbered 01, 02, \u2026 \u2014 as a carousel or a grid';
+    displayName: 'Numbered Cards';
   };
   attributes: {
     anchor: Schema.Attribute.String;
@@ -227,8 +248,8 @@ export interface SectionsCaseStudies extends Struct.ComponentSchema {
 export interface SectionsContentColorBoxes extends Struct.ComponentSchema {
   collectionName: 'components_sections_content_color_boxes';
   info: {
-    description: 'Color boxes section';
-    displayName: 'Content Color Boxes';
+    description: 'Grid of coloured boxes, each one optionally expandable';
+    displayName: 'Color Boxes';
   };
   attributes: {
     anchor: Schema.Attribute.String;
@@ -249,8 +270,8 @@ export interface SectionsContentColorBoxes extends Struct.ComponentSchema {
 export interface SectionsContentImageLeft extends Struct.ComponentSchema {
   collectionName: 'components_sections_content_image_lefts';
   info: {
-    description: 'Image left + content right (numbered blocks or rich text)';
-    displayName: 'Content Image Left';
+    description: 'Image on the left, content on the right \u2014 numbered items or rich text';
+    displayName: 'Image Left + Content';
   };
   attributes: {
     anchor: Schema.Attribute.String;
@@ -280,8 +301,8 @@ export interface SectionsContentImageLeft extends Struct.ComponentSchema {
 export interface SectionsContentNumerated extends Struct.ComponentSchema {
   collectionName: 'components_sections_content_numerateds';
   info: {
-    description: 'Numerated content, static or expandable';
-    displayName: 'Content Numerated';
+    description: 'Numbered rows of content, always open or expandable';
+    displayName: 'Numbered Content';
   };
   attributes: {
     anchor: Schema.Attribute.String;
@@ -391,10 +412,26 @@ export interface SectionsHero extends Struct.ComponentSchema {
   };
 }
 
+export interface SectionsHubBar extends Struct.ComponentSchema {
+  collectionName: 'components_sections_hub_bars';
+  info: {
+    description: 'Sticky bar for a hub page: one chip per section that carries a Nav item, plus the filters of the filterable list on the page. It has no fields of its own \u2014 place it directly under the section it should stick below. Without a filterable list it shows the chips only.';
+    displayName: 'Hub Bar';
+    icon: 'list';
+  };
+  attributes: {
+    filters: Schema.Attribute.Component<'hub-bar.filter', true>;
+    scrollToSections: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<true>;
+    showChips: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    theme: Schema.Attribute.Component<'shared.theme', false>;
+  };
+}
+
 export interface SectionsIndustries extends Struct.ComponentSchema {
   collectionName: 'components_sections_industries';
   info: {
-    description: 'Industries section';
+    description: 'Industries grid, each one linking to its filtered case list';
     displayName: 'Industries';
   };
   attributes: {
@@ -409,12 +446,49 @@ export interface SectionsIndustries extends Struct.ComponentSchema {
   };
 }
 
+export interface SectionsInsightList extends Struct.ComponentSchema {
+  collectionName: 'components_sections_insight_lists';
+  info: {
+    description: 'Resources hub list: a single featured card, a swipeable row, or a filterable paged grid (All Articles, audience strips, eBooks, Podcasts). Fill in a hand-picked list or an audience to narrow it \u2014 leave both empty for the newest resources.';
+    displayName: 'Resource List';
+    icon: 'list';
+  };
+  attributes: {
+    audience: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::primary-audience.primary-audience'
+    >;
+    button: Schema.Attribute.Component<'shared.button', false>;
+    insights: Schema.Attribute.Relation<'manyToMany', 'api::insight.insight'>;
+    itemsToShow: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<3>;
+    layout: Schema.Attribute.Enumeration<
+      ['featured', 'featuredCarousel', 'carousel', 'grid', 'gridFiltered']
+    > &
+      Schema.Attribute.DefaultTo<'grid'>;
+    navItem: Schema.Attribute.Component<'shared.nav-item', false>;
+    resourceType: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::resource-type.resource-type'
+    >;
+    showMore: Schema.Attribute.Component<'shared.show-more', false>;
+    theme: Schema.Attribute.Component<'shared.theme', false>;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface SectionsIntersectionFloatingBoxes
   extends Struct.ComponentSchema {
   collectionName: 'components_sections_intersection_floating_boxes';
   info: {
-    description: 'Floating cards over media';
-    displayName: 'Intersection Floating Boxes';
+    description: 'Full-width media with statistic cards floating over it';
+    displayName: 'Floating Boxes over Media';
   };
   attributes: {
     anchor: Schema.Attribute.String;
@@ -428,13 +502,61 @@ export interface SectionsIntersectionFloatingBoxes
 export interface SectionsIntersectionMedia extends Struct.ComponentSchema {
   collectionName: 'components_sections_intersection_media';
   info: {
-    description: 'Media with title + button overlay';
-    displayName: 'Intersection Media';
+    description: 'Full-width media with a title and a button overlaid on top';
+    displayName: 'Media with Overlay';
   };
   attributes: {
     anchor: Schema.Attribute.String;
     button: Schema.Attribute.Component<'shared.button', false>;
     media: Schema.Attribute.Media<'images' | 'videos'>;
+    theme: Schema.Attribute.Component<'shared.theme', false>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface SectionsNewsletter extends Struct.ComponentSchema {
+  collectionName: 'components_sections_newsletters';
+  info: {
+    description: 'Newsletter sign-up band: title, description, email field and subscribe button.';
+    displayName: 'Newsletter';
+    icon: 'paperPlane';
+  };
+  attributes: {
+    anchor: Schema.Attribute.String;
+    button: Schema.Attribute.Component<'shared.button', false>;
+    description: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
+    label: Schema.Attribute.String;
+    placeholder: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Enter your email'>;
+    theme: Schema.Attribute.Component<'shared.theme', false>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface SectionsPageIntro extends Struct.ComponentSchema {
+  collectionName: 'components_sections_page_intros';
+  info: {
+    description: 'Hub opening: eyebrow label, H1, intro copy, full-width hairline and an optional scroll cue.';
+    displayName: 'Page Intro';
+    icon: 'heading';
+  };
+  attributes: {
+    anchor: Schema.Attribute.String;
+    description: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
+    label: Schema.Attribute.String;
+    showScrollCue: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
     theme: Schema.Attribute.Component<'shared.theme', false>;
     title: Schema.Attribute.String;
   };
@@ -470,6 +592,7 @@ export interface SectionsPortfolio extends Struct.ComponentSchema {
       'oneToMany',
       'api::case-study.case-study'
     >;
+    filters: Schema.Attribute.Component<'portfolio.filter', true>;
     headline: Schema.Attribute.Component<'shared.headline', false>;
     manualCasesControl: Schema.Attribute.Boolean &
       Schema.Attribute.DefaultTo<false>;
@@ -487,8 +610,8 @@ export interface SectionsPortfolio extends Struct.ComponentSchema {
 export interface SectionsProcess extends Struct.ComponentSchema {
   collectionName: 'components_sections_processes';
   info: {
-    description: 'Process steps section';
-    displayName: 'Process';
+    description: 'Numbered process steps picked from the Process collection';
+    displayName: 'Process Steps';
   };
   attributes: {
     anchor: Schema.Attribute.String;
@@ -526,7 +649,7 @@ export interface SectionsRichContentBody extends Struct.ComponentSchema {
     headline: Schema.Attribute.Component<'shared.headline', false>;
     showNav: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
     theme: Schema.Attribute.Component<'shared.theme', false>;
-    variant: Schema.Attribute.Enumeration<['post', 'article']> &
+    variant: Schema.Attribute.Enumeration<['post', 'article', 'blogPost']> &
       Schema.Attribute.DefaultTo<'post'>;
   };
 }
@@ -552,8 +675,8 @@ export interface SectionsServicesGroup extends Struct.ComponentSchema {
 export interface SectionsTeam extends Struct.ComponentSchema {
   collectionName: 'components_sections_teams';
   info: {
-    description: 'Team members section';
-    displayName: 'Team';
+    description: 'Team members as hover rows';
+    displayName: 'Team Rows';
   };
   attributes: {
     anchor: Schema.Attribute.String;
@@ -600,7 +723,7 @@ export interface SectionsTechStack extends Struct.ComponentSchema {
 export interface SharedButton extends Struct.ComponentSchema {
   collectionName: 'components_shared_buttons';
   info: {
-    description: 'Reusable CTA button: title, optional scroll-to, and a single link target (external URL or internal Page / Case Study / Insight)';
+    description: 'Reusable CTA button: title, optional scroll-to, and a single link target (external URL or internal Page / Case Study / Insight / Service)';
     displayName: 'Button';
   };
   attributes: {
@@ -610,11 +733,12 @@ export interface SharedButton extends Struct.ComponentSchema {
     >;
     insight: Schema.Attribute.Relation<'oneToOne', 'api::insight.insight'>;
     linkType: Schema.Attribute.Enumeration<
-      ['url', 'page', 'caseStudy', 'insight']
+      ['url', 'page', 'caseStudy', 'insight', 'service']
     > &
       Schema.Attribute.DefaultTo<'url'>;
     page: Schema.Attribute.Relation<'oneToOne', 'api::page.page'>;
     scrollTo: Schema.Attribute.String;
+    service: Schema.Attribute.Relation<'oneToOne', 'api::service.service'>;
     title: Schema.Attribute.String;
     url: Schema.Attribute.String;
     variant: Schema.Attribute.Enumeration<
@@ -634,8 +758,8 @@ export interface SharedButton extends Struct.ComponentSchema {
 export interface SharedCardMilestone extends Struct.ComponentSchema {
   collectionName: 'components_shared_card_milestones';
   info: {
-    description: 'Milestone card for progress';
-    displayName: 'Card Milestone';
+    description: 'One milestone card: title + copy';
+    displayName: 'Milestone Card';
   };
   attributes: {
     description: Schema.Attribute.RichText &
@@ -652,8 +776,8 @@ export interface SharedCardMilestone extends Struct.ComponentSchema {
 export interface SharedCardNumerated extends Struct.ComponentSchema {
   collectionName: 'components_shared_card_numerateds';
   info: {
-    description: 'Numbered card';
-    displayName: 'Card Numerated';
+    description: 'One numbered card: title, copy and optional media';
+    displayName: 'Numbered Card';
   };
   attributes: {
     description: Schema.Attribute.RichText &
@@ -671,7 +795,7 @@ export interface SharedCardNumerated extends Struct.ComponentSchema {
 export interface SharedColorBox extends Struct.ComponentSchema {
   collectionName: 'components_shared_color_boxes';
   info: {
-    description: 'Expandable color box with content-item blocks';
+    description: 'One coloured box: title, eyebrow and its items (optionally expandable)';
     displayName: 'Color Box';
   };
   attributes: {
@@ -737,8 +861,8 @@ export interface SharedHeadline extends Struct.ComponentSchema {
 export interface SharedHeroPromo extends Struct.ComponentSchema {
   collectionName: 'components_shared_hero_promos';
   info: {
-    description: 'Small promo slide inside the hero carousel';
-    displayName: 'Hero Promo';
+    description: 'One small promo slide inside the hero carousel';
+    displayName: 'Hero Promo Slide';
   };
   attributes: {
     button: Schema.Attribute.Component<'shared.button', false>;
@@ -757,18 +881,6 @@ export interface SharedNavItem extends Struct.ComponentSchema {
   attributes: {
     anchor: Schema.Attribute.String & Schema.Attribute.Required;
     label: Schema.Attribute.String & Schema.Attribute.Required;
-  };
-}
-
-export interface SharedSectionsNavController extends Struct.ComponentSchema {
-  collectionName: 'components_shared_sections_nav_controllers';
-  info: {
-    description: "Opts a block into the sections nav (label only \u2014 the scroll target is the block's own `anchor`).";
-    displayName: 'Sections Nav Controller';
-    icon: 'list';
-  };
-  attributes: {
-    label: Schema.Attribute.String;
   };
 }
 
@@ -817,6 +929,22 @@ export interface SharedShowMore extends Struct.ComponentSchema {
         number
       > &
       Schema.Attribute.DefaultTo<5>;
+    loadChunk: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<6>;
+    pageSize: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<12>;
     showLessLabel: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'Show less'>;
     showMoreLabel: Schema.Attribute.String &
@@ -853,8 +981,8 @@ export interface SharedSocials extends Struct.ComponentSchema {
 export interface SharedTheme extends Struct.ComponentSchema {
   collectionName: 'components_shared_themes';
   info: {
-    description: 'Section background color + text contrast';
-    displayName: 'Theme';
+    description: 'Section background colour + text contrast';
+    displayName: 'Section Theme';
   };
   attributes: {
     background: Schema.Attribute.Enumeration<
@@ -866,26 +994,13 @@ export interface SharedTheme extends Struct.ComponentSchema {
   };
 }
 
-export interface TestTest extends Struct.ComponentSchema {
-  collectionName: 'components_test_tests';
-  info: {
-    displayName: 'test';
-  };
-  attributes: {
-    case_studies: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::case-study.case-study'
-    >;
-    test: Schema.Attribute.Boolean;
-  };
-}
-
 declare module '@strapi/strapi' {
   export namespace Public {
     export interface ComponentSchemas {
-      'global.content-type-url': GlobalContentTypeUrl;
       'global.footer': GlobalFooter;
       'global.partner': GlobalPartner;
+      'hub-bar.filter': HubBarFilter;
+      'portfolio.filter': PortfolioFilter;
       'rich-content.block': RichContentBlock;
       'rich-content.stat': RichContentStat;
       'sections.campaign-intro': SectionsCampaignIntro;
@@ -899,9 +1014,13 @@ declare module '@strapi/strapi' {
       'sections.faq': SectionsFaq;
       'sections.form': SectionsForm;
       'sections.hero': SectionsHero;
+      'sections.hub-bar': SectionsHubBar;
       'sections.industries': SectionsIndustries;
+      'sections.insight-list': SectionsInsightList;
       'sections.intersection-floating-boxes': SectionsIntersectionFloatingBoxes;
       'sections.intersection-media': SectionsIntersectionMedia;
+      'sections.newsletter': SectionsNewsletter;
+      'sections.page-intro': SectionsPageIntro;
       'sections.person': SectionsPerson;
       'sections.portfolio': SectionsPortfolio;
       'sections.process': SectionsProcess;
@@ -920,14 +1039,12 @@ declare module '@strapi/strapi' {
       'shared.headline': SharedHeadline;
       'shared.hero-promo': SharedHeroPromo;
       'shared.nav-item': SharedNavItem;
-      'shared.sections-nav-controller': SharedSectionsNavController;
       'shared.seo': SharedSeo;
       'shared.service-group': SharedServiceGroup;
       'shared.show-more': SharedShowMore;
       'shared.showreel': SharedShowreel;
       'shared.socials': SharedSocials;
       'shared.theme': SharedTheme;
-      'test.test': TestTest;
     }
   }
 }

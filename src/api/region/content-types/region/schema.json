@@ -5,7 +5,7 @@
     "singularName": "region",
     "pluralName": "regions",
     "displayName": "Regions",
-    "description": "Case Study filter"
+    "description": "Region taxonomy used by the Case Studies filter"
   },
   "options": {
     "draftAndPublish": true

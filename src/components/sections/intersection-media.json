@@ -1,8 +1,8 @@
 {
   "collectionName": "components_sections_intersection_media",
   "info": {
-    "displayName": "Intersection Media",
-    "description": "Media with title + button overlay"
+    "displayName": "Media with Overlay",
+    "description": "Full-width media with a title and a button overlaid on top"
   },
   "options": {},
   "attributes": {

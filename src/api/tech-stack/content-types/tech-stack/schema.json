@@ -5,7 +5,7 @@
     "singularName": "tech-stack",
     "pluralName": "tech-stacks",
     "displayName": "Tech Stack",
-    "description": "Technologies, filterable by slug"
+    "description": "Technologies: the Tech Stack section, the Technologies filter and the tech list on services"
   },
   "options": {
     "draftAndPublish": true

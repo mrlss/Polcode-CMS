@@ -4,8 +4,8 @@
   "info": {
     "singularName": "process",
     "pluralName": "processes",
-    "displayName": "Process",
-    "description": "Process steps"
+    "displayName": "Process Steps",
+    "description": "Steps picked by the Process Steps section"
   },
   "options": {
     "draftAndPublish": true

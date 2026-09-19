@@ -1,0 +1,43 @@
+{
+  "collectionName": "components_sections_newsletters",
+  "info": {
+    "displayName": "Newsletter",
+    "icon": "paperPlane",
+    "description": "Newsletter sign-up band: title, description, email field and subscribe button."
+  },
+  "options": {},
+  "attributes": {
+    "anchor": {
+      "type": "string",
+      "description": "DOM id / URL hash for this section (e.g. \"newsletter\" → #newsletter). Lets nav links target this section on the page."
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "customField",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      }
+    },
+    "label": {
+      "type": "string",
+      "description": "Small eyebrow shown bottom-left of the band (e.g. \"Subscribe to news\")."
+    },
+    "placeholder": {
+      "type": "string",
+      "default": "Enter your email"
+    },
+    "button": {
+      "type": "component",
+      "component": "shared.button",
+      "repeatable": false
+    },
+    "theme": {
+      "type": "component",
+      "component": "shared.theme",
+      "repeatable": false
+    }
+  }
+}

@@ -5,7 +5,7 @@
     "singularName": "team",
     "pluralName": "teams",
     "displayName": "Team",
-    "description": "Team members"
+    "description": "Team members: photo, role, bio and social links, used by the Team Rows, Team Grid and Person sections"
   },
   "options": {
     "draftAndPublish": true
