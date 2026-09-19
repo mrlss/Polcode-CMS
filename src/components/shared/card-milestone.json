@@ -9,12 +9,23 @@
     "title": {
       "type": "string"
     },
+    "label": {
+      "type": "string"
+    },
     "description": {
       "type": "customField",
       "customField": "plugin::ckeditor5.CKEditor",
       "options": {
         "preset": "defaultHtml"
       }
+    },
+    "media": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "videos"
+      ]
     }
   }
 }
