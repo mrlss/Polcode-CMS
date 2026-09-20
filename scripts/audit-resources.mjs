@@ -101,7 +101,7 @@ const sectionRows = (version, status) =>
       resourceType: s.resourceType?.slug ?? null,
       picks: (s.insights ?? []).length,
       navItem: s.navItem?.anchor ?? null,
-      showMore: Boolean(s.showMore?.useShowMore),
+      loadMore: Boolean(s.loadMore?.loadChunk),
     }));
 
 const sections = [

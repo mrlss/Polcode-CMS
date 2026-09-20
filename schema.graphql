@@ -530,35 +530,6 @@ input ComponentSectionsCampaignIntroInput {
   variant: ENUM_COMPONENTSECTIONSCAMPAIGNINTRO_VARIANT
 }
 
-type ComponentSectionsCardsLargeNumerated {
-  anchor: String
-  cards(filters: ComponentSharedCardNumeratedFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSharedCardNumerated]
-  cardsLayout: ENUM_COMPONENTSECTIONSCARDSLARGENUMERATED_CARDSLAYOUT
-  headline: ComponentSharedHeadline
-  id: ID!
-  theme: ComponentSharedTheme
-}
-
-input ComponentSectionsCardsLargeNumeratedFiltersInput {
-  anchor: StringFilterInput
-  and: [ComponentSectionsCardsLargeNumeratedFiltersInput]
-  cards: ComponentSharedCardNumeratedFiltersInput
-  cardsLayout: StringFilterInput
-  headline: ComponentSharedHeadlineFiltersInput
-  not: ComponentSectionsCardsLargeNumeratedFiltersInput
-  or: [ComponentSectionsCardsLargeNumeratedFiltersInput]
-  theme: ComponentSharedThemeFiltersInput
-}
-
-input ComponentSectionsCardsLargeNumeratedInput {
-  anchor: String
-  cards: [ComponentSharedCardNumeratedInput]
-  cardsLayout: ENUM_COMPONENTSECTIONSCARDSLARGENUMERATED_CARDSLAYOUT
-  headline: ComponentSharedHeadlineInput
-  id: ID
-  theme: ComponentSharedThemeInput
-}
-
 type ComponentSectionsCarousel {
   achievements(filters: AchievementFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Achievement]!
   achievements_connection(filters: AchievementFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): AchievementRelationResponseCollection
@@ -844,9 +815,10 @@ input ComponentSectionsFaqInput {
 type ComponentSectionsForm {
   anchor: String
   description: String
+  hubspotFormID: String
   id: ID!
+  image: UploadFile
   label: String
-  media: UploadFile
   theme: ComponentSharedTheme
   title: String
   variant: ENUM_COMPONENTSECTIONSFORM_VARIANT
@@ -856,6 +828,7 @@ input ComponentSectionsFormFiltersInput {
   anchor: StringFilterInput
   and: [ComponentSectionsFormFiltersInput]
   description: StringFilterInput
+  hubspotFormID: StringFilterInput
   label: StringFilterInput
   not: ComponentSectionsFormFiltersInput
   or: [ComponentSectionsFormFiltersInput]
@@ -867,9 +840,10 @@ input ComponentSectionsFormFiltersInput {
 input ComponentSectionsFormInput {
   anchor: String
   description: String
+  hubspotFormID: String
   id: ID
+  image: ID
   label: String
-  media: ID
   theme: ComponentSharedThemeInput
   title: String
   variant: ENUM_COMPONENTSECTIONSFORM_VARIANT
@@ -990,9 +964,9 @@ type ComponentSectionsInsightList {
   insights_connection(filters: InsightFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): InsightRelationResponseCollection
   itemsToShow: Int
   layout: ENUM_COMPONENTSECTIONSINSIGHTLIST_LAYOUT
+  loadMore: ComponentSharedLoadMore
   navItem: ComponentSharedNavItem
   resourceType: ResourceType
-  showMore: ComponentSharedShowMore
   theme: ComponentSharedTheme
   title: String
 }
@@ -1004,11 +978,11 @@ input ComponentSectionsInsightListFiltersInput {
   insights: InsightFiltersInput
   itemsToShow: IntFilterInput
   layout: StringFilterInput
+  loadMore: ComponentSharedLoadMoreFiltersInput
   navItem: ComponentSharedNavItemFiltersInput
   not: ComponentSectionsInsightListFiltersInput
   or: [ComponentSectionsInsightListFiltersInput]
   resourceType: ResourceTypeFiltersInput
-  showMore: ComponentSharedShowMoreFiltersInput
   theme: ComponentSharedThemeFiltersInput
   title: StringFilterInput
 }
@@ -1020,9 +994,9 @@ input ComponentSectionsInsightListInput {
   insights: [ID]
   itemsToShow: Int
   layout: ENUM_COMPONENTSECTIONSINSIGHTLIST_LAYOUT
+  loadMore: ComponentSharedLoadMoreInput
   navItem: ComponentSharedNavItemInput
   resourceType: ID
-  showMore: ComponentSharedShowMoreInput
   theme: ComponentSharedThemeInput
   title: String
 }
@@ -1079,41 +1053,6 @@ input ComponentSectionsIntersectionMediaInput {
   button: ComponentSharedButtonInput
   id: ID
   media: ID
-  theme: ComponentSharedThemeInput
-  title: String
-}
-
-type ComponentSectionsNewsletter {
-  anchor: String
-  button: ComponentSharedButton
-  description: String
-  id: ID!
-  label: String
-  placeholder: String
-  theme: ComponentSharedTheme
-  title: String
-}
-
-input ComponentSectionsNewsletterFiltersInput {
-  anchor: StringFilterInput
-  and: [ComponentSectionsNewsletterFiltersInput]
-  button: ComponentSharedButtonFiltersInput
-  description: StringFilterInput
-  label: StringFilterInput
-  not: ComponentSectionsNewsletterFiltersInput
-  or: [ComponentSectionsNewsletterFiltersInput]
-  placeholder: StringFilterInput
-  theme: ComponentSharedThemeFiltersInput
-  title: StringFilterInput
-}
-
-input ComponentSectionsNewsletterInput {
-  anchor: String
-  button: ComponentSharedButtonInput
-  description: String
-  id: ID
-  label: String
-  placeholder: String
   theme: ComponentSharedThemeInput
   title: String
 }
@@ -1192,6 +1131,7 @@ type ComponentSectionsPortfolio {
   filters(filters: ComponentPortfolioFilterFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentPortfolioFilter]
   headline: ComponentSharedHeadline
   id: ID!
+  loadMore: ComponentSharedLoadMore
   manualCasesControl: Boolean
   otherCases(filters: CaseStudyFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [CaseStudy]!
   otherCases_connection(filters: CaseStudyFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): CaseStudyRelationResponseCollection
@@ -1206,6 +1146,7 @@ input ComponentSectionsPortfolioFiltersInput {
   featuredCases: CaseStudyFiltersInput
   filters: ComponentPortfolioFilterFiltersInput
   headline: ComponentSharedHeadlineFiltersInput
+  loadMore: ComponentSharedLoadMoreFiltersInput
   manualCasesControl: BooleanFilterInput
   not: ComponentSectionsPortfolioFiltersInput
   or: [ComponentSectionsPortfolioFiltersInput]
@@ -1221,6 +1162,7 @@ input ComponentSectionsPortfolioInput {
   filters: [ComponentPortfolioFilterInput]
   headline: ComponentSharedHeadlineInput
   id: ID
+  loadMore: ComponentSharedLoadMoreInput
   manualCasesControl: Boolean
   otherCases: [ID]
   showMore: ComponentSharedShowMoreInput
@@ -1354,59 +1296,38 @@ input ComponentSectionsServicesGroupInput {
 
 type ComponentSectionsTeam {
   anchor: String
+  content: ComponentSharedContentItem
+  headline: ComponentSharedHeadline
   id: ID!
   members(filters: TeamFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Team]!
   members_connection(filters: TeamFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): TeamRelationResponseCollection
   theme: ComponentSharedTheme
   title: String
+  variant: ENUM_COMPONENTSECTIONSTEAM_VARIANT!
 }
 
 input ComponentSectionsTeamFiltersInput {
   anchor: StringFilterInput
   and: [ComponentSectionsTeamFiltersInput]
+  content: ComponentSharedContentItemFiltersInput
+  headline: ComponentSharedHeadlineFiltersInput
   members: TeamFiltersInput
   not: ComponentSectionsTeamFiltersInput
   or: [ComponentSectionsTeamFiltersInput]
   theme: ComponentSharedThemeFiltersInput
   title: StringFilterInput
-}
-
-type ComponentSectionsTeamGrid {
-  anchor: String
-  content: ComponentSharedContentItem
-  headline: ComponentSharedHeadline
-  id: ID!
-  team(filters: TeamFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Team]!
-  team_connection(filters: TeamFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): TeamRelationResponseCollection
-  theme: ComponentSharedTheme
-}
-
-input ComponentSectionsTeamGridFiltersInput {
-  anchor: StringFilterInput
-  and: [ComponentSectionsTeamGridFiltersInput]
-  content: ComponentSharedContentItemFiltersInput
-  headline: ComponentSharedHeadlineFiltersInput
-  not: ComponentSectionsTeamGridFiltersInput
-  or: [ComponentSectionsTeamGridFiltersInput]
-  team: TeamFiltersInput
-  theme: ComponentSharedThemeFiltersInput
-}
-
-input ComponentSectionsTeamGridInput {
-  anchor: String
-  content: ComponentSharedContentItemInput
-  headline: ComponentSharedHeadlineInput
-  id: ID
-  team: [ID]
-  theme: ComponentSharedThemeInput
+  variant: StringFilterInput
 }
 
 input ComponentSectionsTeamInput {
   anchor: String
+  content: ComponentSharedContentItemInput
+  headline: ComponentSharedHeadlineInput
   id: ID
   members: [ID]
   theme: ComponentSharedThemeInput
   title: String
+  variant: ENUM_COMPONENTSECTIONSTEAM_VARIANT
 }
 
 type ComponentSectionsTechStack {
@@ -1650,6 +1571,29 @@ input ComponentSharedHeroPromoInput {
   title: String
 }
 
+type ComponentSharedLoadMore {
+  id: ID!
+  initialItems: Int
+  loadChunk: Int
+  loadMoreLabel: String
+}
+
+input ComponentSharedLoadMoreFiltersInput {
+  and: [ComponentSharedLoadMoreFiltersInput]
+  initialItems: IntFilterInput
+  loadChunk: IntFilterInput
+  loadMoreLabel: StringFilterInput
+  not: ComponentSharedLoadMoreFiltersInput
+  or: [ComponentSharedLoadMoreFiltersInput]
+}
+
+input ComponentSharedLoadMoreInput {
+  id: ID
+  initialItems: Int
+  loadChunk: Int
+  loadMoreLabel: String
+}
+
 type ComponentSharedNavItem {
   anchor: String!
   id: ID!
@@ -1720,8 +1664,6 @@ input ComponentSharedServiceGroupInput {
 type ComponentSharedShowMore {
   id: ID!
   itemsToShow: Int
-  loadChunk: Int
-  pageSize: Int
   showLessLabel: String
   showMoreLabel: String
   useShowMore: Boolean
@@ -1730,10 +1672,8 @@ type ComponentSharedShowMore {
 input ComponentSharedShowMoreFiltersInput {
   and: [ComponentSharedShowMoreFiltersInput]
   itemsToShow: IntFilterInput
-  loadChunk: IntFilterInput
   not: ComponentSharedShowMoreFiltersInput
   or: [ComponentSharedShowMoreFiltersInput]
-  pageSize: IntFilterInput
   showLessLabel: StringFilterInput
   showMoreLabel: StringFilterInput
   useShowMore: BooleanFilterInput
@@ -1742,8 +1682,6 @@ input ComponentSharedShowMoreFiltersInput {
 input ComponentSharedShowMoreInput {
   id: ID
   itemsToShow: Int
-  loadChunk: Int
-  pageSize: Int
   showLessLabel: String
   showMoreLabel: String
   useShowMore: Boolean
@@ -1997,11 +1935,6 @@ enum ENUM_COMPONENTSECTIONSCAMPAIGNINTRO_VARIANT {
   withMedia
 }
 
-enum ENUM_COMPONENTSECTIONSCARDSLARGENUMERATED_CARDSLAYOUT {
-  carousel
-  grid
-}
-
 enum ENUM_COMPONENTSECTIONSCAROUSEL_COLLECTIONTYPE {
   achievements
   clientTestimonials
@@ -2039,8 +1972,8 @@ enum ENUM_COMPONENTSECTIONSCONTENTNUMERATED_LAYOUT {
 }
 
 enum ENUM_COMPONENTSECTIONSFORM_VARIANT {
-  contact
-  cv
+  compact
+  default
 }
 
 enum ENUM_COMPONENTSECTIONSHERO_VARIANT {
@@ -2072,6 +2005,11 @@ enum ENUM_COMPONENTSECTIONSRICHCONTENTBODY_VARIANT {
 enum ENUM_COMPONENTSECTIONSSERVICESGROUP_VARIANT {
   servicesGroup
   servicesList
+}
+
+enum ENUM_COMPONENTSECTIONSTEAM_VARIANT {
+  grid
+  rows
 }
 
 enum ENUM_COMPONENTSHAREDBUTTON_LINKTYPE {
@@ -2192,7 +2130,7 @@ input FloatFilterInput {
   startsWith: Float
 }
 
-union GenericMorph = Achievement | Author | CaseStudy | Client | ClientTestimonial | ComponentGlobalFooter | ComponentGlobalPartner | ComponentHubBarFilter | ComponentPortfolioFilter | ComponentRichContentBlock | ComponentRichContentStat | ComponentSectionsCampaignIntro | ComponentSectionsCardsLargeNumerated | ComponentSectionsCarousel | ComponentSectionsCaseStudies | ComponentSectionsContentColorBoxes | ComponentSectionsContentImageLeft | ComponentSectionsContentNumerated | ComponentSectionsCta | ComponentSectionsFaq | ComponentSectionsForm | ComponentSectionsHero | ComponentSectionsHubBar | ComponentSectionsIndustries | ComponentSectionsInsightList | ComponentSectionsIntersectionFloatingBoxes | ComponentSectionsIntersectionMedia | ComponentSectionsNewsletter | ComponentSectionsPageIntro | ComponentSectionsPerson | ComponentSectionsPortfolio | ComponentSectionsProcess | ComponentSectionsProgressCards | ComponentSectionsRichContentBody | ComponentSectionsServicesGroup | ComponentSectionsTeam | ComponentSectionsTeamGrid | ComponentSectionsTechStack | ComponentSharedButton | ComponentSharedCardMilestone | ComponentSharedCardNumerated | ComponentSharedColorBox | ComponentSharedContentItem | ComponentSharedFloatingCard | ComponentSharedHeadline | ComponentSharedHeroPromo | ComponentSharedNavItem | ComponentSharedSeo | ComponentSharedServiceGroup | ComponentSharedShowMore | ComponentSharedShowreel | ComponentSharedSocials | ComponentSharedTheme | ContentManagerOrganizerContentManagerConfiguration | Faq | Global | HiringProcess | I18NLocale | Industry | Insight | Page | Platform | PrimaryAudience | Process | Region | ResourceType | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | Service | Tag | Team | TeamTestimonial | TechStack | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser
+union GenericMorph = Achievement | Author | CaseStudy | Client | ClientTestimonial | ComponentGlobalFooter | ComponentGlobalPartner | ComponentHubBarFilter | ComponentPortfolioFilter | ComponentRichContentBlock | ComponentRichContentStat | ComponentSectionsCampaignIntro | ComponentSectionsCarousel | ComponentSectionsCaseStudies | ComponentSectionsContentColorBoxes | ComponentSectionsContentImageLeft | ComponentSectionsContentNumerated | ComponentSectionsCta | ComponentSectionsFaq | ComponentSectionsForm | ComponentSectionsHero | ComponentSectionsHubBar | ComponentSectionsIndustries | ComponentSectionsInsightList | ComponentSectionsIntersectionFloatingBoxes | ComponentSectionsIntersectionMedia | ComponentSectionsPageIntro | ComponentSectionsPerson | ComponentSectionsPortfolio | ComponentSectionsProcess | ComponentSectionsProgressCards | ComponentSectionsRichContentBody | ComponentSectionsServicesGroup | ComponentSectionsTeam | ComponentSectionsTechStack | ComponentSharedButton | ComponentSharedCardMilestone | ComponentSharedCardNumerated | ComponentSharedColorBox | ComponentSharedContentItem | ComponentSharedFloatingCard | ComponentSharedHeadline | ComponentSharedHeroPromo | ComponentSharedLoadMore | ComponentSharedNavItem | ComponentSharedSeo | ComponentSharedServiceGroup | ComponentSharedShowMore | ComponentSharedShowreel | ComponentSharedSocials | ComponentSharedTheme | ContentManagerOrganizerContentManagerConfiguration | Faq | Global | HiringProcess | I18NLocale | Industry | Insight | Page | Platform | PrimaryAudience | Process | Region | ResourceType | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | Service | Tag | Team | TeamTestimonial | TechStack | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser
 
 type Global {
   createdAt: DateTime
@@ -2491,7 +2429,7 @@ type InsightRelationResponseCollection {
   nodes: [Insight!]!
 }
 
-union InsightSectionsDynamicZone = ComponentSectionsCarousel | ComponentSectionsCta | ComponentSectionsNewsletter | ComponentSectionsRichContentBody | Error
+union InsightSectionsDynamicZone = ComponentSectionsCarousel | ComponentSectionsCta | ComponentSectionsForm | ComponentSectionsRichContentBody | Error
 
 scalar InsightSectionsDynamicZoneInput
 
@@ -2817,7 +2755,7 @@ type PageRelationResponseCollection {
   nodes: [Page!]!
 }
 
-union PageSectionsDynamicZone = ComponentSectionsCampaignIntro | ComponentSectionsCardsLargeNumerated | ComponentSectionsCarousel | ComponentSectionsCaseStudies | ComponentSectionsContentColorBoxes | ComponentSectionsContentImageLeft | ComponentSectionsContentNumerated | ComponentSectionsCta | ComponentSectionsFaq | ComponentSectionsForm | ComponentSectionsHero | ComponentSectionsHubBar | ComponentSectionsIndustries | ComponentSectionsInsightList | ComponentSectionsIntersectionFloatingBoxes | ComponentSectionsIntersectionMedia | ComponentSectionsNewsletter | ComponentSectionsPageIntro | ComponentSectionsPerson | ComponentSectionsPortfolio | ComponentSectionsProcess | ComponentSectionsProgressCards | ComponentSectionsRichContentBody | ComponentSectionsServicesGroup | ComponentSectionsTeam | ComponentSectionsTeamGrid | ComponentSectionsTechStack | Error
+union PageSectionsDynamicZone = ComponentSectionsCampaignIntro | ComponentSectionsCarousel | ComponentSectionsCaseStudies | ComponentSectionsContentColorBoxes | ComponentSectionsContentImageLeft | ComponentSectionsContentNumerated | ComponentSectionsCta | ComponentSectionsFaq | ComponentSectionsForm | ComponentSectionsHero | ComponentSectionsHubBar | ComponentSectionsIndustries | ComponentSectionsInsightList | ComponentSectionsIntersectionFloatingBoxes | ComponentSectionsIntersectionMedia | ComponentSectionsPageIntro | ComponentSectionsPerson | ComponentSectionsPortfolio | ComponentSectionsProcess | ComponentSectionsProgressCards | ComponentSectionsRichContentBody | ComponentSectionsServicesGroup | ComponentSectionsTeam | ComponentSectionsTechStack | Error
 
 scalar PageSectionsDynamicZoneInput
 

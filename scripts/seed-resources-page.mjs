@@ -59,12 +59,10 @@ const SECTIONS = [
     navItem: { label: "All", anchor: "all-articles" },
     title: "All Articles",
     layout: "gridFiltered",
-    showMore: {
-      useShowMore: true,
+    loadMore: {
+      initialItems: 6,
       loadChunk: 6,
-      pageSize: 12,
-      showMoreLabel: "Show More",
-      showLessLabel: "Show Less",
+      loadMoreLabel: "Load more",
     },
     theme: { background: "white", textColor: "dark" },
   },
@@ -89,13 +87,13 @@ const SECTIONS = [
     theme: { background: "white", textColor: "dark" },
   },
   {
-    __component: "sections.newsletter",
+    __component: "sections.form",
+    variant: "compact",
     anchor: "newsletter",
     title: "Stay in the loop",
     description:
       "<p>The ideas worth keeping up with, delivered to your inbox.</p>",
     label: "Subscribe to newsletter",
-    placeholder: "Enter your email",
     theme: { background: "black", textColor: "light" },
   },
 ];

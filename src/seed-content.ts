@@ -898,42 +898,15 @@ export async function seedContent(strapi: Strapi) {
       theme: theme("cream"),
       achievements: achievements.map((e) => e.id),
     },
-    // 3. cards-large-numerated
+    // 3. content-numerated (numbered cards)
     {
-      __component: "sections.cards-large-numerated",
+      __component: "sections.content-numerated",
       headline: h("Why teams choose us"),
-      cardsLayout: "carousel",
-      cards: [
-        {
-          __component: "shared.card-numerated",
-          title: "Senior talent",
-          description: "<p>No juniors learning on your budget.</p>",
-        },
-        {
-          __component: "shared.card-numerated",
-          title: "Fast delivery",
-          description: "<p>Small batches shipped weekly.</p>",
-        },
-        {
-          __component: "shared.card-numerated",
-          title: "Transparent pricing",
-          description: "<p>Fixed scope, honest estimates.</p>",
-        },
-        {
-          __component: "shared.card-numerated",
-          title: "Long-term partners",
-          description: "<p>We stay after launch.</p>",
-        },
-        {
-          __component: "shared.card-numerated",
-          title: "Senior talent",
-          description: "<p>No juniors learning on your budget.</p>",
-        },
-        {
-          __component: "shared.card-numerated",
-          title: "Fast delivery",
-          description: "<p>Small batches shipped weekly.</p>",
-        },
+      items: [
+        item("Senior talent", "<p>No juniors learning on your budget.</p>"),
+        item("Fast delivery", "<p>Small batches shipped weekly.</p>"),
+        item("Transparent pricing", "<p>Fixed scope, honest estimates.</p>"),
+        item("Long-term partners", "<p>We stay after launch.</p>"),
       ],
     },
     // 4. case-studies (pick: latest)
@@ -1014,10 +987,9 @@ export async function seedContent(strapi: Strapi) {
     // 10. form (contact)
     {
       __component: "sections.form",
-      variant: "contact",
+      variant: "default",
       title: "Contact us",
       description: "<p>Tell us about your project.</p>",
-      label: "Get in touch",
     },
     // 11. hero (default, large heading)
     {
@@ -1179,19 +1151,21 @@ export async function seedContent(strapi: Strapi) {
         },
       ],
     },
-    // 23. team-grid
+    // 23. team (grid variant)
     {
-      __component: "sections.team-grid",
+      __component: "sections.team",
+      variant: "grid",
       headline: h("Meet the team"),
-      team: teamMembers.map((e) => e.id),
+      members: teamMembers.map((e) => e.id),
       content: item(
         "Who we are",
         "<p>Built by engineers, designers and PMs.</p>",
       ),
     },
-    // 24. team
+    // 24. team (rows variant)
     {
       __component: "sections.team",
+      variant: "rows",
       title: "Team members",
       members: teamMembers.map((e) => e.id),
     },

@@ -3,7 +3,7 @@
   "info": {
     "displayName": "Show more / less",
     "icon": "chevronDown",
-    "description": "List pagination for row/card lists: keep `Items to show` items visible and reveal the rest with an editable Show more/less toggle — or switch it off to list everything (and expose the section's button instead)"
+    "description": "Collapsible list: keep `Items to show` visible and reveal the rest with the Show more/less toggle, or switch the toggle off to list everything (and expose the section's own button)."
   },
   "options": {},
   "attributes": {
@@ -16,56 +16,15 @@
       "type": "integer",
       "default": 5,
       "min": 1,
-      "conditions": {
-        "visible": {
-          "!=": [
-            {
-              "var": "useShowMore"
-            },
-            false
-          ]
-        }
-      }
+      "description": "How many items stay visible before the Show more toggle."
     },
     "showMoreLabel": {
       "type": "string",
-      "default": "Show more",
-      "conditions": {
-        "visible": {
-          "!=": [
-            {
-              "var": "useShowMore"
-            },
-            false
-          ]
-        }
-      }
+      "default": "Show more"
     },
     "showLessLabel": {
       "type": "string",
-      "default": "Show less",
-      "conditions": {
-        "visible": {
-          "!=": [
-            {
-              "var": "useShowMore"
-            },
-            false
-          ]
-        }
-      }
-    },
-    "loadChunk": {
-      "type": "integer",
-      "default": 6,
-      "min": 1,
-      "description": "How many items each click on Show more reveals (client-side). Ignored by sections that reveal everything at once."
-    },
-    "pageSize": {
-      "type": "integer",
-      "default": 12,
-      "min": 1,
-      "description": "How many items each server page holds when the list keeps loading from Strapi."
+      "default": "Show less"
     }
   }
 }

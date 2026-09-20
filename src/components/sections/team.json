@@ -1,8 +1,8 @@
 {
   "collectionName": "components_sections_teams",
   "info": {
-    "displayName": "Team Rows",
-    "description": "Team members as hover rows"
+    "displayName": "Team",
+    "description": "Team members as an animated rail (rows) or a card grid (grid)"
   },
   "options": {},
   "attributes": {
@@ -10,13 +10,72 @@
       "type": "string",
       "description": "DOM id / URL hash for this section (e.g. \"industries\" → #industries). Lets nav links target this section on the page."
     },
+    "variant": {
+      "type": "enumeration",
+      "enum": [
+        "rows",
+        "grid"
+      ],
+      "default": "grid",
+      "required": true
+    },
     "title": {
-      "type": "string"
+      "type": "string",
+      "conditions": {
+        "visible": {
+          "!=": [
+            {
+              "var": "variant"
+            },
+            "grid"
+          ]
+        }
+      }
     },
     "members": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::team.team"
+      "target": "api::team.team",
+      "conditions": {
+        "visible": {
+          "!=": [
+            {
+              "var": "variant"
+            },
+            "grid"
+          ]
+        }
+      }
+    },
+    "headline": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.headline",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "variant"
+            },
+            "grid"
+          ]
+        }
+      }
+    },
+    "content": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.content-item",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "variant"
+            },
+            "grid"
+          ]
+        }
+      }
     },
     "theme": {
       "type": "component",

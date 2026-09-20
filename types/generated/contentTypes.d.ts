@@ -847,7 +847,7 @@ export interface ApiInsightInsight extends Struct.CollectionTypeSchema {
         'sections.rich-content-body',
         'sections.cta',
         'sections.carousel',
-        'sections.newsletter',
+        'sections.form',
       ]
     >;
     seo: Schema.Attribute.Component<'shared.seo', false>;
@@ -884,7 +884,6 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
       [
         'sections.cta',
         'sections.carousel',
-        'sections.cards-large-numerated',
         'sections.case-studies',
         'sections.content-color-boxes',
         'sections.content-image-left',
@@ -895,7 +894,6 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'sections.hub-bar',
         'sections.industries',
         'sections.insight-list',
-        'sections.newsletter',
         'sections.page-intro',
         'sections.intersection-floating-boxes',
         'sections.intersection-media',
@@ -904,7 +902,6 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'sections.process',
         'sections.progress-cards',
         'sections.services-group',
-        'sections.team-grid',
         'sections.team',
         'sections.tech-stack',
         'sections.portfolio',

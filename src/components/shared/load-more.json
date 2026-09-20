@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_shared_load_mores",
+  "info": {
+    "displayName": "Load more",
+    "icon": "chevronDown",
+    "description": "Paged list: render the first batch and add another one per click. No collapse."
+  },
+  "options": {},
+  "attributes": {
+    "initialItems": {
+      "type": "integer",
+      "default": 6,
+      "min": 1,
+      "description": "How many items are on the page before the first click."
+    },
+    "loadChunk": {
+      "type": "integer",
+      "default": 6,
+      "min": 1,
+      "description": "How many items one click adds."
+    },
+    "loadMoreLabel": {
+      "type": "string",
+      "default": "Load more",
+      "description": "Label of the Load more button."
+    }
+  }
+}

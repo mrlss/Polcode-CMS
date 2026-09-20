@@ -27,6 +27,12 @@
       "component": "shared.show-more",
       "description": "Show a set number of other cases behind a Show more/less toggle (labels + count editable), or list them all"
     },
+    "loadMore": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.load-more",
+      "description": "Paged list instead of a collapse: first batch on load, another batch per click."
+    },
     "filters": {
       "type": "component",
       "repeatable": true,

@@ -160,12 +160,13 @@ const COPY: CopyMap = {
     },
     showMoreLabel: { description: "Label of the collapsed toggle." },
     showLessLabel: { description: "Label of the expanded toggle." },
-    loadChunk: {
-      description: "How many items each click on Show more reveals.",
+  },
+  "shared.load-more": {
+    initialItems: {
+      description: "How many items are on the page before the first click.",
     },
-    pageSize: {
-      description: "How many items each server page loads from the CMS.",
-    },
+    loadChunk: { description: "How many items one click adds." },
+    loadMoreLabel: { description: "Label of the Load more button." },
   },
   "sections.page-intro": {
     anchor: {
@@ -177,15 +178,6 @@ const COPY: CopyMap = {
     description: { description: "Intro paragraph under the title." },
     showScrollCue: { description: "Show the 'Scroll down' cue." },
     theme: { description: "Section background + text colour." },
-  },
-  "sections.newsletter": {
-    anchor: { description: "DOM id / URL hash for this band." },
-    title: { description: "Band headline." },
-    description: { description: "Copy next to the form." },
-    label: { description: "Text of the subscribe button." },
-    placeholder: { description: "Placeholder inside the email field." },
-    button: { description: "Optional CTA shown instead of / beside the form." },
-    theme: { description: "Band background + text colour." },
   },
   "sections.insight-list": {
     navItem: {
@@ -689,19 +681,6 @@ const COPY: CopyMap = {
     button: { description: BUTTON_TIP },
     theme: { description: THEME_TIP },
   },
-  "sections.cards-large-numerated": {
-    anchor: { label: "Anchor (URL hash)", description: ANCHOR_TIP },
-    headline: { description: HEADLINE_TIP },
-    cardsLayout: {
-      label: "Layout",
-      description: "carousel = swipeable row of cards, grid = static grid.",
-    },
-    cards: {
-      label: "Cards",
-      description: "Numbered automatically, in this order.",
-    },
-    theme: { description: THEME_TIP },
-  },
   "sections.content-color-boxes": {
     anchor: { label: "Anchor (URL hash)", description: ANCHOR_TIP },
     headline: { description: HEADLINE_TIP },
@@ -757,15 +736,20 @@ const COPY: CopyMap = {
     theme: { description: THEME_TIP },
   },
   "sections.form": {
-    variant: {
-      label: "Form type",
-      description: "contact = general enquiry form, cv = job application form.",
-    },
     anchor: { label: "Anchor (URL hash)", description: ANCHOR_TIP },
+    variant: {
+      label: "Layout",
+      description: "default = contact form, compact = newsletter band.",
+    },
     title: { label: "Title" },
     description: { label: "Copy" },
-    label: { label: "Button label" },
-    media: { label: "Image / video", description: MEDIA_TIP },
+    hubspotFormID: {
+      label: "HubSpot form ID",
+      description:
+        "Form ID pasted from HubSpot (leave empty for the built-in form).",
+    },
+    image: { label: "Image", description: MEDIA_TIP },
+    label: { label: "Eyebrow", description: "Newsletter layout only." },
     theme: { description: THEME_TIP },
   },
   "sections.industries": {
@@ -860,17 +844,17 @@ const COPY: CopyMap = {
   },
   "sections.team": {
     anchor: { label: "Anchor (URL hash)", description: ANCHOR_TIP },
-    title: { label: "Title" },
+    variant: {
+      label: "Behaviour",
+      description:
+        "Rows = the scroll-driven rail (title + members). Grid = the card grid (headline + intro copy).",
+    },
+    title: { label: "Title", description: "Shown above the rail (rows only)." },
     members: { label: "Team members", description: "Shown in this order." },
-    theme: { description: THEME_TIP },
-  },
-  "sections.team-grid": {
-    anchor: { label: "Anchor (URL hash)", description: ANCHOR_TIP },
     headline: { description: HEADLINE_TIP },
-    team: { label: "Team members", description: "Shown in this order." },
     content: {
       label: "Intro copy",
-      description: "Optional title + copy beside the grid.",
+      description: "Optional title + copy above the grid (grid only).",
     },
     theme: { description: THEME_TIP },
   },
@@ -987,14 +971,6 @@ const EDIT_LAYOUT: Record<string, string[][]> = {
     ["label"],
     ["theme"],
   ],
-  "sections.newsletter": [
-    ["anchor"],
-    ["title"],
-    ["description"],
-    ["label", "placeholder"],
-    ["button"],
-    ["theme"],
-  ],
   "sections.insight-list": [
     ["navItem"],
     ["title"],
@@ -1095,11 +1071,10 @@ const EDIT_LAYOUT: Record<string, string[][]> = {
     ["service"],
   ],
   "shared.show-more": [
-    ["useShowMore"],
-    ["itemsToShow", "loadChunk"],
+    ["useShowMore", "itemsToShow"],
     ["showMoreLabel", "showLessLabel"],
-    ["pageSize"],
   ],
+  "shared.load-more": [["initialItems", "loadChunk"], ["loadMoreLabel"]],
   "shared.content-item": [["title"], ["description"], ["button"]],
   "shared.card-numerated": [["title"], ["description"], ["media"]],
   "shared.card-milestone": [["title"], ["description"]],
@@ -1182,13 +1157,6 @@ const EDIT_LAYOUT: Record<string, string[][]> = {
     ["button"],
     ["theme"],
   ],
-  "sections.cards-large-numerated": [
-    ["anchor"],
-    ["headline"],
-    ["cardsLayout"],
-    ["cards"],
-    ["theme"],
-  ],
   "sections.content-color-boxes": [
     ["anchor"],
     ["headline", "subtitle"],
@@ -1216,10 +1184,9 @@ const EDIT_LAYOUT: Record<string, string[][]> = {
   "sections.faq": [["anchor"], ["headline"], ["faqs"], ["theme"]],
   "sections.form": [
     ["variant", "anchor"],
-    ["title"],
-    ["description"],
-    ["label"],
-    ["media"],
+    ["title", "description"],
+    ["hubspotFormID"],
+    ["image", "label"],
     ["theme"],
   ],
   "sections.industries": [
@@ -1275,11 +1242,12 @@ const EDIT_LAYOUT: Record<string, string[][]> = {
     ["button"],
     ["theme"],
   ],
-  "sections.team": [["anchor"], ["title"], ["members"], ["theme"]],
-  "sections.team-grid": [
+  "sections.team": [
     ["anchor"],
+    ["variant"],
+    ["title"],
+    ["members"],
     ["headline"],
-    ["team"],
     ["content"],
     ["theme"],
   ],

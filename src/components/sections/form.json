@@ -1,22 +1,22 @@
 {
   "collectionName": "components_sections_forms",
   "info": {
-    "displayName": "Form",
-    "description": "Contact or CV form section"
+    "displayName": "Forms",
+    "description": "Contact form (default) or newsletter sign-up (compact)"
   },
   "options": {},
   "attributes": {
     "anchor": {
       "type": "string",
-      "description": "DOM id / URL hash for this section (e.g. \"industries\" → #industries). Lets nav links target this section on the page."
+      "description": "DOM id / URL hash for this section (e.g. \"contact\" → #contact). Lets nav links target this section on the page."
     },
     "variant": {
       "type": "enumeration",
       "enum": [
-        "contact",
-        "cv"
+        "default",
+        "compact"
       ],
-      "default": "contact"
+      "default": "default"
     },
     "title": {
       "type": "string"
@@ -28,17 +28,40 @@
         "preset": "defaultHtml"
       }
     },
-    "label": {
-      "type": "string"
+    "hubspotFormID": {
+      "type": "string",
+      "description": "HubSpot form ID, e.g. \"0cf3d2c3-1c1a-4c0b-9f1e-2b0c1a2b3c4d\"."
     },
-    "media": {
+    "image": {
       "type": "media",
       "multiple": false,
       "required": false,
       "allowedTypes": [
-        "images",
-        "videos"
-      ]
+        "images"
+      ],
+      "conditions": {
+        "visible": {
+          "!=": [
+            {
+              "var": "variant"
+            },
+            "compact"
+          ]
+        }
+      }
+    },
+    "label": {
+      "type": "string",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "variant"
+            },
+            "compact"
+          ]
+        }
+      }
     },
     "theme": {
       "type": "component",

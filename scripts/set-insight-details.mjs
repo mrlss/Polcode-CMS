@@ -110,13 +110,12 @@ const SECTIONS = [
     })),
   },
   {
-    __component: "sections.newsletter",
+    __component: "sections.form",
+    variant: "compact",
     title: "Sign up for the Latest PolCode News",
     label: "Subscribe to news",
-    placeholder: "Enter your email",
     description:
       "<p>Join our newsletter to stay up to date. No spam, ever.</p>",
-    button: { title: "Subscribe", linkType: "url", url: "#" },
     theme: { background: "black", textColor: "light" },
   },
 ];

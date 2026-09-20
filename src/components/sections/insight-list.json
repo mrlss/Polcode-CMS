@@ -62,9 +62,9 @@
         }
       }
     },
-    "showMore": {
+    "loadMore": {
       "type": "component",
-      "component": "shared.show-more",
+      "component": "shared.load-more",
       "repeatable": false,
       "conditions": {
         "visible": {
