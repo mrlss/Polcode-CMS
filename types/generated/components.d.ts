@@ -1,5 +1,25 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface GlobalError extends Struct.ComponentSchema {
+  collectionName: 'components_global_errors';
+  info: {
+    description: 'Copy shown on the 404 and error screens';
+    displayName: 'Error';
+  };
+  attributes: {
+    button: Schema.Attribute.Component<'shared.button', false>;
+    description: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
+    image: Schema.Attribute.Media<'images'>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface GlobalFooter extends Struct.ComponentSchema {
   collectionName: 'components_global_footers';
   info: {
@@ -343,7 +363,7 @@ export interface SectionsFaq extends Struct.ComponentSchema {
 export interface SectionsForm extends Struct.ComponentSchema {
   collectionName: 'components_sections_forms';
   info: {
-    description: 'Contact form (default) or newsletter sign-up (compact)';
+    description: 'Contact form (default / hero) or newsletter sign-up (compact)';
     displayName: 'Forms';
   };
   attributes: {
@@ -360,7 +380,7 @@ export interface SectionsForm extends Struct.ComponentSchema {
     label: Schema.Attribute.String;
     theme: Schema.Attribute.Component<'shared.theme', false>;
     title: Schema.Attribute.String;
-    variant: Schema.Attribute.Enumeration<['default', 'compact']> &
+    variant: Schema.Attribute.Enumeration<['default', 'hero', 'compact']> &
       Schema.Attribute.DefaultTo<'default'>;
   };
 }
@@ -554,6 +574,8 @@ export interface SectionsPortfolio extends Struct.ComponentSchema {
     >;
     filters: Schema.Attribute.Component<'portfolio.filter', true>;
     headline: Schema.Attribute.Component<'shared.headline', false>;
+    listMode: Schema.Attribute.Enumeration<['showMore', 'loadMore', 'none']> &
+      Schema.Attribute.DefaultTo<'showMore'>;
     loadMore: Schema.Attribute.Component<'shared.load-more', false>;
     manualCasesControl: Schema.Attribute.Boolean &
       Schema.Attribute.DefaultTo<false>;
@@ -666,6 +688,8 @@ export interface SectionsTechStack extends Struct.ComponentSchema {
     >;
     button: Schema.Attribute.Component<'shared.button', false>;
     headline: Schema.Attribute.Component<'shared.headline', false>;
+    listMode: Schema.Attribute.Enumeration<['showMore', 'none']> &
+      Schema.Attribute.DefaultTo<'showMore'>;
     showMore: Schema.Attribute.Component<'shared.show-more', false>;
     theme: Schema.Attribute.Component<'shared.theme', false>;
   };
@@ -721,25 +745,6 @@ export interface SharedCardMilestone extends Struct.ComponentSchema {
         }
       >;
     label: Schema.Attribute.String;
-    media: Schema.Attribute.Media<'images' | 'videos'>;
-    title: Schema.Attribute.String;
-  };
-}
-
-export interface SharedCardNumerated extends Struct.ComponentSchema {
-  collectionName: 'components_shared_card_numerateds';
-  info: {
-    description: 'One numbered card: title, copy and optional media';
-    displayName: 'Numbered Card';
-  };
-  attributes: {
-    description: Schema.Attribute.RichText &
-      Schema.Attribute.CustomField<
-        'plugin::ckeditor5.CKEditor',
-        {
-          preset: 'defaultHtml';
-        }
-      >;
     media: Schema.Attribute.Media<'images' | 'videos'>;
     title: Schema.Attribute.String;
   };
@@ -898,7 +903,7 @@ export interface SharedServiceGroup extends Struct.ComponentSchema {
 export interface SharedShowMore extends Struct.ComponentSchema {
   collectionName: 'components_shared_show_mores';
   info: {
-    description: "Collapsible list: keep `Items to show` visible and reveal the rest with the Show more/less toggle, or switch the toggle off to list everything (and expose the section's own button).";
+    description: "Collapse settings: how many items stay visible and the toggle's labels. Whether the toggle is used at all comes from the section's `List ending` field.";
     displayName: 'Show more / less';
     icon: 'chevronDown';
   };
@@ -915,7 +920,6 @@ export interface SharedShowMore extends Struct.ComponentSchema {
       Schema.Attribute.DefaultTo<'Show less'>;
     showMoreLabel: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'Show more'>;
-    useShowMore: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
   };
 }
 
@@ -955,6 +959,7 @@ export interface SharedTheme extends Struct.ComponentSchema {
       ['white', 'black', 'cream', 'purple']
     > &
       Schema.Attribute.DefaultTo<'white'>;
+    headerTheme: Schema.Attribute.Enumeration<['light', 'dark']>;
     textColor: Schema.Attribute.Enumeration<['light', 'dark']> &
       Schema.Attribute.DefaultTo<'dark'>;
   };
@@ -963,6 +968,7 @@ export interface SharedTheme extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export namespace Public {
     export interface ComponentSchemas {
+      'global.error': GlobalError;
       'global.footer': GlobalFooter;
       'global.partner': GlobalPartner;
       'hub-bar.filter': HubBarFilter;
@@ -995,7 +1001,6 @@ declare module '@strapi/strapi' {
       'sections.tech-stack': SectionsTechStack;
       'shared.button': SharedButton;
       'shared.card-milestone': SharedCardMilestone;
-      'shared.card-numerated': SharedCardNumerated;
       'shared.color-box': SharedColorBox;
       'shared.content-item': SharedContentItem;
       'shared.floating-card': SharedFloatingCard;

@@ -22,12 +22,6 @@
       "required": true,
       "regex": "^[a-z0-9-_.]+$"
     },
-    "parent": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::page.page",
-      "description": "Optional parent page. The public URL is the parent's path plus this page's slug."
-    },
     "seo": {
       "type": "component",
       "repeatable": false,
@@ -63,7 +57,8 @@
         "sections.team",
         "sections.tech-stack",
         "sections.portfolio",
-        "sections.rich-content-body"
+        "sections.rich-content-body",
+        "sections.vacancies-list"
       ]
     }
   }

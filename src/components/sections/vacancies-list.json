@@ -1,0 +1,72 @@
+{
+  "collectionName": "components_sections_vacancies_lists",
+  "info": {
+    "displayName": "Vacancies list",
+    "icon": "briefcase",
+    "description": "Open positions pulled live from the recruitment system (Traffit). The positions themselves are never entered here — only the copy that surrounds them."
+  },
+  "options": {},
+  "attributes": {
+    "anchor": {
+      "type": "string",
+      "description": "DOM id / URL hash for this section (e.g. \"openings\" → #openings). Lets nav links target this section on the page."
+    },
+    "headline": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.headline"
+    },
+    "intro": {
+      "type": "customField",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      },
+      "description": "Intro copy shown above the list. The list itself comes from Traffit and cannot be edited here."
+    },
+    "emptyState": {
+      "type": "customField",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      },
+      "description": "Shown instead of the list when Traffit has no published positions — or when Traffit is temporarily unreachable. Always write something here, otherwise the section renders as an empty gap."
+    },
+    "listMode": {
+      "type": "enumeration",
+      "default": "showMore",
+      "enum": [
+        "showMore",
+        "none"
+      ],
+      "description": "`showMore`: collapse the list behind a toggle once it gets long. `none`: always list every open position."
+    },
+    "showMore": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.show-more",
+      "description": "How many positions stay visible and the toggle's labels. Used when List ending is `showMore`.",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "listMode"
+            },
+            "showMore"
+          ]
+        }
+      }
+    },
+    "button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.button",
+      "description": "Optional call to action under the list (e.g. a speculative application)."
+    },
+    "theme": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.theme"
+    }
+  }
+}

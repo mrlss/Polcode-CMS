@@ -77,25 +77,29 @@
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::industry.industry",
-      "inversedBy": "relatedCases"
+      "inversedBy": "relatedCases",
+      "description": "The industry this case study belongs to. Exactly one — it cannot belong to several industries."
     },
     "services": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::service.service",
-      "mappedBy": "caseStudies"
+      "mappedBy": "caseStudies",
+      "description": "Services this case study was delivered for. This is the same link as 'Case studies' on each service — filling it in here also lists the case study there, and vice versa. The Cases filters and the related-cases carousels read from it."
     },
     "techStack": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::tech-stack.tech-stack",
-      "mappedBy": "caseStudies"
+      "mappedBy": "caseStudies",
+      "description": "Technologies used on this project. The same link as 'Case studies' on each technology. Shown as tags on the case cards and used by the Technologies filter."
     },
     "regions": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::region.region",
-      "inversedBy": "caseStudies"
+      "inversedBy": "caseStudies",
+      "description": "The region this case study belongs to. Exactly one — it cannot belong to several regions."
     },
     "foreground": {
       "type": "enumeration",
@@ -111,12 +115,11 @@
       "type": "dynamiczone",
       "components": [
         "sections.rich-content-body",
-        "sections.process",
-        "sections.carousel",
-        "sections.tech-stack",
         "sections.cta",
-        "sections.case-studies"
-      ]
+        "sections.case-studies",
+        "sections.form"
+      ],
+      "description": "The page content, in the order shown here. Add, remove and drag to reorder — the published page follows this order."
     }
   }
 }

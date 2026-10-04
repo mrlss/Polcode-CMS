@@ -218,7 +218,7 @@ type CaseStudyRelationResponseCollection {
   nodes: [CaseStudy!]!
 }
 
-union CaseStudySectionsDynamicZone = ComponentSectionsCarousel | ComponentSectionsCaseStudies | ComponentSectionsCta | ComponentSectionsProcess | ComponentSectionsRichContentBody | ComponentSectionsTechStack | Error
+union CaseStudySectionsDynamicZone = ComponentSectionsCaseStudies | ComponentSectionsCta | ComponentSectionsForm | ComponentSectionsRichContentBody | Error
 
 scalar CaseStudySectionsDynamicZoneInput
 
@@ -326,6 +326,31 @@ input ClientTestimonialInput {
 
 type ClientTestimonialRelationResponseCollection {
   nodes: [ClientTestimonial!]!
+}
+
+type ComponentGlobalError {
+  button: ComponentSharedButton
+  description: String
+  id: ID!
+  image: UploadFile
+  title: String!
+}
+
+input ComponentGlobalErrorFiltersInput {
+  and: [ComponentGlobalErrorFiltersInput]
+  button: ComponentSharedButtonFiltersInput
+  description: StringFilterInput
+  not: ComponentGlobalErrorFiltersInput
+  or: [ComponentGlobalErrorFiltersInput]
+  title: StringFilterInput
+}
+
+input ComponentGlobalErrorInput {
+  button: ComponentSharedButtonInput
+  description: String
+  id: ID
+  image: ID
+  title: String
 }
 
 type ComponentGlobalFooter {
@@ -1131,6 +1156,7 @@ type ComponentSectionsPortfolio {
   filters(filters: ComponentPortfolioFilterFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentPortfolioFilter]
   headline: ComponentSharedHeadline
   id: ID!
+  listMode: ENUM_COMPONENTSECTIONSPORTFOLIO_LISTMODE
   loadMore: ComponentSharedLoadMore
   manualCasesControl: Boolean
   otherCases(filters: CaseStudyFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [CaseStudy]!
@@ -1146,6 +1172,7 @@ input ComponentSectionsPortfolioFiltersInput {
   featuredCases: CaseStudyFiltersInput
   filters: ComponentPortfolioFilterFiltersInput
   headline: ComponentSharedHeadlineFiltersInput
+  listMode: StringFilterInput
   loadMore: ComponentSharedLoadMoreFiltersInput
   manualCasesControl: BooleanFilterInput
   not: ComponentSectionsPortfolioFiltersInput
@@ -1162,6 +1189,7 @@ input ComponentSectionsPortfolioInput {
   filters: [ComponentPortfolioFilterInput]
   headline: ComponentSharedHeadlineInput
   id: ID
+  listMode: ENUM_COMPONENTSECTIONSPORTFOLIO_LISTMODE
   loadMore: ComponentSharedLoadMoreInput
   manualCasesControl: Boolean
   otherCases: [ID]
@@ -1337,6 +1365,7 @@ type ComponentSectionsTechStack {
   button: ComponentSharedButton
   headline: ComponentSharedHeadline
   id: ID!
+  listMode: ENUM_COMPONENTSECTIONSTECHSTACK_LISTMODE
   showMore: ComponentSharedShowMore
   theme: ComponentSharedTheme
 }
@@ -1347,6 +1376,7 @@ input ComponentSectionsTechStackFiltersInput {
   blocks: TechStackFiltersInput
   button: ComponentSharedButtonFiltersInput
   headline: ComponentSharedHeadlineFiltersInput
+  listMode: StringFilterInput
   not: ComponentSectionsTechStackFiltersInput
   or: [ComponentSectionsTechStackFiltersInput]
   showMore: ComponentSharedShowMoreFiltersInput
@@ -1359,6 +1389,7 @@ input ComponentSectionsTechStackInput {
   button: ComponentSharedButtonInput
   headline: ComponentSharedHeadlineInput
   id: ID
+  listMode: ENUM_COMPONENTSECTIONSTECHSTACK_LISTMODE
   showMore: ComponentSharedShowMoreInput
   theme: ComponentSharedThemeInput
 }
@@ -1425,28 +1456,6 @@ input ComponentSharedCardMilestoneInput {
   description: String
   id: ID
   label: String
-  media: ID
-  title: String
-}
-
-type ComponentSharedCardNumerated {
-  description: String
-  id: ID!
-  media: UploadFile
-  title: String
-}
-
-input ComponentSharedCardNumeratedFiltersInput {
-  and: [ComponentSharedCardNumeratedFiltersInput]
-  description: StringFilterInput
-  not: ComponentSharedCardNumeratedFiltersInput
-  or: [ComponentSharedCardNumeratedFiltersInput]
-  title: StringFilterInput
-}
-
-input ComponentSharedCardNumeratedInput {
-  description: String
-  id: ID
   media: ID
   title: String
 }
@@ -1666,7 +1675,6 @@ type ComponentSharedShowMore {
   itemsToShow: Int
   showLessLabel: String
   showMoreLabel: String
-  useShowMore: Boolean
 }
 
 input ComponentSharedShowMoreFiltersInput {
@@ -1676,7 +1684,6 @@ input ComponentSharedShowMoreFiltersInput {
   or: [ComponentSharedShowMoreFiltersInput]
   showLessLabel: StringFilterInput
   showMoreLabel: StringFilterInput
-  useShowMore: BooleanFilterInput
 }
 
 input ComponentSharedShowMoreInput {
@@ -1684,7 +1691,6 @@ input ComponentSharedShowMoreInput {
   itemsToShow: Int
   showLessLabel: String
   showMoreLabel: String
-  useShowMore: Boolean
 }
 
 type ComponentSharedShowreel {
@@ -1730,6 +1736,7 @@ input ComponentSharedSocialsInput {
 
 type ComponentSharedTheme {
   background: ENUM_COMPONENTSHAREDTHEME_BACKGROUND
+  headerTheme: ENUM_COMPONENTSHAREDTHEME_HEADERTHEME
   id: ID!
   textColor: ENUM_COMPONENTSHAREDTHEME_TEXTCOLOR
 }
@@ -1737,6 +1744,7 @@ type ComponentSharedTheme {
 input ComponentSharedThemeFiltersInput {
   and: [ComponentSharedThemeFiltersInput]
   background: StringFilterInput
+  headerTheme: StringFilterInput
   not: ComponentSharedThemeFiltersInput
   or: [ComponentSharedThemeFiltersInput]
   textColor: StringFilterInput
@@ -1744,6 +1752,7 @@ input ComponentSharedThemeFiltersInput {
 
 input ComponentSharedThemeInput {
   background: ENUM_COMPONENTSHAREDTHEME_BACKGROUND
+  headerTheme: ENUM_COMPONENTSHAREDTHEME_HEADERTHEME
   id: ID
   textColor: ENUM_COMPONENTSHAREDTHEME_TEXTCOLOR
 }
@@ -1974,6 +1983,7 @@ enum ENUM_COMPONENTSECTIONSCONTENTNUMERATED_LAYOUT {
 enum ENUM_COMPONENTSECTIONSFORM_VARIANT {
   compact
   default
+  hero
 }
 
 enum ENUM_COMPONENTSECTIONSHERO_VARIANT {
@@ -1989,6 +1999,12 @@ enum ENUM_COMPONENTSECTIONSINSIGHTLIST_LAYOUT {
   featuredCarousel
   grid
   gridFiltered
+}
+
+enum ENUM_COMPONENTSECTIONSPORTFOLIO_LISTMODE {
+  loadMore
+  none
+  showMore
 }
 
 enum ENUM_COMPONENTSECTIONSPORTFOLIO_SORT {
@@ -2010,6 +2026,11 @@ enum ENUM_COMPONENTSECTIONSSERVICESGROUP_VARIANT {
 enum ENUM_COMPONENTSECTIONSTEAM_VARIANT {
   grid
   rows
+}
+
+enum ENUM_COMPONENTSECTIONSTECHSTACK_LISTMODE {
+  none
+  showMore
 }
 
 enum ENUM_COMPONENTSHAREDBUTTON_LINKTYPE {
@@ -2035,6 +2056,11 @@ enum ENUM_COMPONENTSHAREDTHEME_BACKGROUND {
   cream
   purple
   white
+}
+
+enum ENUM_COMPONENTSHAREDTHEME_HEADERTHEME {
+  dark
+  light
 }
 
 enum ENUM_COMPONENTSHAREDTHEME_TEXTCOLOR {
@@ -2130,11 +2156,12 @@ input FloatFilterInput {
   startsWith: Float
 }
 
-union GenericMorph = Achievement | Author | CaseStudy | Client | ClientTestimonial | ComponentGlobalFooter | ComponentGlobalPartner | ComponentHubBarFilter | ComponentPortfolioFilter | ComponentRichContentBlock | ComponentRichContentStat | ComponentSectionsCampaignIntro | ComponentSectionsCarousel | ComponentSectionsCaseStudies | ComponentSectionsContentColorBoxes | ComponentSectionsContentImageLeft | ComponentSectionsContentNumerated | ComponentSectionsCta | ComponentSectionsFaq | ComponentSectionsForm | ComponentSectionsHero | ComponentSectionsHubBar | ComponentSectionsIndustries | ComponentSectionsInsightList | ComponentSectionsIntersectionFloatingBoxes | ComponentSectionsIntersectionMedia | ComponentSectionsPageIntro | ComponentSectionsPerson | ComponentSectionsPortfolio | ComponentSectionsProcess | ComponentSectionsProgressCards | ComponentSectionsRichContentBody | ComponentSectionsServicesGroup | ComponentSectionsTeam | ComponentSectionsTechStack | ComponentSharedButton | ComponentSharedCardMilestone | ComponentSharedCardNumerated | ComponentSharedColorBox | ComponentSharedContentItem | ComponentSharedFloatingCard | ComponentSharedHeadline | ComponentSharedHeroPromo | ComponentSharedLoadMore | ComponentSharedNavItem | ComponentSharedSeo | ComponentSharedServiceGroup | ComponentSharedShowMore | ComponentSharedShowreel | ComponentSharedSocials | ComponentSharedTheme | ContentManagerOrganizerContentManagerConfiguration | Faq | Global | HiringProcess | I18NLocale | Industry | Insight | Page | Platform | PrimaryAudience | Process | Region | ResourceType | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | Service | Tag | Team | TeamTestimonial | TechStack | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser
+union GenericMorph = Achievement | Author | CaseStudy | Client | ClientTestimonial | ComponentGlobalError | ComponentGlobalFooter | ComponentGlobalPartner | ComponentHubBarFilter | ComponentPortfolioFilter | ComponentRichContentBlock | ComponentRichContentStat | ComponentSectionsCampaignIntro | ComponentSectionsCarousel | ComponentSectionsCaseStudies | ComponentSectionsContentColorBoxes | ComponentSectionsContentImageLeft | ComponentSectionsContentNumerated | ComponentSectionsCta | ComponentSectionsFaq | ComponentSectionsForm | ComponentSectionsHero | ComponentSectionsHubBar | ComponentSectionsIndustries | ComponentSectionsInsightList | ComponentSectionsIntersectionFloatingBoxes | ComponentSectionsIntersectionMedia | ComponentSectionsPageIntro | ComponentSectionsPerson | ComponentSectionsPortfolio | ComponentSectionsProcess | ComponentSectionsProgressCards | ComponentSectionsRichContentBody | ComponentSectionsServicesGroup | ComponentSectionsTeam | ComponentSectionsTechStack | ComponentSharedButton | ComponentSharedCardMilestone | ComponentSharedColorBox | ComponentSharedContentItem | ComponentSharedFloatingCard | ComponentSharedHeadline | ComponentSharedHeroPromo | ComponentSharedLoadMore | ComponentSharedNavItem | ComponentSharedSeo | ComponentSharedServiceGroup | ComponentSharedShowMore | ComponentSharedShowreel | ComponentSharedSocials | ComponentSharedTheme | ContentManagerOrganizerContentManagerConfiguration | Faq | Global | HiringProcess | I18NLocale | Industry | Insight | Page | Platform | PrimaryAudience | Process | Region | ResourceType | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | Service | Tag | Team | TeamTestimonial | TechStack | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser
 
 type Global {
   createdAt: DateTime
   documentId: ID!
+  error: ComponentGlobalError
   footer: ComponentGlobalFooter
   publishedAt: DateTime
   updatedAt: DateTime
@@ -2157,6 +2184,7 @@ type GlobalEntityResponseCollection {
 input GlobalFiltersInput {
   and: [GlobalFiltersInput]
   createdAt: DateTimeFilterInput
+  error: ComponentGlobalErrorFiltersInput
   footer: ComponentGlobalFooterFiltersInput
   not: GlobalFiltersInput
   or: [GlobalFiltersInput]
@@ -2165,6 +2193,7 @@ input GlobalFiltersInput {
 }
 
 input GlobalInput {
+  error: ComponentGlobalErrorInput
   footer: ComponentGlobalFooterInput
   locale: String
   publishedAt: DateTime
@@ -2680,12 +2709,7 @@ type NavigationItem {
 
 type NavigationItemAdditionalFields
 
-type NavigationItemRelated {
-  documentId: String
-  id: Int
-  name: String
-  title: String
-}
+union NavigationItemRelated = CaseStudy | Industry | Insight | Page | Service
 
 enum NavigationItemType {
   EXTERNAL
@@ -2701,7 +2725,6 @@ enum NavigationRenderType {
 type Page {
   createdAt: DateTime
   documentId: ID!
-  parent: Page
   publishedAt: DateTime
   sections: [PageSectionsDynamicZone]
   seo: ComponentSharedSeo
@@ -2731,7 +2754,6 @@ input PageFiltersInput {
   documentId: IDFilterInput
   not: PageFiltersInput
   or: [PageFiltersInput]
-  parent: PageFiltersInput
   publishedAt: DateTimeFilterInput
   seo: ComponentSharedSeoFiltersInput
   showScrollTop: BooleanFilterInput
@@ -2742,7 +2764,6 @@ input PageFiltersInput {
 
 input PageInput {
   locale: String
-  parent: ID
   publishedAt: DateTime
   sections: [PageSectionsDynamicZoneInput!]
   seo: ComponentSharedSeoInput
@@ -3305,7 +3326,7 @@ type ServiceRelationResponseCollection {
   nodes: [Service!]!
 }
 
-union ServiceSectionsDynamicZone = ComponentSectionsCarousel | ComponentSectionsCaseStudies | ComponentSectionsCta | ComponentSectionsProcess | ComponentSectionsRichContentBody | ComponentSectionsTechStack | Error
+union ServiceSectionsDynamicZone = ComponentSectionsCampaignIntro | ComponentSectionsCarousel | ComponentSectionsCaseStudies | ComponentSectionsContentColorBoxes | ComponentSectionsContentNumerated | ComponentSectionsCta | ComponentSectionsProcess | Error
 
 scalar ServiceSectionsDynamicZoneInput
 

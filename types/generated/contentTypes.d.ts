@@ -552,11 +552,9 @@ export interface ApiCaseStudyCaseStudy extends Struct.CollectionTypeSchema {
     sections: Schema.Attribute.DynamicZone<
       [
         'sections.rich-content-body',
-        'sections.process',
-        'sections.carousel',
-        'sections.tech-stack',
         'sections.cta',
         'sections.case-studies',
+        'sections.form',
       ]
     >;
     seo: Schema.Attribute.Component<'shared.seo', false>;
@@ -704,6 +702,7 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    error: Schema.Attribute.Component<'global.error', false>;
     footer: Schema.Attribute.Component<'global.footer', false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -878,7 +877,6 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::page.page'> &
       Schema.Attribute.Private;
-    parent: Schema.Attribute.Relation<'manyToOne', 'api::page.page'>;
     publishedAt: Schema.Attribute.DateTime;
     sections: Schema.Attribute.DynamicZone<
       [
@@ -1131,12 +1129,13 @@ export interface ApiServiceService extends Struct.CollectionTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     sections: Schema.Attribute.DynamicZone<
       [
-        'sections.rich-content-body',
+        'sections.campaign-intro',
+        'sections.content-numerated',
+        'sections.content-color-boxes',
+        'sections.case-studies',
         'sections.process',
         'sections.carousel',
-        'sections.tech-stack',
         'sections.cta',
-        'sections.case-studies',
       ]
     >;
     seo: Schema.Attribute.Component<'shared.seo', false>;

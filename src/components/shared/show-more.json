@@ -3,20 +3,15 @@
   "info": {
     "displayName": "Show more / less",
     "icon": "chevronDown",
-    "description": "Collapsible list: keep `Items to show` visible and reveal the rest with the Show more/less toggle, or switch the toggle off to list everything (and expose the section's own button)."
+    "description": "Collapse settings: how many items stay visible and the toggle's labels. Whether the toggle is used at all comes from the section's `List ending` field."
   },
   "options": {},
   "attributes": {
-    "useShowMore": {
-      "type": "boolean",
-      "default": true,
-      "description": "On: keep `Items to show` items visible, reveal the rest with the toggle. Off: list every item and use the section's button instead."
-    },
     "itemsToShow": {
       "type": "integer",
       "default": 5,
       "min": 1,
-      "description": "How many items stay visible before the Show more toggle."
+      "description": "How many items render up front. Everything after them stays collapsed behind the toggle."
     },
     "showMoreLabel": {
       "type": "string",

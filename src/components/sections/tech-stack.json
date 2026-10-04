@@ -15,24 +15,43 @@
       "repeatable": false,
       "component": "shared.headline"
     },
+    "listMode": {
+      "type": "enumeration",
+      "default": "showMore",
+      "enum": [
+        "showMore",
+        "none"
+      ],
+      "description": "`showMore` = collapse the technologies behind the toggle; `none` = list every technology and use the button below instead."
+    },
     "showMore": {
       "type": "component",
       "repeatable": false,
       "component": "shared.show-more",
-      "description": "Show a set number of technologies behind a Show more/less toggle (labels + count editable), or list every picked technology"
+      "description": "Toggle labels + how many technologies stay visible. Used when List ending is `showMore`.",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "listMode"
+            },
+            "showMore"
+          ]
+        }
+      }
     },
     "button": {
       "type": "component",
       "repeatable": false,
       "component": "shared.button",
-      "description": "Only available when Show more/less is switched off — the button and the toggle are mutually exclusive",
+      "description": "Only used when List ending is `none` — the button and the toggle are mutually exclusive",
       "conditions": {
         "visible": {
-          "!=": [
+          "==": [
             {
-              "var": "showMore.useShowMore"
+              "var": "listMode"
             },
-            true
+            "none"
           ]
         }
       }
@@ -40,7 +59,8 @@
     "blocks": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::tech-stack.tech-stack"
+      "target": "api::tech-stack.tech-stack",
+      "description": "The technologies to list, in this order. On a Service page, leave it empty to list that service's own 'Tech stack' instead — so the section shows something before you curate it here. Picking even one technology switches that automatic list off."
     },
     "theme": {
       "type": "component",

@@ -16,6 +16,11 @@
       "type": "component",
       "repeatable": false,
       "component": "global.footer"
+    },
+    "error": {
+      "type": "component",
+      "repeatable": false,
+      "component": "global.error"
     }
   }
 }

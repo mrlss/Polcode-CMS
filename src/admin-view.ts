@@ -33,11 +33,7 @@ const COPY: CopyMap = {
     },
     slug: {
       description:
-        "URL segment for this page: 'index' renders the homepage at '/', any other value renders '/<slug>' under its parent page. One segment only — no slashes.",
-    },
-    parent: {
-      description:
-        "Optional parent page. The public URL is the parent's path plus this slug (e.g. parent 'Services' + slug 'web-development' → /services/web-development). Leave empty for a top-level page.",
+        "URL segment for this page: 'index' renders the homepage at '/', any other value renders '/<slug>'. One segment only — no slashes.",
     },
     seo: {
       description:
@@ -58,7 +54,7 @@ const COPY: CopyMap = {
     },
     parent: {
       description:
-        "Page the case study is listed under — normally the Case Studies hub. The public URL is the parent's path plus the slug. Projects without a parent fall back to the legacy /case-studies prefix.",
+        "Optional parent page. The public URL is the parent's path plus this slug. Leave empty to publish at the site root ('/<slug>').",
     },
     seo: {
       description:
@@ -76,7 +72,7 @@ const COPY: CopyMap = {
     },
     parent: {
       description:
-        "Page the resource is listed under — normally the Resources hub. The public URL is the parent's path plus the slug.",
+        "Optional parent page. The public URL is the parent's path plus this slug. Leave empty to publish at the site root ('/<slug>').",
     },
     readDuration: {
       label: "Reading / listening time",
@@ -99,7 +95,7 @@ const COPY: CopyMap = {
     },
     parent: {
       description:
-        "Page the service is listed under — normally the Services hub. The public URL is the parent's path plus the slug (e.g. Services + 'web-development' → /services/web-development).",
+        "Optional parent page. The public URL is the parent's path plus this slug (e.g. Services + 'web-development' → /services/web-development). Leave empty to publish at the site root ('/<slug>').",
     },
     seo: {
       description:
@@ -118,6 +114,10 @@ const COPY: CopyMap = {
     textColor: {
       description:
         "Text colour inside the section. 'light' = white text (used on dark backgrounds).",
+    },
+    headerTheme: {
+      description:
+        "Text colour of the header bar while this section is under it. Leave empty to follow the section's text colour.",
     },
   },
   "shared.button": {
@@ -151,19 +151,16 @@ const COPY: CopyMap = {
     },
   },
   "shared.show-more": {
-    useShowMore: {
-      description:
-        "On: show only 'Items to show' and reveal the rest with the toggle. Off: list everything and use the section's own button instead.",
-    },
     itemsToShow: {
-      description: "How many items stay visible before the Show more toggle.",
+      description:
+        "How many items render up front. Everything after them stays collapsed behind the toggle.",
     },
     showMoreLabel: { description: "Label of the collapsed toggle." },
     showLessLabel: { description: "Label of the expanded toggle." },
   },
   "shared.load-more": {
     initialItems: {
-      description: "How many items are on the page before the first click.",
+      description: "How many items render up front, before the first click.",
     },
     loadChunk: { description: "How many items one click adds." },
     loadMoreLabel: { description: "Label of the Load more button." },
@@ -439,6 +436,10 @@ const COPY: CopyMap = {
       description:
         "Site-wide footer content. Navigation links come from the footer navigations, not from here.",
     },
+    error: {
+      description:
+        "Copy for the 404 / error screens. Consumed by the frontend error pages.",
+    },
   },
   "shared.seo": {
     metaTitle: {
@@ -472,11 +473,6 @@ const COPY: CopyMap = {
     title: { label: "Title" },
     description: { label: "Copy" },
     button: { description: BUTTON_TIP },
-  },
-  "shared.card-numerated": {
-    title: { label: "Title" },
-    description: { label: "Copy" },
-    media: { label: "Image / video", description: MEDIA_TIP },
   },
   "shared.card-milestone": {
     title: { label: "Title" },
@@ -553,6 +549,18 @@ const COPY: CopyMap = {
     label: { label: "Name" },
     url: { label: "Website" },
     logo: { label: "Logo" },
+  },
+  "global.error": {
+    title: { label: "Title" },
+    image: {
+      label: "Image",
+      description: "Optional illustration shown next to the message.",
+    },
+    description: { label: "Description" },
+    button: {
+      label: "Button",
+      description: "Where the visitor should go next.",
+    },
   },
   "rich-content.block": {
     type: {
@@ -739,7 +747,8 @@ const COPY: CopyMap = {
     anchor: { label: "Anchor (URL hash)", description: ANCHOR_TIP },
     variant: {
       label: "Layout",
-      description: "default = contact form, compact = newsletter band.",
+      description:
+        "default = contact form, hero = contact form with the wordmark band, compact = newsletter band.",
     },
     title: { label: "Title" },
     description: { label: "Copy" },
@@ -865,9 +874,14 @@ const COPY: CopyMap = {
       label: "Technologies",
       description: "Shown as hover rows, in this order.",
     },
+    listMode: {
+      label: "List ending",
+      description:
+        "`showMore`: collapse the technologies behind the toggle. `none`: list every technology and use the button below instead.",
+    },
     showMore: {
       description:
-        "Off: list every technology and use the button below. On: keep a set number visible behind the toggle.",
+        "Toggle labels + how many technologies stay visible. Used when List ending is `showMore`.",
     },
     button: { description: BUTTON_TIP },
     theme: { description: THEME_TIP },
@@ -882,6 +896,11 @@ const COPY: CopyMap = {
     otherCases: {
       label: "Other cases",
       description: "Revealed by Show more. Empty = every remaining case study.",
+    },
+    listMode: {
+      label: "List ending",
+      description:
+        "`showMore`: other cases behind a Show more/less toggle. `loadMore`: page them with the Load more button. `none`: list every other case with no control.",
     },
     sort: {
       label: "Sort order",
@@ -898,9 +917,70 @@ const COPY: CopyMap = {
     },
     showMore: {
       description:
-        "Toggle + labels for the other cases. They stay behind the toggle: the Featured cases relation is what stays visible.",
+        "Toggle labels + how many other cases stay visible. Used when List ending is `showMore`.",
     },
     theme: { description: THEME_TIP },
+  },
+  "sections.vacancies-list": {
+    anchor: { label: "Anchor (URL hash)", description: ANCHOR_TIP },
+    headline: { description: HEADLINE_TIP },
+    intro: {
+      description:
+        "Intro copy above the list. The positions themselves come from Traffit and cannot be edited here.",
+    },
+    emptyState: {
+      label: "No positions message",
+      description:
+        "Shown instead of the list when Traffit has no published positions, or is temporarily unreachable. Always fill this in — otherwise the section renders as an empty gap.",
+    },
+    listMode: {
+      label: "List ending",
+      description:
+        "`showMore`: collapse the list behind a toggle once it gets long. `none`: always list every open position.",
+    },
+    showMore: {
+      description:
+        "How many positions stay visible and the toggle's labels. Used when List ending is `showMore`.",
+    },
+    button: { description: BUTTON_TIP },
+    theme: { description: THEME_TIP },
+  },
+  "sections.vacancy-details": {
+    anchor: { label: "Anchor (URL hash)", description: ANCHOR_TIP },
+    headline: {
+      description:
+        "Optional. Leave empty and the position title from Traffit becomes the page heading — recommended, so a retitled position never needs editing here.",
+    },
+    applyLabel: {
+      label: "Apply button text",
+      description: "Opens the application form in Traffit.",
+    },
+    applyNote: {
+      label: "Apply note",
+      description:
+        "Reassurance under the apply button (e.g. \"We reply to every application\"). Optional.",
+    },
+    backLabel: {
+      label: "Back link text",
+      description: "Link back to the vacancies list.",
+    },
+    emptyState: {
+      label: "Missing position message",
+      description:
+        "Fallback copy for a position that is no longer published. In practice those pages return 404, so this is only a safety net.",
+    },
+    theme: { description: THEME_TIP },
+  },
+  "api::vacancy-page.vacancy-page": {
+    title: { description: "Name shown in the admin sidebar. Not visible on the website." },
+    seo: {
+      description:
+        "Fallback search + social copy. The position title and description from Traffit are used first, so these only fill the gaps.",
+    },
+    sections: {
+      description:
+        "The blocks that build every vacancy page, top to bottom. Keep exactly one 'Vacancy details' block — that is where the live position renders — and wrap it with any of the other blocks. Everything here is shared by all positions; per-position text is edited in Traffit.",
+    },
   },
 };
 
@@ -926,7 +1006,6 @@ const EDIT_LAYOUT: Record<string, string[][]> = {
   "api::page.page": [
     ["seo"],
     ["title", "slug"],
-    ["parent"],
     ["showScrollTop"],
     ["sections"],
   ],
@@ -990,6 +1069,7 @@ const EDIT_LAYOUT: Record<string, string[][]> = {
   "sections.portfolio": [
     ["anchor"],
     ["headline"],
+    ["listMode"],
     ["sort", "manualCasesControl"],
     ["filters"],
     ["featuredCases"],
@@ -998,6 +1078,28 @@ const EDIT_LAYOUT: Record<string, string[][]> = {
     ["theme"],
   ],
   "portfolio.filter": [["taxonomy", "label"]],
+  "sections.vacancies-list": [
+    ["anchor"],
+    ["headline"],
+    ["intro"],
+    ["listMode"],
+    ["showMore"],
+    ["emptyState"],
+    ["button"],
+    ["theme"],
+  ],
+  "sections.vacancy-details": [
+    ["anchor"],
+    ["headline"],
+    ["applyLabel", "backLabel"],
+    ["applyNote"],
+    ["emptyState"],
+    ["theme"],
+  ],
+  "api::vacancy-page.vacancy-page": [
+    ["title", "seo"],
+    ["sections"],
+  ],
   "api::achievement.achievement": [
     ["title", "date"],
     ["platform"],
@@ -1054,9 +1156,9 @@ const EDIT_LAYOUT: Record<string, string[][]> = {
     ["link"],
     ["services", "caseStudies"],
   ],
-  "api::global.global": [["footer"]],
+  "api::global.global": [["footer"], ["error"]],
   "shared.seo": [["metaTitle"], ["metaDescription"], ["socialImage"]],
-  "shared.theme": [["background", "textColor"]],
+  "shared.theme": [["background", "textColor"], ["headerTheme"]],
   "shared.headline": [["title", "addCount"]],
   "shared.nav-item": [["label", "anchor"]],
   "shared.socials": [["title", "link"]],
@@ -1070,13 +1172,9 @@ const EDIT_LAYOUT: Record<string, string[][]> = {
     ["insight"],
     ["service"],
   ],
-  "shared.show-more": [
-    ["useShowMore", "itemsToShow"],
-    ["showMoreLabel", "showLessLabel"],
-  ],
+  "shared.show-more": [["itemsToShow"], ["showMoreLabel", "showLessLabel"]],
   "shared.load-more": [["initialItems", "loadChunk"], ["loadMoreLabel"]],
   "shared.content-item": [["title"], ["description"], ["button"]],
-  "shared.card-numerated": [["title"], ["description"], ["media"]],
   "shared.card-milestone": [["title"], ["description"]],
   "shared.color-box": [["title", "label"], ["blocks"], ["expandable"]],
   "shared.floating-card": [
@@ -1096,6 +1194,7 @@ const EDIT_LAYOUT: Record<string, string[][]> = {
     ["copyright"],
   ],
   "global.partner": [["label"], ["url"], ["logo"]],
+  "global.error": [["title", "image"], ["description"], ["button"]],
   "rich-content.block": [
     ["type", "title"],
     ["content"],
@@ -1255,6 +1354,7 @@ const EDIT_LAYOUT: Record<string, string[][]> = {
     ["anchor"],
     ["headline"],
     ["blocks"],
+    ["listMode"],
     ["showMore"],
     ["button"],
     ["theme"],

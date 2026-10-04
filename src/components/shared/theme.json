@@ -23,6 +23,13 @@
         "light",
         "dark"
       ]
+    },
+    "headerTheme": {
+      "type": "enumeration",
+      "enum": [
+        "light",
+        "dark"
+      ]
     }
   }
 }

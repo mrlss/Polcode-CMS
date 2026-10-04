@@ -11,7 +11,7 @@
       "type": "integer",
       "default": 6,
       "min": 1,
-      "description": "How many items are on the page before the first click."
+      "description": "How many items render up front, before the first click."
     },
     "loadChunk": {
       "type": "integer",

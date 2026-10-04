@@ -71,9 +71,16 @@ const config = ({
   navigation: {
     enabled: true,
     config: {
-      contentTypes: ["api::page.page"],
+      contentTypes: [
+        "api::page.page",
+        "api::service.service",
+        "api::case-study.case-study",
+        "api::insight.insight",
+        "api::industry.industry",
+      ],
       contentTypesNameFields: {
-        "api::page.page": ["title"],
+        default: ["title"],
+        "api::case-study.case-study": ["title", "shortTitle"],
       },
       pathDefaultFields: {
         "api::page.page": ["slug"],
