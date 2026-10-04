@@ -1,0 +1,61 @@
+{
+  "collectionName": "components_sections_vacancy_details",
+  "info": {
+    "displayName": "Vacancy details",
+    "icon": "briefcase",
+    "description": "One live position: name, apply button, location and the full description, straight from the recruitment system (Traffit). Keep exactly one per vacancy page — that is where the position renders."
+  },
+  "options": {},
+  "attributes": {
+    "anchor": {
+      "type": "string",
+      "description": "DOM id / URL hash for this section (e.g. \"details\" → #details). Lets nav links target this section on the page."
+    },
+    "headline": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.headline",
+      "description": "Optional. Leave empty and the position title from Traffit becomes the page heading — that is what we recommend, so a retitled position never needs editing here."
+    },
+    "linkTarget": {
+      "type": "enumeration",
+      "default": "application",
+      "enum": [
+        "application",
+        "advert"
+      ],
+      "description": "Where the button sends candidates. `application`: Traffit's application form (recommended — that is the form HR tracks). `advert`: the public advert page on Traffit."
+    },
+    "buttonLabel": {
+      "type": "string",
+      "default": "Apply now",
+      "description": "Text on the button that opens Traffit in a new tab."
+    },
+    "buttonNote": {
+      "type": "customField",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      },
+      "description": "Reassurance under the button (e.g. \"We reply to every application\"). Optional."
+    },
+    "backLabel": {
+      "type": "string",
+      "default": "All open positions",
+      "description": "Text on the link back to the vacancies list."
+    },
+    "emptyState": {
+      "type": "customField",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      },
+      "description": "Fallback copy for a position that is no longer published. In practice the page returns 404 for those, so this is only a safety net."
+    },
+    "theme": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.theme"
+    }
+  }
+}

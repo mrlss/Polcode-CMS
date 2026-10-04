@@ -18,7 +18,8 @@
         "manual",
         "next",
         "featured"
-      ]
+      ],
+      "description": "`manual` = show exactly the case studies you pick below. `latest` = the newest case studies in the whole Case Studies collection. `featured` = the ones marked as featured. `next` = the newest, excluding the current page. Only `manual` uses your own picks."
     },
     "limit": {
       "type": "integer",
@@ -33,7 +34,8 @@
         }
       },
       "default": 2,
-      "min": 1
+      "min": 1,
+      "description": "How many case studies to show. Ignored when Selection is `manual`, which shows every pick."
     },
     "headline": {
       "type": "component",
@@ -63,7 +65,8 @@
             "manual"
           ]
         }
-      }
+      },
+      "description": "Only used when Selection is `manual`. On a Service or Case Study page, leave it empty to show that page's own related case studies instead — so the page always has cases even before you curate them here. Picking even one case switches that automatic set off."
     }
   }
 }

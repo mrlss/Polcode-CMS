@@ -63,32 +63,77 @@ type NavItem = {
   path?: string;
   externalPath?: string;
   key: string;
+  relatedType?: string;
+  relatedDocumentId?: string;
   children?: NavItem[];
 };
 
-const serviceItems = (pathPrefix: string): NavItem[] =>
-  SERVICES.map((s) => ({
-    title: s.title,
+type NavEntry = { title: string; slug: string; documentId: string };
+
+type NavLinks = {
+  servicePath: (slug: string) => string;
+  industryHref: (slug: string) => string;
+  serviceHubPath: string;
+  casesHubPath: string;
+  serviceHubSlug: string | null;
+  casesHubSlug: string | null;
+  serviceEntries: NavEntry[];
+  industryEntries: NavEntry[];
+  pageIds: Map<string, string>;
+};
+
+const CASES_FILTER_PARAM = "cases_industries";
+
+const serviceItems = (
+  servicePath: NavLinks["servicePath"],
+  serviceEntries: NavEntry[],
+): NavItem[] =>
+  serviceEntries.map((service) => ({
+    title: service.title,
     type: "INTERNAL",
-    path: `/${pathPrefix}/${s.slug}`,
-    key: `${pathPrefix}-${s.slug}`,
+    path: servicePath(service.slug),
+    key: `services-${service.slug}`,
+    relatedType: "api::service.service",
+    relatedDocumentId: service.documentId,
   }));
 
-const industryItems = (): NavItem[] =>
-  INDUSTRIES.map((ind) => ({
-    title: ind.title,
-    type: "INTERNAL",
-    // No dedicated industry pages — every industry links to the Industries
-    // section on the homepage (see `sections.industries` anchor).
-    path: "/#industries",
-    key: `industry-${ind.slug}`,
+const industryItems = (
+  industryHref: NavLinks["industryHref"],
+  industryEntries: NavEntry[],
+): NavItem[] =>
+  industryEntries.map((industry) => ({
+    title: industry.title,
+    type: "INTERNAL" as const,
+    // No dedicated industry pages — the Cases listing renders each industry
+    // through its own filter, on the hub page the case studies live under.
+    path: industryHref(industry.slug),
+    key: `industry-${industry.slug}`,
+    relatedType: "api::industry.industry",
+    relatedDocumentId: industry.documentId,
   }));
 
-const NAVIGATIONS: { name: string; items: NavItem[] }[] = [
+const navigations = ({
+  servicePath,
+  industryHref,
+  serviceHubPath,
+  casesHubPath,
+  serviceHubSlug,
+  casesHubSlug,
+  serviceEntries,
+  industryEntries,
+  pageIds,
+}: NavLinks): { name: string; items: NavItem[] }[] => [
   {
     name: "Header",
     items: [
-      { title: "Home", type: "INTERNAL", path: "/", key: "home" },
+      {
+        title: "Home",
+        type: "INTERNAL",
+        path: "/",
+        key: "home",
+        relatedType: "api::page.page",
+        relatedDocumentId: pageIds.get("index"),
+      },
       {
         title: "Services",
         type: "WRAPPER",
@@ -97,17 +142,21 @@ const NAVIGATIONS: { name: string; items: NavItem[] }[] = [
           {
             title: "All Services",
             type: "INTERNAL",
-            path: "/services",
+            path: serviceHubPath,
             key: "all-services",
+            relatedType: "api::page.page",
+            relatedDocumentId: serviceHubSlug
+              ? pageIds.get(serviceHubSlug)
+              : undefined,
           },
-          ...serviceItems("services"),
+          ...serviceItems(servicePath, serviceEntries),
         ],
       },
       {
         title: "Industries",
         type: "WRAPPER",
         key: "industries",
-        children: industryItems(),
+        children: industryItems(industryHref, industryEntries),
       },
       {
         title: "Technologies",
@@ -118,8 +167,10 @@ const NAVIGATIONS: { name: string; items: NavItem[] }[] = [
       {
         title: "Case Studies",
         type: "INTERNAL",
-        path: "/case-studies",
+        path: casesHubPath,
         key: "case-studies",
+        relatedType: "api::page.page",
+        relatedDocumentId: casesHubSlug ? pageIds.get(casesHubSlug) : undefined,
       },
     ],
   },
@@ -158,11 +209,11 @@ const NAVIGATIONS: { name: string; items: NavItem[] }[] = [
   },
   {
     name: "Footer Industries",
-    items: industryItems(),
+    items: industryItems(industryHref, industryEntries),
   },
   {
     name: "Footer Services",
-    items: serviceItems("services"),
+    items: serviceItems(servicePath, serviceEntries),
   },
   {
     name: "Footer Navigation",
@@ -170,8 +221,12 @@ const NAVIGATIONS: { name: string; items: NavItem[] }[] = [
       {
         title: "Services",
         type: "INTERNAL",
-        path: "/services",
+        path: serviceHubPath,
         key: "footer-nav-services",
+        relatedType: "api::page.page",
+        relatedDocumentId: serviceHubSlug
+          ? pageIds.get(serviceHubSlug)
+          : undefined,
       },
       {
         title: "Industries",
@@ -188,8 +243,10 @@ const NAVIGATIONS: { name: string; items: NavItem[] }[] = [
       {
         title: "Case Studies",
         type: "INTERNAL",
-        path: "/case-studies",
+        path: casesHubPath,
         key: "footer-nav-case-studies",
+        relatedType: "api::page.page",
+        relatedDocumentId: casesHubSlug ? pageIds.get(casesHubSlug) : undefined,
       },
       {
         title: "About Us",
@@ -263,6 +320,30 @@ const CONTENT_TYPE_PARENTS: { collection: UID.ContentType; slug: string }[] = [
 // Helpers
 // ---------------------------------------------------------------------------
 
+/** Every entry of a collection (draft + published rows deduped by slug). */
+async function collectionEntries(
+  strapi: Strapi,
+  uid: UID.ContentType,
+  fallback: { title: string; slug: string }[],
+): Promise<NavEntry[]> {
+  const rows = (await strapi.db.query(uid).findMany({
+    orderBy: { title: "asc" },
+  })) as NavEntry[];
+  const bySlug = new Map<string, NavEntry>();
+
+  for (const row of rows) {
+    if (row.slug && !bySlug.has(row.slug)) bySlug.set(row.slug, row);
+  }
+
+  if (bySlug.size === 0) {
+    return fallback.map((entry) => ({ ...entry, documentId: "" }));
+  }
+
+  return [...bySlug.values()].sort((a, b) =>
+    a.title.localeCompare(b.title, "en", { sensitivity: "base" }),
+  );
+}
+
 /** Ensure a (title, slug) entry exists for a content type; returns it. */
 async function ensureBySlug(
   strapi: Strapi,
@@ -299,11 +380,19 @@ const toItemDto = (item: NavItem, order: number): Record<string, unknown> => ({
   ...(item.externalPath !== undefined
     ? { externalPath: item.externalPath }
     : {}),
+  ...(item.relatedType && item.relatedDocumentId
+    ? {
+        related: {
+          __type: item.relatedType,
+          documentId: item.relatedDocumentId,
+        },
+        autoSync: false,
+      }
+    : { autoSync: true }),
   uiRouterKey: item.key,
   menuAttached: true,
   order,
   collapsed: false,
-  autoSync: true,
   ...(item.children && item.children.length
     ? { items: item.children.map((c, i) => toItemDto(c, i)) }
     : {}),
@@ -393,20 +482,35 @@ export async function seedNavigation(strapi: Strapi) {
   log(`taxonomy: services=${services.length} industries=${industries.length}`);
 
   // Every content type sits under its hub page, so URLs come from the parent
-  // chain instead of a hardcoded prefix.
+  // chain instead of a hardcoded prefix. A relation link must point at the row
+  // OF ITS OWN VERSION — a draft-page link on a published row resolves to null
+  // and drops the entry to a root-level URL — so pick the matching page row.
   for (const { collection, slug } of CONTENT_TYPE_PARENTS) {
-    const parent = (await qPage.findOne({ where: { slug } })) as {
+    const pageRows = (await qPage.findMany({ where: { slug } })) as {
       id: number;
-    } | null;
-    if (!parent) continue;
+      publishedAt: string | null;
+    }[];
+    if (pageRows.length === 0) continue;
+
+    const draftPage = pageRows.find((page) => !page.publishedAt) ?? pageRows[0];
+    const publishedPage =
+      pageRows.find((page) => page.publishedAt) ?? pageRows[0];
 
     const rows = (await strapi.db.query(collection).findMany({
       populate: { parent: true },
-    })) as { id: number; parent?: { id: number } | null }[];
+    })) as {
+      id: number;
+      publishedAt: string | null;
+      parent?: { id: number; publishedAt: string | null } | null;
+    }[];
     let linked = 0;
 
     for (const row of rows) {
-      if (row.parent?.id) continue;
+      const parent = row.publishedAt ? publishedPage : draftPage;
+      const parentMatches =
+        row.parent?.id && !!row.parent.publishedAt === !!row.publishedAt;
+      if (parentMatches) continue;
+
       await strapi.db.query(collection).update({
         where: { id: row.id },
         data: { parent: parent.id },
@@ -417,11 +521,85 @@ export async function seedNavigation(strapi: Strapi) {
     log(`parent '${slug}': ${linked} of ${rows.length} ${collection} linked`);
   }
 
-  // Navigations.
-  for (const { name, items } of NAVIGATIONS) {
+  // Navigations. Every path comes from the CMS: a page is its own slug, an
+  // entry is `parent page slug + slug`, and a filtered listing hangs off the
+  // hub page its content type is parented to.
+  const pagePath = (slug: string | null): string =>
+    !slug || slug === "index" ? "/" : `/${slug}`;
+  const entryPath = (parentSlug: string | null, slug: string): string =>
+    parentSlug && parentSlug !== "index"
+      ? `/${parentSlug}/${slug}`
+      : `/${slug}`;
+
+  const parentSlugsOf = async (uid: UID.ContentType) => {
+    const rows = (await strapi.db.query(uid).findMany({
+      populate: { parent: true },
+    })) as { slug: string; parent?: { slug: string } | null }[];
+    const bySlug = new Map<string, string>();
+    for (const row of rows) {
+      if (row.parent?.slug && !bySlug.has(row.slug)) {
+        bySlug.set(row.slug, row.parent.slug);
+      }
+    }
+    return bySlug;
+  };
+
+  const hubSlugOf = (
+    parents: Map<string, string>,
+    uid: UID.ContentType,
+  ): string | null =>
+    [...parents.values()][0] ??
+    CONTENT_TYPE_PARENTS.find((entry) => entry.collection === uid)?.slug ??
+    null;
+
+  const serviceParents = await parentSlugsOf("api::service.service");
+  const caseStudyParents = await parentSlugsOf("api::case-study.case-study");
+  const serviceHubSlug = hubSlugOf(serviceParents, "api::service.service");
+  const casesHubSlug = hubSlugOf(
+    caseStudyParents,
+    "api::case-study.case-study",
+  );
+  const serviceHubPath = pagePath(serviceHubSlug);
+  const casesHubPath = pagePath(casesHubSlug);
+
+  const documentIdsOf = (rows: { slug: string; documentId: string }[]) =>
+    new Map(rows.map((row) => [row.slug, row.documentId]));
+
+  const serviceEntries = await collectionEntries(
+    strapi,
+    "api::service.service",
+    SERVICES,
+  );
+  const industryEntries = await collectionEntries(
+    strapi,
+    "api::industry.industry",
+    INDUSTRIES,
+  );
+
+  for (const { name, items } of navigations({
+    serviceHubPath,
+    casesHubPath,
+    serviceHubSlug,
+    casesHubSlug,
+    serviceEntries,
+    industryEntries,
+    pageIds: new Map([
+      ...documentIdsOf(pages),
+      ...documentIdsOf(
+        (await qPage.findMany({ where: { slug: "index" } })) as {
+          slug: string;
+          documentId: string;
+        }[],
+      ),
+    ]),
+    servicePath: (slug) => entryPath(serviceParents.get(slug) ?? null, slug),
+    industryHref: (slug) => `${casesHubPath}?${CASES_FILTER_PARAM}=${slug}`,
+  })) {
     await upsertNavigation(strapi, name, items);
     log(
-      `navigation '${slugify(name)}' upserted (${items.length} top-level items)`,
+      `navigation '${slugify(name)}' upserted (${
+        items.length
+      } top-level items)`,
     );
   }
 

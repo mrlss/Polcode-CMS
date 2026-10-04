@@ -68,6 +68,13 @@ export default {
                   kind: "collectionType",
                   items: ["page"],
                 },
+                {
+                  id: "settings",
+                  label: "Settings",
+                  defaultExpanded: false,
+                  kind: "singleType",
+                  items: ["global", "vacancy-page"],
+                },
               ],
             },
           },
@@ -99,8 +106,9 @@ export default {
           ("title" in attributes ? "title" : null);
         if (!mainField || !(mainField in attributes)) continue;
 
-        const configuration =
-          await contentTypesService.findConfiguration(schema);
+        const configuration = await contentTypesService.findConfiguration(
+          schema,
+        );
         if (!configuration || configuration.settings?.mainField === mainField) {
           continue;
         }
@@ -145,6 +153,21 @@ export default {
         await seedNavigation(strapi);
       } catch (error: any) {
         console.warn("Could not seed navigations:", error?.message);
+        if (error?.details?.errors) {
+          error.details.errors.forEach((e: any) =>
+            console.warn("[seed-navigation] detail:", JSON.stringify(e)),
+          );
+        }
+      }
+    }
+
+    // Navigations only, without touching demo content — opt-in via SEED_NAV=true.
+    if (process.env.SEED_NAV === "true" && process.env.SEED_DEMO !== "true") {
+      try {
+        const { seedNavigation } = await import("./seed-navigation");
+        await seedNavigation(strapi);
+      } catch (error: any) {
+        console.warn("Could not rebuild navigations:", error?.message);
         if (error?.details?.errors) {
           error.details.errors.forEach((e: any) =>
             console.warn("[seed-navigation] detail:", JSON.stringify(e)),

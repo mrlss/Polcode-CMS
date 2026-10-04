@@ -21,17 +21,47 @@
       "component": "shared.theme",
       "repeatable": false
     },
+    "listMode": {
+      "type": "enumeration",
+      "default": "showMore",
+      "enum": [
+        "showMore",
+        "loadMore",
+        "none"
+      ],
+      "description": "How the other cases end: `showMore` = collapse them behind a Show more/less toggle, `loadMore` = page them with the Load more button, `none` = list every other case with no control."
+    },
     "showMore": {
       "type": "component",
       "repeatable": false,
       "component": "shared.show-more",
-      "description": "Show a set number of other cases behind a Show more/less toggle (labels + count editable), or list them all"
+      "description": "Toggle labels + how many other cases stay visible. Used when List ending is `showMore`.",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "listMode"
+            },
+            "showMore"
+          ]
+        }
+      }
     },
     "loadMore": {
       "type": "component",
       "repeatable": false,
       "component": "shared.load-more",
-      "description": "Paged list instead of a collapse: first batch on load, another batch per click."
+      "description": "First batch on load, another batch per click. Used when List ending is `loadMore`.",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "listMode"
+            },
+            "loadMore"
+          ]
+        }
+      }
     },
     "filters": {
       "type": "component",

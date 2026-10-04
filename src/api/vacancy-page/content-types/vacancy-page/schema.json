@@ -1,0 +1,46 @@
+{
+  "kind": "singleType",
+  "collectionName": "vacancy_pages",
+  "info": {
+    "singularName": "vacancy-page",
+    "pluralName": "vacancy-pages",
+    "displayName": "Vacancy page",
+    "description": "The template every vacancy page uses: the blocks that wrap the live position from Traffit, plus the page's own SEO. One setup for all positions."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "description": "Name shown in the admin sidebar. Not visible on the website."
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo",
+      "description": "Fallback search + social copy for vacancy pages. The position title and description from Traffit are used first, so these only fill the gaps."
+    },
+    "sections": {
+      "type": "dynamiczone",
+      "components": [
+        "sections.vacancy-details",
+        "sections.hero",
+        "sections.page-intro",
+        "sections.rich-content-body",
+        "sections.content-numerated",
+        "sections.content-color-boxes",
+        "sections.intersection-media",
+        "sections.faq",
+        "sections.carousel",
+        "sections.process",
+        "sections.team",
+        "sections.person",
+        "sections.cta",
+        "sections.form"
+      ],
+      "description": "The blocks that build every vacancy page, top to bottom. Keep exactly one 'Vacancy details' block — that is where the live position renders — and wrap it with any of the other blocks. Everything here is shared by all positions; per-position text is edited in Traffit."
+    }
+  }
+}

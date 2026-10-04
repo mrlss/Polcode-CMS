@@ -13,7 +13,7 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::service.service",
-      "description": "The carousel's cases come from here: every case study attached to these services is collected for the group."
+      "description": "The carousel's cases come from here: every case study listed in these services' own 'Case studies' field is collected for the group."
     },
     "relatedCaseStudies": {
       "type": "relation",

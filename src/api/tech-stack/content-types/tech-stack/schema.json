@@ -27,7 +27,8 @@
       "customField": "plugin::ckeditor5.CKEditor",
       "options": {
         "preset": "defaultHtml"
-      }
+      },
+      "description": "One or two lines explaining what the technology is used for. Shown next to the name in a Tech Stack section."
     },
     "image": {
       "type": "media",
@@ -35,22 +36,26 @@
       "required": false,
       "allowedTypes": [
         "images"
-      ]
+      ],
+      "description": "Logo or screenshot revealed when the row is hovered in a Tech Stack section. Use a transparent PNG or SVG."
     },
     "link": {
-      "type": "string"
+      "type": "string",
+      "description": "Full URL the row opens (e.g. https://react.dev). Leave empty for a row that is not clickable — technologies have no page on this site of their own."
     },
     "services": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::service.service",
-      "mappedBy": "techStack"
+      "mappedBy": "techStack",
+      "description": "Services that use this technology. This is the same link as 'Tech stack' on each service — filling it in here also adds the technology there, and vice versa."
     },
     "caseStudies": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::case-study.case-study",
-      "inversedBy": "techStack"
+      "inversedBy": "techStack",
+      "description": "Case studies that used this technology. The same link as 'Tech stack' on each case study. Drives the Technologies filter and the tags shown on case cards."
     }
   }
 }

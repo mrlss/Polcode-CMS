@@ -380,6 +380,16 @@ export async function seedContent(strapi: Strapi) {
         title: "Support",
         description: "<p>Long-term care with SLAs and 24/7 coverage.</p>",
       },
+      {
+        title: "Monitor",
+        description:
+          "<p>Continuous monitoring, alerting and reporting on live product metrics.</p>",
+      },
+      {
+        title: "Evolve",
+        description:
+          "<p>Roadmap iteration as the product, its traffic and its team grow.</p>",
+      },
     ],
   );
 
@@ -1264,9 +1274,21 @@ export async function seedGlobals(strapi: Strapi) {
           ],
           copyright: "©[[year_now]] Polcode Sp. z o.o. All rights reserved.",
         },
+        error: {
+          title: "Something went wrong",
+          description:
+            "<p>The page you are looking for does not exist, or it has been moved. Head back to the homepage and try again.</p>",
+          image: logoIds[0],
+          button: {
+            title: "Back to homepage",
+            variant: "dark",
+            linkType: "url",
+            url: "/",
+          },
+        },
         publishedAt: now.toISOString(),
       },
     } as never,
   );
-  log("globals (footer) seeded & published");
+  log("globals (footer + error) seeded & published");
 }
