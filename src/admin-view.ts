@@ -958,7 +958,7 @@ const COPY: CopyMap = {
     applyNote: {
       label: "Apply note",
       description:
-        "Reassurance under the apply button (e.g. \"We reply to every application\"). Optional.",
+        'Reassurance under the apply button (e.g. "We reply to every application"). Optional.',
     },
     backLabel: {
       label: "Back link text",
@@ -972,7 +972,10 @@ const COPY: CopyMap = {
     theme: { description: THEME_TIP },
   },
   "api::vacancy-page.vacancy-page": {
-    title: { description: "Name shown in the admin sidebar. Not visible on the website." },
+    title: {
+      description:
+        "Name shown in the admin sidebar. Not visible on the website.",
+    },
     seo: {
       description:
         "Fallback search + social copy. The position title and description from Traffit are used first, so these only fill the gaps.",
@@ -1096,10 +1099,7 @@ const EDIT_LAYOUT: Record<string, string[][]> = {
     ["emptyState"],
     ["theme"],
   ],
-  "api::vacancy-page.vacancy-page": [
-    ["title", "seo"],
-    ["sections"],
-  ],
+  "api::vacancy-page.vacancy-page": [["title", "seo"], ["sections"]],
   "api::achievement.achievement": [
     ["title", "date"],
     ["platform"],
