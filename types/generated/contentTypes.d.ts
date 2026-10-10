@@ -552,11 +552,9 @@ export interface ApiCaseStudyCaseStudy extends Struct.CollectionTypeSchema {
     sections: Schema.Attribute.DynamicZone<
       [
         'sections.rich-content-body',
-        'sections.process',
-        'sections.carousel',
-        'sections.tech-stack',
         'sections.cta',
         'sections.case-studies',
+        'sections.form',
       ]
     >;
     seo: Schema.Attribute.Component<'shared.seo', false>;
@@ -704,6 +702,7 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    error: Schema.Attribute.Component<'global.error', false>;
     footer: Schema.Attribute.Component<'global.footer', false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -878,7 +877,6 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::page.page'> &
       Schema.Attribute.Private;
-    parent: Schema.Attribute.Relation<'manyToOne', 'api::page.page'>;
     publishedAt: Schema.Attribute.DateTime;
     sections: Schema.Attribute.DynamicZone<
       [
@@ -906,6 +904,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'sections.tech-stack',
         'sections.portfolio',
         'sections.rich-content-body',
+        'sections.vacancies-list',
       ]
     >;
     seo: Schema.Attribute.Component<'shared.seo', false>;
@@ -1131,12 +1130,14 @@ export interface ApiServiceService extends Struct.CollectionTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     sections: Schema.Attribute.DynamicZone<
       [
-        'sections.rich-content-body',
+        'sections.campaign-intro',
+        'sections.content-numerated',
+        'sections.content-color-boxes',
+        'sections.case-studies',
         'sections.process',
         'sections.carousel',
-        'sections.tech-stack',
         'sections.cta',
-        'sections.case-studies',
+        'sections.tech-stack',
       ]
     >;
     seo: Schema.Attribute.Component<'shared.seo', false>;
@@ -1300,6 +1301,47 @@ export interface ApiTechStackTechStack extends Struct.CollectionTypeSchema {
     title: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiVacancyPageVacancyPage extends Struct.SingleTypeSchema {
+  collectionName: 'vacancy_pages';
+  info: {
+    description: "The template every vacancy page uses: the blocks that wrap the live position from Traffit, plus the page's own SEO. One setup for all positions.";
+    displayName: 'Vacancy page';
+    pluralName: 'vacancy-pages';
+    singularName: 'vacancy-page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::vacancy-page.vacancy-page'
+    > &
+      Schema.Attribute.Private;
+    parent: Schema.Attribute.Relation<'manyToOne', 'api::page.page'>;
+    publishedAt: Schema.Attribute.DateTime;
+    sections: Schema.Attribute.DynamicZone<
+      [
+        'sections.vacancy-details',
+        'sections.faq',
+        'sections.carousel',
+        'sections.cta',
+        'sections.form',
+        'sections.case-studies',
+      ]
+    >;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
+    title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -2031,6 +2073,7 @@ declare module '@strapi/strapi' {
       'api::team-testimonial.team-testimonial': ApiTeamTestimonialTeamTestimonial;
       'api::team.team': ApiTeamTeam;
       'api::tech-stack.tech-stack': ApiTechStackTechStack;
+      'api::vacancy-page.vacancy-page': ApiVacancyPageVacancyPage;
       'plugin::content-manager-organizer.content-manager-configuration': PluginContentManagerOrganizerContentManagerConfiguration;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

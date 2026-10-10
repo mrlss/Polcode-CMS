@@ -1,0 +1,99 @@
+{
+  "collectionName": "components_sections_vacancies_lists",
+  "info": {
+    "displayName": "Vacancies list",
+    "icon": "briefcase",
+    "description": "Open positions pulled live from the recruitment system (Traffit), as a grid of cards that link to each vacancy page. Drop it on any page. The positions themselves are never entered here — only the copy that surrounds them."
+  },
+  "options": {},
+  "attributes": {
+    "anchor": {
+      "type": "string",
+      "description": "DOM id / URL hash for this section (e.g. \"openings\" → #openings). Lets nav links target this section on the page."
+    },
+    "headline": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.headline"
+    },
+    "intro": {
+      "type": "customField",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      },
+      "description": "Intro copy shown above the list. The list itself comes from Traffit and cannot be edited here."
+    },
+    "emptyState": {
+      "type": "customField",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      },
+      "description": "Shown instead of the list when Traffit has no published positions — or when Traffit is temporarily unreachable. Always write something here, otherwise the section renders as an empty gap."
+    },
+    "listMode": {
+      "type": "enumeration",
+      "default": "loadMore",
+      "enum": [
+        "showMore",
+        "loadMore",
+        "none"
+      ],
+      "description": "`loadMore`: render the first batch and add another one per click. `showMore`: collapse the rest behind a Show more/less toggle. `none`: always show every open position."
+    },
+    "showMore": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.show-more",
+      "description": "How many cards stay visible and the toggle's labels. Used when List ending is `showMore`.",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "listMode"
+            },
+            "showMore"
+          ]
+        }
+      }
+    },
+    "loadMore": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.load-more",
+      "description": "How many cards render first, how many one click adds, and the button label. Used when List ending is `loadMore`.",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "listMode"
+            },
+            "loadMore"
+          ]
+        }
+      }
+    },
+    "button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.button",
+      "description": "Optional call to action under the grid (e.g. a speculative application). Only used when List ending is `none`, where there is no toggle to compete with it.",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "listMode"
+            },
+            "none"
+          ]
+        }
+      }
+    },
+    "theme": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.theme"
+    }
+  }
+}

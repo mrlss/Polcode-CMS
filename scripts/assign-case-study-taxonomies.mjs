@@ -16,7 +16,9 @@
  * Manager — the script recreates those drafts first.
  *
  * Usage (Strapi RUNNING, from the strapi project root):
- *   node scripts/assign-case-study-taxonomies.mjs [--dry-run] [--seed=1234]
+ *   node scripts/assign-case-study-taxonomies.mjs [--seed=1234] [--apply]
+ *
+ * Dry run by default — pass --apply to write.
  *
  * Token: STRAPI_ACCESS_TOKEN, else ../frontend/.env.
  */
@@ -24,7 +26,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 const STRAPI_URL = process.env.STRAPI_URL ?? "http://localhost:1337";
-const DRY_RUN = process.argv.includes("--dry-run");
+const DRY_RUN = !process.argv.includes("--apply");
 const SEED = Number(
   (process.argv.find((a) => a.startsWith("--seed=")) ?? "").split("=")[1] ??
   20260912,

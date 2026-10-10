@@ -1,5 +1,25 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface GlobalError extends Struct.ComponentSchema {
+  collectionName: 'components_global_errors';
+  info: {
+    description: 'Copy shown on the 404 and error screens';
+    displayName: 'Error';
+  };
+  attributes: {
+    button: Schema.Attribute.Component<'shared.button', false>;
+    description: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
+    image: Schema.Attribute.Media<'images'>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface GlobalFooter extends Struct.ComponentSchema {
   collectionName: 'components_global_footers';
   info: {
@@ -153,6 +173,7 @@ export interface SectionsCarousel extends Struct.ComponentSchema {
     >;
     anchor: Schema.Attribute.String;
     button: Schema.Attribute.Component<'shared.button', false>;
+    clientLogos: Schema.Attribute.Relation<'oneToMany', 'api::client.client'>;
     clientTestimonials: Schema.Attribute.Relation<
       'oneToMany',
       'api::client-testimonial.client-testimonial'
@@ -343,7 +364,7 @@ export interface SectionsFaq extends Struct.ComponentSchema {
 export interface SectionsForm extends Struct.ComponentSchema {
   collectionName: 'components_sections_forms';
   info: {
-    description: 'Contact form (default) or newsletter sign-up (compact)';
+    description: 'Contact form (default / hero) or newsletter sign-up (compact)';
     displayName: 'Forms';
   };
   attributes: {
@@ -360,7 +381,7 @@ export interface SectionsForm extends Struct.ComponentSchema {
     label: Schema.Attribute.String;
     theme: Schema.Attribute.Component<'shared.theme', false>;
     title: Schema.Attribute.String;
-    variant: Schema.Attribute.Enumeration<['default', 'compact']> &
+    variant: Schema.Attribute.Enumeration<['default', 'hero', 'compact']> &
       Schema.Attribute.DefaultTo<'default'>;
   };
 }
@@ -375,6 +396,17 @@ export interface SectionsHero extends Struct.ComponentSchema {
     anchor: Schema.Attribute.String;
     button: Schema.Attribute.Component<'shared.button', false>;
     carousel: Schema.Attribute.Component<'shared.hero-promo', true>;
+    carouselLimit: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 10;
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<5>;
+    carouselSource: Schema.Attribute.Enumeration<['vacancies', 'promos']> &
+      Schema.Attribute.DefaultTo<'vacancies'>;
     description: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
         'plugin::ckeditor5.CKEditor',
@@ -390,6 +422,8 @@ export interface SectionsHero extends Struct.ComponentSchema {
     subtitle: Schema.Attribute.String;
     theme: Schema.Attribute.Component<'shared.theme', false>;
     title: Schema.Attribute.Text;
+    vacancyCtaLabel: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'See position'>;
     variant: Schema.Attribute.Enumeration<
       ['default', 'withCarousel', 'withShowreel', 'twoColumns']
     > &
@@ -554,6 +588,8 @@ export interface SectionsPortfolio extends Struct.ComponentSchema {
     >;
     filters: Schema.Attribute.Component<'portfolio.filter', true>;
     headline: Schema.Attribute.Component<'shared.headline', false>;
+    listMode: Schema.Attribute.Enumeration<['showMore', 'loadMore', 'none']> &
+      Schema.Attribute.DefaultTo<'showMore'>;
     loadMore: Schema.Attribute.Component<'shared.load-more', false>;
     manualCasesControl: Schema.Attribute.Boolean &
       Schema.Attribute.DefaultTo<false>;
@@ -666,7 +702,76 @@ export interface SectionsTechStack extends Struct.ComponentSchema {
     >;
     button: Schema.Attribute.Component<'shared.button', false>;
     headline: Schema.Attribute.Component<'shared.headline', false>;
+    listMode: Schema.Attribute.Enumeration<['showMore', 'none']> &
+      Schema.Attribute.DefaultTo<'showMore'>;
     showMore: Schema.Attribute.Component<'shared.show-more', false>;
+    theme: Schema.Attribute.Component<'shared.theme', false>;
+  };
+}
+
+export interface SectionsVacanciesList extends Struct.ComponentSchema {
+  collectionName: 'components_sections_vacancies_lists';
+  info: {
+    description: 'Open positions pulled live from the recruitment system (Traffit), as a grid of cards that link to each vacancy page. Drop it on any page. The positions themselves are never entered here \u2014 only the copy that surrounds them.';
+    displayName: 'Vacancies list';
+    icon: 'briefcase';
+  };
+  attributes: {
+    anchor: Schema.Attribute.String;
+    button: Schema.Attribute.Component<'shared.button', false>;
+    emptyState: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
+    headline: Schema.Attribute.Component<'shared.headline', false>;
+    intro: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
+    listMode: Schema.Attribute.Enumeration<['showMore', 'loadMore', 'none']> &
+      Schema.Attribute.DefaultTo<'loadMore'>;
+    loadMore: Schema.Attribute.Component<'shared.load-more', false>;
+    showMore: Schema.Attribute.Component<'shared.show-more', false>;
+    theme: Schema.Attribute.Component<'shared.theme', false>;
+  };
+}
+
+export interface SectionsVacancyDetails extends Struct.ComponentSchema {
+  collectionName: 'components_sections_vacancy_details';
+  info: {
+    description: 'One live position: name, apply button, location and the full description, straight from the recruitment system (Traffit). Keep exactly one per vacancy page \u2014 that is where the position renders.';
+    displayName: 'Vacancy details';
+    icon: 'briefcase';
+  };
+  attributes: {
+    anchor: Schema.Attribute.String;
+    backLabel: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'All open positions'>;
+    buttonLabel: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Apply now'>;
+    buttonNote: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
+    emptyState: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
+    headline: Schema.Attribute.Component<'shared.headline', false>;
+    linkTarget: Schema.Attribute.Enumeration<['application', 'advert']> &
+      Schema.Attribute.DefaultTo<'application'>;
     theme: Schema.Attribute.Component<'shared.theme', false>;
   };
 }
@@ -721,25 +826,6 @@ export interface SharedCardMilestone extends Struct.ComponentSchema {
         }
       >;
     label: Schema.Attribute.String;
-    media: Schema.Attribute.Media<'images' | 'videos'>;
-    title: Schema.Attribute.String;
-  };
-}
-
-export interface SharedCardNumerated extends Struct.ComponentSchema {
-  collectionName: 'components_shared_card_numerateds';
-  info: {
-    description: 'One numbered card: title, copy and optional media';
-    displayName: 'Numbered Card';
-  };
-  attributes: {
-    description: Schema.Attribute.RichText &
-      Schema.Attribute.CustomField<
-        'plugin::ckeditor5.CKEditor',
-        {
-          preset: 'defaultHtml';
-        }
-      >;
     media: Schema.Attribute.Media<'images' | 'videos'>;
     title: Schema.Attribute.String;
   };
@@ -898,7 +984,7 @@ export interface SharedServiceGroup extends Struct.ComponentSchema {
 export interface SharedShowMore extends Struct.ComponentSchema {
   collectionName: 'components_shared_show_mores';
   info: {
-    description: "Collapsible list: keep `Items to show` visible and reveal the rest with the Show more/less toggle, or switch the toggle off to list everything (and expose the section's own button).";
+    description: "Collapse settings: how many items stay visible and the toggle's labels. Whether the toggle is used at all comes from the section's `List ending` field.";
     displayName: 'Show more / less';
     icon: 'chevronDown';
   };
@@ -915,7 +1001,6 @@ export interface SharedShowMore extends Struct.ComponentSchema {
       Schema.Attribute.DefaultTo<'Show less'>;
     showMoreLabel: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'Show more'>;
-    useShowMore: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
   };
 }
 
@@ -955,6 +1040,7 @@ export interface SharedTheme extends Struct.ComponentSchema {
       ['white', 'black', 'cream', 'purple']
     > &
       Schema.Attribute.DefaultTo<'white'>;
+    headerTheme: Schema.Attribute.Enumeration<['light', 'dark']>;
     textColor: Schema.Attribute.Enumeration<['light', 'dark']> &
       Schema.Attribute.DefaultTo<'dark'>;
   };
@@ -963,6 +1049,7 @@ export interface SharedTheme extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export namespace Public {
     export interface ComponentSchemas {
+      'global.error': GlobalError;
       'global.footer': GlobalFooter;
       'global.partner': GlobalPartner;
       'hub-bar.filter': HubBarFilter;
@@ -993,9 +1080,10 @@ declare module '@strapi/strapi' {
       'sections.services-group': SectionsServicesGroup;
       'sections.team': SectionsTeam;
       'sections.tech-stack': SectionsTechStack;
+      'sections.vacancies-list': SectionsVacanciesList;
+      'sections.vacancy-details': SectionsVacancyDetails;
       'shared.button': SharedButton;
       'shared.card-milestone': SharedCardMilestone;
-      'shared.card-numerated': SharedCardNumerated;
       'shared.color-box': SharedColorBox;
       'shared.content-item': SharedContentItem;
       'shared.floating-card': SharedFloatingCard;

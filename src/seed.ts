@@ -1,17 +1,3 @@
-/**
- * Idempotent demo-data seeder for local development.
- *
- * Run automatically from `src/index.ts` bootstrap when `SEED_DEMO=true`
- * (e.g. `SEED_DEMO=true npm --prefix strapi run develop`). Creates the filter
- * + content collections and a homepage (`slug: "index"`) whose `sections`
- * dynamiczone exercises all 28 section components, so the frontend can render
- * every new block from real Strapi data.
- *
- * Uses the low-level `strapi.db.query` API — works at bootstrap time, no auth
- * needed. Every entry is created published (`publishedAt`) so the frontend's
- * `publicationState: "LIVE"` query returns it.
- */
-
 import type { Core } from "@strapi/strapi";
 import type { UID } from "@strapi/types";
 
@@ -34,8 +20,6 @@ async function upsert(
   const q = strapi.db.query(uid);
   const existing = await q.findOne({ where });
   if (existing) {
-    // Repair entries created before the seed switched to entityService
-    // (they may be drafts — publish so LIVE queries return them).
     if (!existing.publishedAt) {
       await q.update({
         where: { id: existing.id },
@@ -44,7 +28,6 @@ async function upsert(
     }
     return existing;
   }
-  // entityService handles components + relations; `publishedAt` makes it published.
   return strapi.entityService.create(uid, {
     data: { ...data, publishedAt: now.toISOString() },
   });
@@ -53,9 +36,6 @@ async function upsert(
 export async function seedDemoData(strapi: Strapi) {
   const log = (msg: string) => console.log(`[seed] ${msg}`);
 
-  // ------------------------------------------------------------------
-  // Filter collections (industries / services / regions / platforms / tech stack)
-  // ------------------------------------------------------------------
   const industry = async (title: string, description: string) =>
     upsert(
       strapi,
@@ -107,9 +87,6 @@ export async function seedDemoData(strapi: Strapi) {
   const platformClutch = await platform("Clutch");
   const platformAwwwards = await platform("Awwwards");
 
-  // ------------------------------------------------------------------
-  // Content collections
-  // ------------------------------------------------------------------
   const achievement = async (
     title: string,
     date: string,
@@ -267,9 +244,6 @@ export async function seedDemoData(strapi: Strapi) {
   await techStack("AWS", "/what-we-do?stack=aws");
   await techStack("Docker", "/what-we-do?stack=docker");
 
-  // ------------------------------------------------------------------
-  // Demo homepage exercising all 28 sections
-  // ------------------------------------------------------------------
   const qPage = strapi.db.query("api::page.page");
   const existingPage = await qPage.findOne({ where: { slug: "index" } });
   if (existingPage) {
@@ -298,10 +272,7 @@ export async function seedDemoData(strapi: Strapi) {
     description,
   });
 
-  // Dynamiczone entries are built from loose helpers — typing the array as any
-  // keeps the seed readable without fighting Strapi's strict component unions.
   const sections: any[] = [
-    // 1. cta
     {
       __component: "sections.cta",
       label: "CTA",
@@ -310,14 +281,13 @@ export async function seedDemoData(strapi: Strapi) {
       buttons: [btn("Get in touch")],
       theme: theme("white"),
     },
-    // 2. achievements
     {
-      __component: "sections.achievements",
+      __component: "sections.carousel",
+      collectionType: "achievements",
       headline: h("Recognition"),
       theme: theme("cream"),
       achievements: [ach1.id, ach2.id],
     },
-    // 3. content-numerated (numbered cards)
     {
       __component: "sections.content-numerated",
       headline: h("Why teams choose us"),
@@ -328,7 +298,6 @@ export async function seedDemoData(strapi: Strapi) {
         item("Long-term partners", "<p>We stay after launch.</p>"),
       ],
     },
-    // 4. case-studies (pick: latest)
     {
       __component: "sections.case-studies",
       pick: "latest",
@@ -338,7 +307,6 @@ export async function seedDemoData(strapi: Strapi) {
       theme: theme("cream"),
       caseStudies: [],
     },
-    // 5. content-color-boxes
     {
       __component: "sections.content-color-boxes",
       headline: h("What we value"),
@@ -366,7 +334,6 @@ export async function seedDemoData(strapi: Strapi) {
         },
       ],
     },
-    // 6. content-image-left — “How we deliver” (NumeratedBlocks variant)
     {
       __component: "sections.content-image-left",
       headline: h("How we deliver"),
@@ -385,7 +352,6 @@ export async function seedDemoData(strapi: Strapi) {
         ),
       ],
     },
-    // 8. content-numerated (expandable)
     {
       __component: "sections.content-numerated",
       headline: h("Our pillars"),
@@ -396,62 +362,71 @@ export async function seedDemoData(strapi: Strapi) {
         item("Partnership", "<p>We win when our clients win.</p>"),
       ],
     },
-    // 9. faq
     {
       __component: "sections.faq",
       headline: h("Frequently asked questions"),
       theme: theme("cream"),
       faqs: [faq1.id, faq2.id],
     },
-    // 10. form (contact)
     {
       __component: "sections.form",
       variant: "default",
       title: "Contact us",
       description: "<p>Tell us about your project.</p>",
     },
-    // 11. hero-rich
     {
-      __component: "sections.hero-rich",
+      __component: "sections.hero",
+      variant: "default",
       title: "Built on a simple idea",
       description: "<p>Great software comes from small, empowered teams.</p>",
       label: "About",
-      variant: "titleAbove",
       button: btn("Our story", "/about"),
-      carousel: [
-        item("People first", "<p>We invest in the team.</p>"),
-        item("Quality as habit", "<p>Tests every day.</p>"),
-      ],
     },
-    // 12. hero-svg
-    { __component: "sections.hero-svg", title: "Crafted for the web" },
-    // 13. hero-two-columns
     {
-      __component: "sections.hero-two-columns",
+      __component: "sections.hero",
+      variant: "twoColumns",
+      label: "Our approach",
+      title: "Crafted for the web",
+      description: "<p>Design and engineering under one roof.</p>",
+      button: btn("See how we work", "/about-us"),
+      indicatorText: "Discover what we do",
+      theme: theme("black"),
+    },
+    {
+      __component: "sections.hero",
+      variant: "withCarousel",
       title: "Software that moves your business forward",
       description: "<p>We design, build and scale digital products.</p>",
-      label: "Polcode",
-      indicatorText: "Scroll to explore",
-      button: btn("Get in touch"),
+      carousel: [
+        {
+          __component: "shared.hero-promo",
+          label: "Start a project",
+          title: "Let's build together",
+          button: btn("Get in touch", "/contact-us"),
+        },
+        {
+          __component: "shared.hero-promo",
+          label: "See our work",
+          title: "Explore case studies",
+          button: btn("All cases", "/case-studies"),
+        },
+      ],
     },
-    // 14. industries
     {
       __component: "sections.industries",
       headline: h("Industries we serve"),
       button: btn("All industries", "/case-studies"),
       industries: [fintech.id, health.id, retail.id],
     },
-    // 15. insights (pick: latest)
     {
-      __component: "sections.insights",
-      pick: "latest",
-      limit: 5,
+      __component: "sections.carousel",
+      collectionType: "insights",
       headline: h("Insights"),
       button: btn("All insights", "/insights"),
       theme: theme("cream"),
+      insightsPick: "manual",
       insights: [in1.id, in2.id, in3.id],
     },
-    // 16. intersection-floating-boxes
     {
       __component: "sections.intersection-floating-boxes",
       headline: h("Outcomes at a glance"),
@@ -468,13 +443,11 @@ export async function seedDemoData(strapi: Strapi) {
         },
       ],
     },
-    // 17. intersection-media
     {
       __component: "sections.intersection-media",
       title: "Full-screen moment",
       button: btn("Explore", "/what-we-do"),
     },
-    // 18. campaign-intro
     {
       __component: "sections.campaign-intro",
       variant: "default",
@@ -485,7 +458,6 @@ export async function seedDemoData(strapi: Strapi) {
       button: btn("Discuss Your Project", "/contact-us"),
       indicatorText: "Scroll down",
     },
-    // 19. person
     {
       __component: "sections.person",
       person: m1.id,
@@ -500,14 +472,12 @@ export async function seedDemoData(strapi: Strapi) {
       ],
       button: btn("Book a call"),
     },
-    // 20. process
     {
       __component: "sections.process",
       headline: h("How we work"),
       button: btn("Start a project"),
       blocks: [process1.id, process2.id, process3.id],
     },
-    // 21. progress-cards
     {
       __component: "sections.progress-cards",
       headline: h("Milestones"),
@@ -534,7 +504,6 @@ export async function seedDemoData(strapi: Strapi) {
         },
       ],
     },
-    // 22. services-group
     {
       __component: "sections.services-group",
       headline: h("What we offer"),
@@ -547,7 +516,6 @@ export async function seedDemoData(strapi: Strapi) {
         },
       ],
     },
-    // 23. team (grid variant)
     {
       __component: "sections.team",
       variant: "grid",
@@ -558,14 +526,12 @@ export async function seedDemoData(strapi: Strapi) {
         "<p>Built by engineers, designers and PMs.</p>",
       ),
     },
-    // 24. team (rows variant)
     {
       __component: "sections.team",
       variant: "rows",
       title: "Team members",
       members: [m1.id, m2.id],
     },
-    // 25. tech-stack
     {
       __component: "sections.tech-stack",
       headline: h("Our technology stack"),
@@ -581,18 +547,18 @@ export async function seedDemoData(strapi: Strapi) {
         (await techStack("Docker", "/what-we-do?stack=docker")).id,
       ],
     },
-    // 26. testimonials-clients
     {
-      __component: "sections.testimonials-clients",
+      __component: "sections.carousel",
+      collectionType: "clientTestimonials",
+      showLogos: true,
       headline: h("What our clients say"),
-      cards: [t1.id],
+      clientTestimonials: [t1.id],
     },
-    // 27. testimonials-team
     {
-      __component: "sections.testimonials-team",
+      __component: "sections.carousel",
+      collectionType: "teamTestimonials",
       headline: h("Team testimonials"),
-      cardsLayout: "carousel",
-      cards: [t2.id],
+      teamTestimonials: [t2.id],
     },
   ];
 

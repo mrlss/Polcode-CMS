@@ -30,19 +30,22 @@
     },
     "seo": {
       "type": "component",
-      "repeatable": false,
-      "component": "shared.seo"
+      "component": "shared.seo",
+      "repeatable": false
     },
     "sections": {
       "type": "dynamiczone",
       "components": [
-        "sections.rich-content-body",
+        "sections.campaign-intro",
+        "sections.content-numerated",
+        "sections.content-color-boxes",
+        "sections.case-studies",
         "sections.process",
         "sections.carousel",
-        "sections.tech-stack",
         "sections.cta",
-        "sections.case-studies"
-      ]
+        "sections.tech-stack"
+      ],
+      "description": "The page content, in the order shown here. Add, remove and drag to reorder — the published page follows this order."
     },
     "description": {
       "type": "customField",
@@ -63,13 +66,15 @@
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::case-study.case-study",
-      "inversedBy": "services"
+      "inversedBy": "services",
+      "description": "Case studies delivered with this service. The link is the same one as 'Services' on each case study — filling it in here also lists this service there, and vice versa. Case-study sections on this page use these as their default set when you do not pick cases manually, and the Cases filters use them too."
     },
     "techStack": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::tech-stack.tech-stack",
-      "inversedBy": "services"
+      "inversedBy": "services",
+      "description": "Technologies used to deliver this service. The link is the same one as 'Services' on each technology. A Tech Stack section on this page lists these in order unless you pick technologies on the section itself."
     },
     "thumbnailImage": {
       "type": "media",

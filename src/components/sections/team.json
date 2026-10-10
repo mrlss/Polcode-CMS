@@ -7,17 +7,16 @@
   "options": {},
   "attributes": {
     "anchor": {
-      "type": "string",
-      "description": "DOM id / URL hash for this section (e.g. \"industries\" → #industries). Lets nav links target this section on the page."
+      "type": "string"
     },
     "variant": {
       "type": "enumeration",
+      "required": true,
+      "default": "grid",
       "enum": [
         "rows",
         "grid"
-      ],
-      "default": "grid",
-      "required": true
+      ]
     },
     "title": {
       "type": "string",
@@ -35,22 +34,10 @@
     "members": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::team.team",
-      "conditions": {
-        "visible": {
-          "!=": [
-            {
-              "var": "variant"
-            },
-            "grid"
-          ]
-        }
-      }
+      "target": "api::team.team"
     },
     "headline": {
       "type": "component",
-      "repeatable": false,
-      "component": "shared.headline",
       "conditions": {
         "visible": {
           "==": [
@@ -60,12 +47,12 @@
             "grid"
           ]
         }
-      }
+      },
+      "component": "shared.headline",
+      "repeatable": false
     },
     "content": {
       "type": "component",
-      "repeatable": false,
-      "component": "shared.content-item",
       "conditions": {
         "visible": {
           "==": [
@@ -75,12 +62,14 @@
             "grid"
           ]
         }
-      }
+      },
+      "component": "shared.content-item",
+      "repeatable": false
     },
     "theme": {
       "type": "component",
-      "repeatable": false,
-      "component": "shared.theme"
+      "component": "shared.theme",
+      "repeatable": false
     }
   }
 }

@@ -1,0 +1,41 @@
+{
+  "kind": "singleType",
+  "collectionName": "vacancy_pages",
+  "info": {
+    "singularName": "vacancy-page",
+    "pluralName": "vacancy-pages",
+    "displayName": "Vacancy page",
+    "description": "The template every vacancy page uses: the blocks that wrap the live position from Traffit, plus the page's own SEO. One setup for all positions."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "parent": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::page.page",
+      "description": "Page the vacancy URLs hang off (e.g. the Career page). Every position is published at the parent's path plus its own slug."
+    },
+    "seo": {
+      "type": "component",
+      "component": "shared.seo",
+      "repeatable": false
+    },
+    "sections": {
+      "type": "dynamiczone",
+      "components": [
+        "sections.vacancy-details",
+        "sections.faq",
+        "sections.carousel",
+        "sections.cta",
+        "sections.form",
+        "sections.case-studies"
+      ]
+    }
+  }
+}

@@ -223,10 +223,13 @@
         }
       }
     },
-    "carousel": {
-      "type": "component",
-      "repeatable": true,
-      "component": "shared.hero-promo",
+    "carouselSource": {
+      "type": "enumeration",
+      "default": "vacancies",
+      "enum": [
+        "vacancies",
+        "promos"
+      ],
       "conditions": {
         "visible": {
           "==": [
@@ -236,7 +239,92 @@
             "withCarousel"
           ]
         }
-      }
+      },
+      "description": "What the small carousel shows. `vacancies`: the newest open positions, pulled live from Traffit — nothing to maintain here. `promos`: the promo slides you write below, for any other kind of content."
+    },
+    "carouselLimit": {
+      "type": "integer",
+      "default": 5,
+      "min": 1,
+      "max": 10,
+      "conditions": {
+        "visible": {
+          "and": [
+            {
+              "==": [
+                {
+                  "var": "variant"
+                },
+                "withCarousel"
+              ]
+            },
+            {
+              "==": [
+                {
+                  "var": "carouselSource"
+                },
+                "vacancies"
+              ]
+            }
+          ]
+        }
+      },
+      "description": "How many open positions to show, newest first. Each slide is the position name, its location and a link to its page."
+    },
+    "vacancyCtaLabel": {
+      "type": "string",
+      "default": "See position",
+      "conditions": {
+        "visible": {
+          "and": [
+            {
+              "==": [
+                {
+                  "var": "variant"
+                },
+                "withCarousel"
+              ]
+            },
+            {
+              "==": [
+                {
+                  "var": "carouselSource"
+                },
+                "vacancies"
+              ]
+            }
+          ]
+        }
+      },
+      "description": "Button text on each position slide. Leave empty for \"See position\"."
+    },
+    "carousel": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.hero-promo",
+      "conditions": {
+        "visible": {
+          "and": [
+            {
+              "==": [
+                {
+                  "var": "variant"
+                },
+                "withCarousel"
+              ]
+            },
+            {
+              "==": [
+                {
+                  "var": "carouselSource"
+                },
+                "promos"
+              ]
+            }
+          ]
+        }
+      },
+      "description": "Your own promo slides, in this order. Used when Carousel shows is `promos`, and as the safety net when Traffit has no open positions."
     },
     "showreel": {
       "type": "component",

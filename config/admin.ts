@@ -31,9 +31,6 @@ const config = ({
       config: {
         allowedOrigins: [previewBaseUrl],
         handler: async (uid, { documentId, status }) => {
-          // Only the `page` content type renders as a standalone route on the
-          // frontend (catch-all /[[...slug]]). Everything else is embedded in
-          // a page, so preview falls back to the homepage.
           const previewStatus = status === "published" ? "published" : "draft";
           const buildUrl = (path: string) => {
             const query = new URLSearchParams({
@@ -44,8 +41,43 @@ const config = ({
             return `${previewBaseUrl}/api/preview?${query.toString()}`;
           };
 
+          /**
+           * Public path of a content-type entry: `parent-chain + slug`, or a
+           * root-level `/<slug>` when no parent page is set — the same rule the
+           * frontend's route tree applies. `parent` is always a page and pages
+           * have no parent of their own, so one level is enough.
+           */
+          const detailPath = async () => {
+            if (!documentId) return null;
+
+            const opts = {
+              documentId,
+              status: previewStatus,
+              populate: { parent: true },
+            } as const;
+
+            const doc =
+              uid === "api::case-study.case-study"
+                ? await strapi
+                    .documents("api::case-study.case-study")
+                    .findOne(opts)
+                : uid === "api::insight.insight"
+                ? await strapi.documents("api::insight.insight").findOne(opts)
+                : uid === "api::service.service"
+                ? await strapi.documents("api::service.service").findOne(opts)
+                : null;
+
+            const slug = doc?.slug;
+            if (!slug) return null;
+
+            const parentSlug = doc?.parent?.slug;
+            return parentSlug && parentSlug !== "index"
+              ? `/${parentSlug}/${slug}`
+              : `/${slug}`;
+          };
+
           if (uid !== "api::page.page") {
-            return buildUrl("/");
+            return buildUrl((await detailPath()) ?? "/");
           }
 
           let slug = "index";

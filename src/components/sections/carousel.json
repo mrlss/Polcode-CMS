@@ -152,6 +152,33 @@
         }
       }
     },
+    "clientLogos": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::client.client",
+      "conditions": {
+        "visible": {
+          "and": [
+            {
+              "==": [
+                {
+                  "var": "collectionType"
+                },
+                "clientTestimonials"
+              ]
+            },
+            {
+              "!=": [
+                {
+                  "var": "showLogos"
+                },
+                false
+              ]
+            }
+          ]
+        }
+      }
+    },
     "showLogos": {
       "type": "boolean",
       "default": true,
